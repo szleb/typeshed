@@ -24,7 +24,7 @@ MinCovDet_Self = TypeVar("MinCovDet_Self", bound=MinCovDet)
 #   1999, American Statistical Association and the American Society
 #   for Quality, TECHNOMETRICS)
 # XXX Is this really a public function? It's not listed in the docs or
-# exported by sklearn.covariance. Deprecate?
+# exported by scikit-learn.covariance. Deprecate?
 def c_step(
     X: MatrixLike,
     n_support: Int,
