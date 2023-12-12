@@ -1,0 +1,2 @@
+version = "1.3pytest.*"
+upstream_repository = "https://github.com/scikit-learn/scikit-learn"
