@@ -1,9 +1,10 @@
 from typing import Callable, Literal
-from ...utils.validation import check_consistent_length as check_consistent_length, check_array as check_array
+
 from numpy import ndarray
-from ..._typing import Float
 from scipy.optimize import linear_sum_assignment as linear_sum_assignment
-import numpy as np
+
+from ..._typing import Float
+from ...utils.validation import check_array as check_array, check_consistent_length as check_consistent_length
 
 __all__ = ["consensus_score"]
 

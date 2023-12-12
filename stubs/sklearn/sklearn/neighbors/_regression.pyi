@@ -1,12 +1,14 @@
 from typing import Callable, ClassVar, Literal, TypeVar
-from ._base import NeighborsBase, KNeighborsMixin, RadiusNeighborsMixin
-from numpy import ndarray
-from ..utils._param_validation import StrOptions as StrOptions
-from ..base import RegressorMixin
-from .._typing import Int, MatrixLike, ArrayLike, Float
 
-KNeighborsRegressor_Self = TypeVar("KNeighborsRegressor_Self", bound="KNeighborsRegressor")
-RadiusNeighborsRegressor_Self = TypeVar("RadiusNeighborsRegressor_Self", bound="RadiusNeighborsRegressor")
+from numpy import ndarray
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import RegressorMixin
+from ..utils._param_validation import StrOptions as StrOptions
+from ._base import KNeighborsMixin, NeighborsBase, RadiusNeighborsMixin
+
+KNeighborsRegressor_Self = TypeVar("KNeighborsRegressor_Self", bound=KNeighborsRegressor)
+RadiusNeighborsRegressor_Self = TypeVar("RadiusNeighborsRegressor_Self", bound=RadiusNeighborsRegressor)
 
 # Authors: Jake Vanderplas <vanderplas@astro.washington.edu>
 #          Fabian Pedregosa <fabian.pedregosa@inria.fr>
@@ -17,10 +19,6 @@ RadiusNeighborsRegressor_Self = TypeVar("RadiusNeighborsRegressor_Self", bound="
 #
 # License: BSD 3 clause (C) INRIA, University of Amsterdam,
 #                           University of Copenhagen
-
-import warnings
-
-import numpy as np
 
 class KNeighborsRegressor(KNeighborsMixin, RegressorMixin, NeighborsBase):
     n_samples_fit_: int = ...

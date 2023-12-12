@@ -1,43 +1,41 @@
-from typing import Any, ClassVar, Literal, Mapping, TypeVar
-from numpy.random import RandomState
-from ..base import BaseEstimator
-from ..exceptions import ConvergenceWarning as ConvergenceWarning
-from ..utils.extmath import safe_sparse_dot as safe_sparse_dot
-from scipy.sparse._csr import csr_matrix
-from ..utils.parallel import delayed as delayed, Parallel as Parallel
-from ..utils.validation import check_is_fitted as check_is_fitted
 from abc import ABCMeta, abstractmethod
-from numpy import ndarray
-from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions, Hidden as Hidden
 from numbers import Integral as Integral, Real as Real
+from typing import Any, ClassVar, Literal, Mapping, TypeVar
+
+from numpy import ndarray
+from numpy.random import RandomState
+from scipy.sparse._csr import csr_matrix
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, OutlierMixin, RegressorMixin, clone as clone, is_classifier as is_classifier
+from ..exceptions import ConvergenceWarning as ConvergenceWarning
+from ..model_selection import ShuffleSplit as ShuffleSplit, StratifiedShuffleSplit as StratifiedShuffleSplit
+from ..utils import check_random_state as check_random_state, compute_class_weight as compute_class_weight
+from ..utils._param_validation import Hidden as Hidden, Interval as Interval, StrOptions as StrOptions
+from ..utils.extmath import safe_sparse_dot as safe_sparse_dot
+from ..utils.metaestimators import available_if as available_if
+from ..utils.parallel import Parallel as Parallel, delayed as delayed
+from ..utils.validation import check_is_fitted as check_is_fitted
+from ._base import LinearClassifierMixin, SparseCoefMixin, make_dataset as make_dataset
 from ._sgd_fast import (
+    EpsilonInsensitive as EpsilonInsensitive,
     Hinge as Hinge,
-    SquaredHinge as SquaredHinge,
+    Huber as Huber,
     Log as Log,
     ModifiedHuber as ModifiedHuber,
-    SquaredLoss as SquaredLoss,
-    Huber as Huber,
-    EpsilonInsensitive as EpsilonInsensitive,
     SquaredEpsilonInsensitive as SquaredEpsilonInsensitive,
+    SquaredHinge as SquaredHinge,
+    SquaredLoss as SquaredLoss,
 )
-from ..base import clone as clone, is_classifier as is_classifier, RegressorMixin, OutlierMixin
-from ..model_selection import StratifiedShuffleSplit as StratifiedShuffleSplit, ShuffleSplit as ShuffleSplit
-from ..utils import check_random_state as check_random_state, compute_class_weight as compute_class_weight
-from ._base import LinearClassifierMixin, SparseCoefMixin, make_dataset as make_dataset
-from ..utils.metaestimators import available_if as available_if
-from .._typing import Float, Int, MatrixLike, ArrayLike
 
-BaseSGDClassifier_Self = TypeVar("BaseSGDClassifier_Self", bound="BaseSGDClassifier")
-SGDOneClassSVM_Self = TypeVar("SGDOneClassSVM_Self", bound="SGDOneClassSVM")
-BaseSGDRegressor_Self = TypeVar("BaseSGDRegressor_Self", bound="BaseSGDRegressor")
+BaseSGDClassifier_Self = TypeVar("BaseSGDClassifier_Self", bound=BaseSGDClassifier)
+SGDOneClassSVM_Self = TypeVar("SGDOneClassSVM_Self", bound=SGDOneClassSVM)
+BaseSGDRegressor_Self = TypeVar("BaseSGDRegressor_Self", bound=BaseSGDRegressor)
 
 # Authors: Peter Prettenhofer <peter.prettenhofer@gmail.com> (main author)
 #          Mathieu Blondel (partial_fit support)
 #
 # License: BSD 3 clause
-
-import numpy as np
-import warnings
 
 LEARNING_RATE_TYPES: dict = ...
 
@@ -87,7 +85,7 @@ class BaseSGD(SparseCoefMixin, BaseEstimator, metaclass=ABCMeta):
         average: bool = False,
     ) -> None: ...
     @abstractmethod
-    def fit(self, X, y): ...
+    def fit(self, X, y) -> None: ...
 
 def fit_binary(
     est: BaseEstimator,

@@ -1,14 +1,12 @@
-from typing import Literal
 from os import listdir as listdir, makedirs as makedirs, remove as remove
-from ._base import get_data_home as get_data_home, RemoteFileMetadata as RemoteFileMetadata, load_descr as load_descr
-from os.path import join as join, exists as exists, isdir as isdir
+from os.path import exists as exists, isdir as isdir, join as join
+from typing import Literal
+
 from joblib import Memory as Memory
-from ..utils._bunch import Bunch
+
 from .._typing import Float, Int
-
-import logging
-
-import numpy as np
+from ..utils._bunch import Bunch
+from ._base import RemoteFileMetadata as RemoteFileMetadata, get_data_home as get_data_home, load_descr as load_descr
 
 logger = ...
 

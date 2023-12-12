@@ -1,14 +1,15 @@
-from typing import Callable, Type
+from typing import Callable
+
+from numpy import bool_, ndarray
 from scipy import sparse as sparse
-from numpy import ndarray, bool_
-from ..utils.extmath import squared_norm as squared_norm
+
 from .._loss.loss import BaseLoss
-from .._typing import Float, MatrixLike, ArrayLike, Int
-import numpy as np
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..utils.extmath import squared_norm as squared_norm
 
 class LinearModelLoss:
     def __init__(self, base_loss: BaseLoss, fit_intercept: bool) -> None: ...
-    def init_zero_coef(self, X: ndarray, dtype: None | Type[Float] = None) -> ndarray: ...
+    def init_zero_coef(self, X: ndarray, dtype: None | type[Float] = None) -> ndarray: ...
     def weight_intercept(
         self, coef: MatrixLike | ArrayLike
     ) -> tuple[ndarray, Float] | tuple[ndarray, ndarray] | tuple[ndarray, float | ndarray]: ...

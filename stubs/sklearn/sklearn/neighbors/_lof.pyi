@@ -1,22 +1,21 @@
-from typing import Any, Callable, ClassVar, Literal, TypeVar
-from ._base import NeighborsBase, KNeighborsMixin
-from numpy import ndarray
-from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
 from numbers import Real as Real
-from ..utils.metaestimators import available_if as available_if
-from ..base import OutlierMixin
-from .._typing import Int, MatrixLike, ArrayLike
-from ..utils import check_array as check_array
-from ..utils.validation import check_is_fitted as check_is_fitted
+from typing import Any, Callable, ClassVar, Literal, TypeVar
 
-LocalOutlierFactor_Self = TypeVar("LocalOutlierFactor_Self", bound="LocalOutlierFactor")
+from numpy import ndarray
+
+from .._typing import ArrayLike, Int, MatrixLike
+from ..base import OutlierMixin
+from ..utils import check_array as check_array
+from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
+from ..utils.metaestimators import available_if as available_if
+from ..utils.validation import check_is_fitted as check_is_fitted
+from ._base import KNeighborsMixin, NeighborsBase
+
+LocalOutlierFactor_Self = TypeVar("LocalOutlierFactor_Self", bound=LocalOutlierFactor)
 
 # Authors: Nicolas Goix <nicolas.goix@telecom-paristech.fr>
 #          Alexandre Gramfort <alexandre.gramfort@telecom-paristech.fr>
 # License: BSD 3 clause
-
-import numpy as np
-import warnings
 
 __all__ = ["LocalOutlierFactor"]
 

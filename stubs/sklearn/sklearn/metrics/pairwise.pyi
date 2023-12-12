@@ -1,29 +1,3 @@
-from typing import Callable, Iterator, Sequence
-from ..exceptions import DataConversionWarning as DataConversionWarning
-from ..utils.extmath import row_norms as row_norms, safe_sparse_dot as safe_sparse_dot
-from joblib import effective_n_jobs as effective_n_jobs
-from scipy.spatial import distance
-from ..metrics import DistanceMetric as DistanceMetric
-from ..utils.fixes import sp_version as sp_version, parse_version as parse_version
-from ..preprocessing import normalize as normalize
-from scipy.sparse import csr_matrix as csr_matrix, issparse as issparse
-from ..utils.parallel import delayed as delayed, Parallel as Parallel
-from .. import config_context as config_context
-from ..utils.validation import check_non_negative as check_non_negative
-from ..gaussian_process.kernels import ExpSineSquared
-from numpy import ndarray
-from functools import partial as partial
-from ..utils import (
-    check_array as check_array,
-    gen_even_slices as gen_even_slices,
-    gen_batches as gen_batches,
-    get_chunk_n_rows as get_chunk_n_rows,
-    is_scalar_nan as is_scalar_nan,
-)
-from ..gaussian_process.kernels import Kernel as GPKernel
-from ._pairwise_distances_reduction import ArgKmin as ArgKmin
-from .._typing import MatrixLike, ArrayLike, Int, Float
-
 # Authors: Alexandre Gramfort <alexandre.gramfort@inria.fr>
 #          Mathieu Blondel <mathieu@mblondel.org>
 #          Robert Layton <robertlayton@gmail.com>
@@ -32,11 +6,31 @@ from .._typing import MatrixLike, ArrayLike, Int, Float
 #          Lars Buitinck
 #          Joel Nothman <joel.nothman@gmail.com>
 # License: BSD 3 clause
+from functools import partial as partial
+from typing import Callable, Iterator, Sequence
 
-import itertools
-import warnings
+from joblib import effective_n_jobs as effective_n_jobs
+from numpy import ndarray
+from scipy.sparse import csr_matrix as csr_matrix, issparse as issparse
 
-import numpy as np
+from .. import config_context as config_context
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..exceptions import DataConversionWarning as DataConversionWarning
+from ..gaussian_process.kernels import ExpSineSquared
+from ..metrics import DistanceMetric as DistanceMetric
+from ..preprocessing import normalize as normalize
+from ..utils import (
+    check_array as check_array,
+    gen_batches as gen_batches,
+    gen_even_slices as gen_even_slices,
+    get_chunk_n_rows as get_chunk_n_rows,
+    is_scalar_nan as is_scalar_nan,
+)
+from ..utils.extmath import row_norms as row_norms, safe_sparse_dot as safe_sparse_dot
+from ..utils.fixes import parse_version as parse_version, sp_version as sp_version
+from ..utils.parallel import Parallel as Parallel, delayed as delayed
+from ..utils.validation import check_non_negative as check_non_negative
+from ._pairwise_distances_reduction import ArgKmin as ArgKmin
 
 def check_pairwise_arrays(
     X: MatrixLike,

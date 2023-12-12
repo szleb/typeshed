@@ -1,48 +1,44 @@
+from numbers import Integral as Integral, Real as Real
 from typing import ClassVar, TypeVar
+
+from numpy import ndarray
 from numpy.random import RandomState
+
+from ._typing import ArrayLike, Float, Int, MatrixLike
 from .base import (
+    BaseEstimator,
     ClassifierMixin,
+    MetaEstimatorMixin,
+    MultiOutputMixin,
     clone as clone,
     is_classifier as is_classifier,
-    MultiOutputMixin,
-    MetaEstimatorMixin,
     is_regressor as is_regressor,
 )
+from .metrics.pairwise import euclidean_distances as euclidean_distances
 from .preprocessing import LabelBinarizer
-from .base import BaseEstimator
-from .utils.validation import check_is_fitted as check_is_fitted
-from .utils.multiclass import check_classification_targets as check_classification_targets
-from numpy import ndarray
-from numbers import Integral as Integral, Real as Real
-from .utils.metaestimators import available_if as available_if
 from .utils import check_random_state as check_random_state
 from .utils._param_validation import HasMethods as HasMethods, Interval as Interval
-from ._typing import Int, MatrixLike, ArrayLike, Float
-from .metrics.pairwise import euclidean_distances as euclidean_distances
-from .utils.parallel import delayed as delayed, Parallel as Parallel
+from .utils.metaestimators import available_if as available_if
+from .utils.multiclass import check_classification_targets as check_classification_targets
+from .utils.parallel import Parallel as Parallel, delayed as delayed
+from .utils.validation import check_is_fitted as check_is_fitted
 
-OneVsRestClassifier_Self = TypeVar("OneVsRestClassifier_Self", bound="OneVsRestClassifier")
-OneVsOneClassifier_Self = TypeVar("OneVsOneClassifier_Self", bound="OneVsOneClassifier")
-OutputCodeClassifier_Self = TypeVar("OutputCodeClassifier_Self", bound="OutputCodeClassifier")
+OneVsRestClassifier_Self = TypeVar("OneVsRestClassifier_Self", bound=OneVsRestClassifier)
+OneVsOneClassifier_Self = TypeVar("OneVsOneClassifier_Self", bound=OneVsOneClassifier)
+OutputCodeClassifier_Self = TypeVar("OutputCodeClassifier_Self", bound=OutputCodeClassifier)
 
 # Author: Mathieu Blondel <mathieu@mblondel.org>
 # Author: Hamzeh Alsalhi <93hamsal@gmail.com>
 #
 # License: BSD 3 clause
 
-import array
-import numpy as np
-import warnings
-import scipy.sparse as sp
-import itertools
-
 __all__ = ["OneVsRestClassifier", "OneVsOneClassifier", "OutputCodeClassifier"]
 
 class _ConstantPredictor(BaseEstimator):
-    def fit(self, X, y): ...
-    def predict(self, X): ...
-    def decision_function(self, X): ...
-    def predict_proba(self, X): ...
+    def fit(self, X, y) -> None: ...
+    def predict(self, X) -> None: ...
+    def decision_function(self, X) -> None: ...
+    def predict_proba(self, X) -> None: ...
 
 class OneVsRestClassifier(MultiOutputMixin, ClassifierMixin, MetaEstimatorMixin, BaseEstimator):
     feature_names_in_: ndarray = ...

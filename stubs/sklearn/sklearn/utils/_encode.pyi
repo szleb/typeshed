@@ -1,10 +1,10 @@
-from typing import Any, ClassVar, NamedTuple
 from collections import Counter
 from contextlib import suppress as suppress
-from numpy import str_, ndarray
-from . import is_scalar_nan as is_scalar_nan
+from typing import Any, ClassVar, NamedTuple
 
-import numpy as np
+from numpy import ndarray, str_
+
+from . import is_scalar_nan as is_scalar_nan
 
 class MissingValues(NamedTuple):
     nan: ClassVar[bool] = ...

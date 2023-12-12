@@ -1,26 +1,22 @@
-from typing import Any, Callable, ClassVar, Literal, TypeVar
-from numpy.random import RandomState
-from operator import itemgetter as itemgetter
-from .kernels import Kernel
-from numpy import ndarray
-from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
-from scipy.linalg import cholesky as cholesky, cho_solve as cho_solve, solve_triangular as solve_triangular
 from numbers import Integral as Integral, Real as Real
-from ..base import BaseEstimator, RegressorMixin, clone as clone, MultiOutputMixin
-from .kernels import RBF as RBF, ConstantKernel as C
-from .._typing import ArrayLike, Int, MatrixLike, Float
-from ..utils import check_random_state as check_random_state
+from operator import itemgetter as itemgetter
+from typing import Any, Callable, ClassVar, Literal, TypeVar
 
-GaussianProcessRegressor_Self = TypeVar("GaussianProcessRegressor_Self", bound="GaussianProcessRegressor")
+from numpy import ndarray
+from numpy.random import RandomState
+from scipy.linalg import cho_solve as cho_solve, cholesky as cholesky, solve_triangular as solve_triangular
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, MultiOutputMixin, RegressorMixin, clone as clone
+from ..utils import check_random_state as check_random_state
+from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
+from .kernels import RBF as RBF, Kernel
+
+GaussianProcessRegressor_Self = TypeVar("GaussianProcessRegressor_Self", bound=GaussianProcessRegressor)
 
 # Authors: Jan Hendrik Metzen <jhm@informatik.uni-bremen.de>
 # Modified by: Pete Green <p.l.green@liverpool.ac.uk>
 # License: BSD 3 clause
-
-import warnings
-
-import numpy as np
-import scipy.optimize
 
 GPR_CHOLESKY_LOWER: bool = ...
 

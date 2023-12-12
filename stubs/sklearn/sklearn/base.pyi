@@ -1,26 +1,21 @@
-from typing import Any, ClassVar, Iterable, TypeVar
-from ._config import get_config as get_config
-from .utils._set_output import _SetOutputMixin
-from .utils._estimator_html_repr import estimator_html_repr as estimator_html_repr
 from collections import defaultdict as defaultdict
-from .utils.validation import check_X_y as check_X_y, check_array as check_array, check_is_fitted as check_is_fitted
-from .metrics import accuracy_score as accuracy_score, r2_score as r2_score
-from numpy import ndarray
-from .utils._param_validation import validate_parameter_constraints as validate_parameter_constraints
-from ._typing import MatrixLike, ArrayLike, Float, Int
+from collections.abc import Iterable
+from typing import Any, ClassVar, TypeVar
 
-BaseEstimator_Self = TypeVar("BaseEstimator_Self", bound="BaseEstimator")
+from numpy import ndarray
+
+from ._config import get_config as get_config
+from ._typing import ArrayLike, Float, Int, MatrixLike
+from .metrics import accuracy_score as accuracy_score, r2_score as r2_score
+from .utils._estimator_html_repr import estimator_html_repr as estimator_html_repr
+from .utils._param_validation import validate_parameter_constraints as validate_parameter_constraints
+from .utils._set_output import _SetOutputMixin
+from .utils.validation import check_array as check_array, check_is_fitted as check_is_fitted, check_X_y as check_X_y
+
+BaseEstimator_Self = TypeVar("BaseEstimator_Self", bound=BaseEstimator)
 
 # Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
 # License: BSD 3 clause
-
-import copy
-import warnings
-import platform
-import inspect
-import re
-
-import numpy as np
 
 def clone(estimator: BaseEstimator | Iterable[BaseEstimator], *, safe: bool = True) -> Any: ...
 
@@ -47,7 +42,7 @@ class ClusterMixin:
     def fit_predict(self, X: MatrixLike, y: Any = None) -> ndarray: ...
 
 class BiclusterMixin:
-    def biclusters_(self): ...
+    def biclusters_(self) -> None: ...
     def get_indices(self, i: Int) -> tuple[ndarray, ndarray]: ...
     def get_shape(self, i: Int) -> tuple[int, int]: ...
     def get_submatrix(self, i: Int, data: MatrixLike) -> ndarray: ...

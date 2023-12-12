@@ -1,28 +1,25 @@
-from typing import ClassVar, Iterable, Literal, TypeVar
-from ..model_selection import BaseCrossValidator
-from numpy.random import RandomState
-from scipy import linalg as linalg, interpolate as interpolate
-from ._base import LinearModel, LinearRegression as LinearRegression
-from ..exceptions import ConvergenceWarning as ConvergenceWarning
-from ..utils._param_validation import Hidden as Hidden, Interval as Interval, StrOptions as StrOptions
-from numpy import ndarray
-from numbers import Integral as Integral, Real as Real
-from scipy.linalg.lapack import get_lapack_funcs as get_lapack_funcs
-from ..model_selection._split import BaseShuffleSplit
-from ..utils.parallel import delayed as delayed, Parallel as Parallel
 from math import log as log
-from ..base import RegressorMixin, MultiOutputMixin
-from ..model_selection import check_cv as check_cv
-from .._typing import MatrixLike, ArrayLike, Int, Float
+from numbers import Integral as Integral, Real as Real
+from typing import ClassVar, Iterable, Literal, TypeVar
+
+from numpy import ndarray
+from numpy.random import RandomState
+from scipy import interpolate as interpolate, linalg as linalg
+from scipy.linalg.lapack import get_lapack_funcs as get_lapack_funcs
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import MultiOutputMixin, RegressorMixin
+from ..exceptions import ConvergenceWarning as ConvergenceWarning
+from ..model_selection import BaseCrossValidator, check_cv as check_cv
+from ..model_selection._split import BaseShuffleSplit
 from ..utils import arrayfuncs as arrayfuncs, as_float_array as as_float_array, check_random_state as check_random_state
+from ..utils._param_validation import Hidden as Hidden, Interval as Interval, StrOptions as StrOptions
+from ..utils.parallel import Parallel as Parallel, delayed as delayed
+from ._base import LinearModel, LinearRegression as LinearRegression
 
-LassoLarsIC_Self = TypeVar("LassoLarsIC_Self", bound="LassoLarsIC")
-Lars_Self = TypeVar("Lars_Self", bound="Lars")
-LarsCV_Self = TypeVar("LarsCV_Self", bound="LarsCV")
-
-import sys
-import warnings
-import numpy as np
+LassoLarsIC_Self = TypeVar("LassoLarsIC_Self", bound=LassoLarsIC)
+Lars_Self = TypeVar("Lars_Self", bound=Lars)
+LarsCV_Self = TypeVar("LarsCV_Self", bound=LarsCV)
 
 SOLVE_TRIANGULAR_ARGS: dict = ...
 
@@ -140,7 +137,7 @@ class LarsCV(Lars):
 
     _parameter_constraints: ClassVar[dict] = ...
 
-    for parameter in ["n_nonzero_coefs", "jitter", "fit_path", "random_state"]:
+    for _parameter in ["n_nonzero_coefs", "jitter", "fit_path", "random_state"]:
         pass
 
     method: ClassVar[str] = ...
@@ -207,7 +204,7 @@ class LassoLarsIC(LassoLars):
 
     _parameter_constraints: ClassVar[dict] = ...
 
-    for parameter in ["jitter", "fit_path", "alpha", "random_state"]:
+    for _parameter in ["jitter", "fit_path", "alpha", "random_state"]:
         pass
 
     def __init__(

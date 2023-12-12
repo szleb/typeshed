@@ -1,26 +1,21 @@
-from typing import Any, ClassVar, Literal, TypeVar
 from collections import Counter as Counter
-from scipy import sparse as sp
-from numpy import ndarray
-from ..utils._param_validation import StrOptions as StrOptions, Hidden as Hidden
-from ..base import BaseEstimator, TransformerMixin
-from scipy.sparse import spmatrix
-from .._typing import Int, MatrixLike, ArrayLike
-from ..utils import is_scalar_nan as is_scalar_nan
-from ..utils.validation import check_is_fitted as check_is_fitted, FLOAT_DTYPES as FLOAT_DTYPES
+from typing import Any, ClassVar, Literal, TypeVar
 
-SimpleImputer_Self = TypeVar("SimpleImputer_Self", bound="SimpleImputer")
-MissingIndicator_Self = TypeVar("MissingIndicator_Self", bound="MissingIndicator")
+from numpy import ndarray
+from scipy.sparse import spmatrix
+
+from .._typing import ArrayLike, Int, MatrixLike
+from ..base import BaseEstimator, TransformerMixin
+from ..utils import is_scalar_nan as is_scalar_nan
+from ..utils._param_validation import Hidden as Hidden, StrOptions as StrOptions
+from ..utils.validation import FLOAT_DTYPES as FLOAT_DTYPES, check_is_fitted as check_is_fitted
+
+SimpleImputer_Self = TypeVar("SimpleImputer_Self", bound=SimpleImputer)
+MissingIndicator_Self = TypeVar("MissingIndicator_Self", bound=MissingIndicator)
 
 # Authors: Nicolas Tresegnie <nicolas.tresegnie@gmail.com>
 #          Sergey Feldman <sergeyfeldman@gmail.com>
 # License: BSD 3 clause
-
-import numbers
-import warnings
-
-import numpy as np
-import numpy.ma as ma
 
 class _BaseImputer(TransformerMixin, BaseEstimator):
     _parameter_constraints: ClassVar[dict] = ...

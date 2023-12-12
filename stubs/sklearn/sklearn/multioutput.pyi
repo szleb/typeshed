@@ -1,30 +1,35 @@
-from typing import ClassVar, Sequence, TypeVar
-from .model_selection import cross_val_predict as cross_val_predict
-from .ensemble._forest import RandomForestRegressor
 from abc import ABCMeta, abstractmethod
-from .base import clone as clone, MetaEstimatorMixin, RegressorMixin, ClassifierMixin, is_classifier as is_classifier
-from .utils.validation import check_is_fitted as check_is_fitted, has_fit_parameter as has_fit_parameter
-from .base import BaseEstimator
-from .utils.multiclass import check_classification_targets as check_classification_targets
-from numpy import ndarray
 from numbers import Integral as Integral
-from .utils.metaestimators import available_if as available_if
+from typing import ClassVar, Sequence, TypeVar
+
+from numpy import ndarray
+from scipy.sparse import spmatrix
+
+from ._typing import ArrayLike, MatrixLike
+from .base import (
+    BaseEstimator,
+    ClassifierMixin,
+    MetaEstimatorMixin,
+    RegressorMixin,
+    clone as clone,
+    is_classifier as is_classifier,
+)
+from .ensemble._forest import RandomForestRegressor
+from .linear_model._logistic import LogisticRegression
+from .model_selection import cross_val_predict as cross_val_predict
 from .utils import check_random_state as check_random_state
 from .utils._param_validation import HasMethods as HasMethods, StrOptions as StrOptions
-from ._typing import MatrixLike, ArrayLike
-from scipy.sparse import spmatrix
-from .utils.parallel import delayed as delayed, Parallel as Parallel
-from .linear_model._logistic import LogisticRegression
+from .utils.metaestimators import available_if as available_if
+from .utils.multiclass import check_classification_targets as check_classification_targets
+from .utils.parallel import Parallel as Parallel, delayed as delayed
+from .utils.validation import check_is_fitted as check_is_fitted, has_fit_parameter as has_fit_parameter
 
-MultiOutputClassifier_Self = TypeVar("MultiOutputClassifier_Self", bound="MultiOutputClassifier")
-RegressorChain_Self = TypeVar("RegressorChain_Self", bound="RegressorChain")
-_BaseChain_Self = TypeVar("_BaseChain_Self", bound="_BaseChain")
-_MultiOutputEstimator_Self = TypeVar("_MultiOutputEstimator_Self", bound="_MultiOutputEstimator")
-MultiOutputRegressor_Self = TypeVar("MultiOutputRegressor_Self", bound="MultiOutputRegressor")
-ClassifierChain_Self = TypeVar("ClassifierChain_Self", bound="ClassifierChain")
-
-import numpy as np
-import scipy.sparse as sp
+MultiOutputClassifier_Self = TypeVar("MultiOutputClassifier_Self", bound=MultiOutputClassifier)
+RegressorChain_Self = TypeVar("RegressorChain_Self", bound=RegressorChain)
+_BaseChain_Self = TypeVar("_BaseChain_Self", bound=_BaseChain)
+_MultiOutputEstimator_Self = TypeVar("_MultiOutputEstimator_Self", bound=_MultiOutputEstimator)
+MultiOutputRegressor_Self = TypeVar("MultiOutputRegressor_Self", bound=MultiOutputRegressor)
+ClassifierChain_Self = TypeVar("ClassifierChain_Self", bound=ClassifierChain)
 
 __all__ = ["MultiOutputRegressor", "MultiOutputClassifier", "ClassifierChain", "RegressorChain"]
 

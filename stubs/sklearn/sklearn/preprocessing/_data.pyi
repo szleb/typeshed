@@ -1,43 +1,45 @@
+from numbers import Integral as Integral, Real as Real
 from typing import Any, ClassVar, Literal, TypeVar
+
+from numpy import ndarray
+from numpy.random import RandomState
+from pandas.core.series import Series
+from scipy import optimize as optimize, sparse as sparse, stats as stats
+from scipy.sparse import spmatrix
+from scipy.sparse._csr import csr_matrix
+from scipy.special import boxcox as boxcox
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, ClassNamePrefixFeaturesOutMixin, OneToOneFeatureMixin, TransformerMixin
+from ..utils import check_array as check_array
+from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
+from ..utils.extmath import row_norms as row_norms
 from ..utils.sparsefuncs import (
+    incr_mean_variance_axis as incr_mean_variance_axis,
     inplace_column_scale as inplace_column_scale,
     mean_variance_axis as mean_variance_axis,
-    incr_mean_variance_axis as incr_mean_variance_axis,
     min_max_axis as min_max_axis,
 )
-from numpy.random import RandomState
-from scipy.special import boxcox as boxcox
-from scipy import sparse as sparse, stats as stats, optimize as optimize
 from ..utils.sparsefuncs_fast import (
     inplace_csr_row_normalize_l1 as inplace_csr_row_normalize_l1,
     inplace_csr_row_normalize_l2 as inplace_csr_row_normalize_l2,
 )
-from ._encoders import OneHotEncoder
-from numpy import ndarray
-from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
-from ..utils.extmath import row_norms as row_norms
-from numbers import Integral as Integral, Real as Real
-from pandas.core.series import Series
-from ..base import BaseEstimator, TransformerMixin, OneToOneFeatureMixin, ClassNamePrefixFeaturesOutMixin
-from scipy.sparse import spmatrix
-from scipy.sparse._csr import csr_matrix
-from .._typing import MatrixLike, ArrayLike, Int, Float
-from ..utils import check_array as check_array
 from ..utils.validation import (
+    FLOAT_DTYPES as FLOAT_DTYPES,
     check_is_fitted as check_is_fitted,
     check_random_state as check_random_state,
-    FLOAT_DTYPES as FLOAT_DTYPES,
 )
+from ._encoders import OneHotEncoder
 
-RobustScaler_Self = TypeVar("RobustScaler_Self", bound="RobustScaler")
-KernelCenterer_Self = TypeVar("KernelCenterer_Self", bound="KernelCenterer")
-Binarizer_Self = TypeVar("Binarizer_Self", bound="Binarizer")
-QuantileTransformer_Self = TypeVar("QuantileTransformer_Self", bound="QuantileTransformer")
-MaxAbsScaler_Self = TypeVar("MaxAbsScaler_Self", bound="MaxAbsScaler")
-StandardScaler_Self = TypeVar("StandardScaler_Self", bound="StandardScaler")
-MinMaxScaler_Self = TypeVar("MinMaxScaler_Self", bound="MinMaxScaler")
-Normalizer_Self = TypeVar("Normalizer_Self", bound="Normalizer")
-PowerTransformer_Self = TypeVar("PowerTransformer_Self", bound="PowerTransformer")
+RobustScaler_Self = TypeVar("RobustScaler_Self", bound=RobustScaler)
+KernelCenterer_Self = TypeVar("KernelCenterer_Self", bound=KernelCenterer)
+Binarizer_Self = TypeVar("Binarizer_Self", bound=Binarizer)
+QuantileTransformer_Self = TypeVar("QuantileTransformer_Self", bound=QuantileTransformer)
+MaxAbsScaler_Self = TypeVar("MaxAbsScaler_Self", bound=MaxAbsScaler)
+StandardScaler_Self = TypeVar("StandardScaler_Self", bound=StandardScaler)
+MinMaxScaler_Self = TypeVar("MinMaxScaler_Self", bound=MinMaxScaler)
+Normalizer_Self = TypeVar("Normalizer_Self", bound=Normalizer)
+PowerTransformer_Self = TypeVar("PowerTransformer_Self", bound=PowerTransformer)
 
 # Authors: Alexandre Gramfort <alexandre.gramfort@inria.fr>
 #          Mathieu Blondel <mathieu@mblondel.org>
@@ -47,10 +49,6 @@ PowerTransformer_Self = TypeVar("PowerTransformer_Self", bound="PowerTransformer
 #          Giorgio Patrini <giorgio.patrini@anu.edu.au>
 #          Eric Chang <ericchang2017@u.northwestern.edu>
 # License: BSD 3 clause
-
-import warnings
-
-import numpy as np
 
 BOUNDS_THRESHOLD: float = ...
 
@@ -141,7 +139,7 @@ class MaxAbsScaler(OneToOneFeatureMixin, TransformerMixin, BaseEstimator):
     def transform(self, X: MatrixLike | ArrayLike) -> ndarray | spmatrix: ...
     def inverse_transform(self, X: MatrixLike | ArrayLike) -> ndarray | spmatrix: ...
 
-def maxabs_scale(X: MatrixLike | ArrayLike, *, axis: Int = 0, copy: bool = True): ...
+def maxabs_scale(X: MatrixLike | ArrayLike, *, axis: Int = 0, copy: bool = True) -> None: ...
 
 class RobustScaler(OneToOneFeatureMixin, TransformerMixin, BaseEstimator):
     feature_names_in_: ndarray = ...

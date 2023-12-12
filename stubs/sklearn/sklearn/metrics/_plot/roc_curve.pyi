@@ -1,11 +1,13 @@
 from typing import Literal
-from ...base import BaseEstimator
-from matplotlib.axes import Axes
+
 from matplotlib.artist import Artist
-from ...utils import check_matplotlib_support as check_matplotlib_support
-from ..._typing import ArrayLike, Float, MatrixLike
-from .. import auc as auc, roc_curve as roc_curve
+from matplotlib.axes import Axes
 from matplotlib.figure import Figure
+
+from ..._typing import ArrayLike, Float, MatrixLike
+from ...base import BaseEstimator
+from ...utils import check_matplotlib_support as check_matplotlib_support
+from .. import auc as auc, roc_curve as roc_curve
 
 class RocCurveDisplay:
     figure_: Figure = ...

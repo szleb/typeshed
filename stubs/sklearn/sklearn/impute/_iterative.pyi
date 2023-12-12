@@ -1,26 +1,23 @@
+from collections import namedtuple as namedtuple
+from numbers import Integral as Integral, Real as Real
+from time import time as time
 from typing import Any, ClassVar, Literal, TypeVar
+
+from numpy import ndarray
 from numpy.random import RandomState
 from scipy import stats as stats
-from ..base import BaseEstimator
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, clone as clone
 from ..exceptions import ConvergenceWarning as ConvergenceWarning
-from ..preprocessing import normalize as normalize
 from ..linear_model import BayesianRidge as BayesianRidge
-from ..utils.validation import FLOAT_DTYPES as FLOAT_DTYPES, check_is_fitted as check_is_fitted
-from ._base import MissingIndicator
-from collections import namedtuple as namedtuple
-from numpy import ndarray
-from ..utils._param_validation import HasMethods as HasMethods, Interval as Interval, StrOptions as StrOptions
-from numbers import Integral as Integral, Real as Real
-from ..base import clone as clone
-from time import time as time
+from ..preprocessing import normalize as normalize
 from ..utils import check_array as check_array, check_random_state as check_random_state, is_scalar_nan as is_scalar_nan
-from ._base import _BaseImputer, SimpleImputer
-from .._typing import Int, Float, ArrayLike, MatrixLike
+from ..utils._param_validation import HasMethods as HasMethods, Interval as Interval, StrOptions as StrOptions
+from ..utils.validation import FLOAT_DTYPES as FLOAT_DTYPES, check_is_fitted as check_is_fitted
+from ._base import MissingIndicator, SimpleImputer, _BaseImputer
 
-IterativeImputer_Self = TypeVar("IterativeImputer_Self", bound="IterativeImputer")
-
-import warnings
-import numpy as np
+IterativeImputer_Self = TypeVar("IterativeImputer_Self", bound=IterativeImputer)
 
 _ImputerTriplet = ...
 

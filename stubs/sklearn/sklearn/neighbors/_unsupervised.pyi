@@ -1,9 +1,11 @@
 from typing import Any, Callable, Literal, TypeVar
-from numpy import ndarray
-from ._base import NeighborsBase, KNeighborsMixin, RadiusNeighborsMixin
-from .._typing import Int, Float, MatrixLike
 
-NearestNeighbors_Self = TypeVar("NearestNeighbors_Self", bound="NearestNeighbors")
+from numpy import ndarray
+
+from .._typing import Float, Int, MatrixLike
+from ._base import KNeighborsMixin, NeighborsBase, RadiusNeighborsMixin
+
+NearestNeighbors_Self = TypeVar("NearestNeighbors_Self", bound=NearestNeighbors)
 
 class NearestNeighbors(KNeighborsMixin, RadiusNeighborsMixin, NeighborsBase):
     n_samples_fit_: int = ...

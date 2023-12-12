@@ -1,19 +1,18 @@
 from typing import Callable
-from scipy.sparse.linalg import LinearOperator
-from numpy import block as bmat, ndarray
+
+from numpy import ndarray
 from scipy.linalg import (
-    inv as inv,
-    eigh as eigh,
+    LinAlgError as LinAlgError,
     cho_factor as cho_factor,
     cho_solve as cho_solve,
     cholesky as cholesky,
-    LinAlgError as LinAlgError,
+    eigh as eigh,
+    inv as inv,
 )
 from scipy.sparse import isspmatrix as isspmatrix
-from .._typing import MatrixLike, ArrayLike, Float, Scalar, Int
-import inspect
-import warnings
-import numpy as np
+from scipy.sparse.linalg import LinearOperator
+
+from .._typing import ArrayLike, Float, Int, MatrixLike, Scalar
 
 __all__ = ["lobpcg"]
 

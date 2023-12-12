@@ -11,7 +11,7 @@ class Classification(LossFunction):
     def dloss(self, p: float, y) -> float: ...
 
 class ModifiedHuber(Classification):
-    """Modified Huber loss for binary classification with y in {-1, 1}
+    """Modified Huber loss for binary classification with y in {-1, 1}.
 
     This is equivalent to quadratically smoothed SVM with gamma = 2.
 
@@ -23,11 +23,10 @@ class ModifiedHuber(Classification):
     def dloss(self, p: float, y: float) -> float: ...
 
 class Hinge(Classification):
-    """Hinge loss for binary classification tasks with y in {-1,1}
+    """Hinge loss for binary classification tasks with y in {-1,1}.
 
     Parameters
     ----------
-
     threshold : float > 0.0
         Margin threshold. When threshold=1.0, one gets the loss used by SVM.
         When threshold=0.0, one gets the loss used by the Perceptron.
@@ -39,11 +38,10 @@ class Hinge(Classification):
     def dloss(self, p: float, y: float) -> float: ...
 
 class SquaredHinge(Classification):
-    """Squared Hinge loss for binary classification tasks with y in {-1,1}
+    """Squared Hinge loss for binary classification tasks with y in {-1,1}.
 
     Parameters
     ----------
-
     threshold : float > 0.0
         Margin threshold. When threshold=1.0, one gets the loss used by
         (quadratically penalized) SVM.
@@ -55,7 +53,7 @@ class SquaredHinge(Classification):
     def dloss(self, p: float, y: float) -> float: ...
 
 class Log(Classification):
-    """Logistic regression loss for binary classification with y in {-1, 1}"""
+    """Logistic regression loss for binary classification with y in {-1, 1}."""
 
     def loss(self, p: float, y: float) -> float: ...
     def dloss(self, p: float, y: float) -> float: ...
@@ -67,7 +65,7 @@ class SquaredLoss(Regression):
     def dloss(self, p: float, y: float) -> float: ...
 
 class Huber(Regression):
-    """Huber regression loss
+    """Huber regression loss.
 
     Variant of the SquaredLoss that is robust to outliers (quadratic near zero,
     linear in for large errors).

@@ -1,24 +1,21 @@
-from typing import Any, ClassVar, Literal, TypeVar
-from scipy.special import comb as comb
-from scipy import sparse
-from itertools import chain as chain, combinations as combinations, combinations_with_replacement as combinations_w_r
-from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
-from numpy import ndarray
+from itertools import chain as chain, combinations as combinations
 from numbers import Integral as Integral
+from typing import Any, ClassVar, Literal, TypeVar
+
+from numpy import ndarray
 from pandas.core.series import Series
 from scipy.interpolate import BSpline as BSpline
-from ..base import BaseEstimator, TransformerMixin
 from scipy.sparse import spmatrix
-from .._typing import ArrayLike, MatrixLike, Int
+from scipy.special import comb as comb
+
+from .._typing import ArrayLike, Int, MatrixLike
+from ..base import BaseEstimator, TransformerMixin
 from ..utils import check_array as check_array
-from ..utils.validation import check_is_fitted as check_is_fitted, FLOAT_DTYPES as FLOAT_DTYPES
+from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
+from ..utils.validation import FLOAT_DTYPES as FLOAT_DTYPES, check_is_fitted as check_is_fitted
 
-SplineTransformer_Self = TypeVar("SplineTransformer_Self", bound="SplineTransformer")
-PolynomialFeatures_Self = TypeVar("PolynomialFeatures_Self", bound="PolynomialFeatures")
-
-import collections
-
-import numpy as np
+SplineTransformer_Self = TypeVar("SplineTransformer_Self", bound=SplineTransformer)
+PolynomialFeatures_Self = TypeVar("PolynomialFeatures_Self", bound=PolynomialFeatures)
 
 __all__ = ["PolynomialFeatures", "SplineTransformer"]
 

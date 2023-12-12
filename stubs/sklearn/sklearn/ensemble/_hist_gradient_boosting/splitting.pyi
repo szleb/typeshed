@@ -2,6 +2,7 @@ import numpy as np
 
 class SplitInfo:
     """Pure data class to store information about a potential split.
+
     Parameters
     ----------
     gain : float
@@ -54,13 +55,14 @@ class SplitInfo:
         value_right,
         is_categorical: bool,
         left_cat_bitset: np.ndarray | None = None,
-    ): ...
+    ) -> None: ...
 
 class Splitter:
     """Splitter used to find the best possible split at each node.
     A split (see SplitInfo) is characterized by a feature and a bin.
     The Splitter is also responsible for partitioning the samples among the
     leaves of the tree (see split_indices() and the partition attribute).
+
     Parameters
     ----------
     X_binned : ndarray of int, shape (n_samples, n_features)
@@ -132,13 +134,14 @@ class Splitter:
         min_gain_to_split: float = 0.0,
         hessians_are_constant: bool = False,
         n_threads: int = 1,
-    ): ...
-    def split_indices(self, split_info: SplitInfo, sample_indices: np.ndarray):
+    ) -> None: ...
+    def split_indices(self, split_info: SplitInfo, sample_indices: np.ndarray) -> None:
         """Split samples into left and right arrays.
         The split is performed according to the best possible split
         (split_info).
         Ultimately, this is nothing but a partition of the sample_indices
         array with a given pivot, exactly like a quicksort subroutine.
+
         Parameters
         ----------
         split_info : SplitInfo
@@ -148,6 +151,7 @@ class Splitter:
             on self.partition, and it is modified inplace by placing the
             indices of the left child at the beginning, and the indices of
             the right child at the end.
+
         Returns
         -------
         left_indices : ndarray of int, shape (n_left_samples,)
@@ -170,9 +174,10 @@ class Splitter:
         lower_bound: float = ...,
         upper_bound: float = ...,
         allowed_features: np.ndarray | None = None,
-    ):
+    ) -> None:
         """For each feature, find the best bin to split on at a given node.
         Return the best split info among all features.
+
         Parameters
         ----------
         n_samples : int
@@ -202,6 +207,7 @@ class Splitter:
         allowed_features : None or ndarray, dtype=np.uint32
             Indices of the features that are allowed by interaction constraints to be
             split.
+
         Returns
         -------
         best_split_info : SplitInfo

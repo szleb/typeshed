@@ -1,40 +1,38 @@
-from typing import ClassVar, Iterable, Literal, Sequence, TypeVar
-from ..base import BaseEstimator
-from ..exceptions import NotFittedError as NotFittedError
-from ..model_selection._split import BaseShuffleSplit
-from ..preprocessing import LabelEncoder as LabelEncoder
-from ..linear_model._logistic import LogisticRegression
-from copy import deepcopy as deepcopy
-from ..utils.parallel import delayed as delayed, Parallel as Parallel
-from ..utils.validation import check_is_fitted as check_is_fitted, column_or_1d as column_or_1d
 from abc import ABCMeta, abstractmethod
-from numpy import ndarray
-from ..utils._param_validation import HasMethods as HasMethods, StrOptions as StrOptions
+from copy import deepcopy as deepcopy
 from numbers import Integral as Integral
-from ..linear_model._ridge import RidgeCV
+from typing import ClassVar, Iterable, Literal, Sequence, TypeVar
+
+from numpy import ndarray
+
+from .._typing import ArrayLike, Int, MatrixLike
 from ..base import (
-    clone as clone,
+    BaseEstimator,
     ClassifierMixin,
     RegressorMixin,
     TransformerMixin,
+    clone as clone,
     is_classifier as is_classifier,
     is_regressor as is_regressor,
 )
-from ..model_selection import cross_val_predict as cross_val_predict, check_cv as check_cv
-from ..utils import Bunch
+from ..exceptions import NotFittedError as NotFittedError
+from ..linear_model._logistic import LogisticRegression
+from ..linear_model._ridge import RidgeCV
+from ..model_selection import BaseCrossValidator, check_cv as check_cv, cross_val_predict as cross_val_predict
+from ..model_selection._split import BaseShuffleSplit
 from ..pipeline import Pipeline
-from ._base import _BaseHeterogeneousEnsemble
-from ..utils.multiclass import check_classification_targets as check_classification_targets, type_of_target as type_of_target
+from ..preprocessing import LabelEncoder as LabelEncoder
+from ..utils import Bunch
+from ..utils._param_validation import HasMethods as HasMethods, StrOptions as StrOptions
 from ..utils.metaestimators import available_if as available_if
-from .._typing import MatrixLike, ArrayLike, Int
-from ..model_selection import BaseCrossValidator
+from ..utils.multiclass import check_classification_targets as check_classification_targets, type_of_target as type_of_target
+from ..utils.parallel import Parallel as Parallel, delayed as delayed
+from ..utils.validation import check_is_fitted as check_is_fitted, column_or_1d as column_or_1d
+from ._base import _BaseHeterogeneousEnsemble
 
-_BaseStacking_Self = TypeVar("_BaseStacking_Self", bound="_BaseStacking")
-StackingRegressor_Self = TypeVar("StackingRegressor_Self", bound="StackingRegressor")
-StackingClassifier_Self = TypeVar("StackingClassifier_Self", bound="StackingClassifier")
-
-import numpy as np
-import scipy.sparse as sparse
+_BaseStacking_Self = TypeVar("_BaseStacking_Self", bound=_BaseStacking)
+StackingRegressor_Self = TypeVar("StackingRegressor_Self", bound=StackingRegressor)
+StackingClassifier_Self = TypeVar("StackingClassifier_Self", bound=StackingClassifier)
 
 class _BaseStacking(TransformerMixin, _BaseHeterogeneousEnsemble, metaclass=ABCMeta):
     _parameter_constraints: ClassVar[dict] = ...
@@ -54,7 +52,7 @@ class _BaseStacking(TransformerMixin, _BaseHeterogeneousEnsemble, metaclass=ABCM
     def fit(
         self: _BaseStacking_Self, X: MatrixLike | ArrayLike, y: ArrayLike, sample_weight: None | ArrayLike = None
     ) -> _BaseStacking_Self | StackingClassifier: ...
-    def n_features_in_(self): ...
+    def n_features_in_(self) -> None: ...
     def get_feature_names_out(self, input_features: None | ArrayLike = None) -> ndarray: ...
     def predict(self, X: MatrixLike | ArrayLike, **predict_params) -> ndarray: ...
 

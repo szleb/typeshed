@@ -1,12 +1,10 @@
-from typing import Any, Callable, Iterable, Iterator
-from numpy import ndarray
-from .._config import config_context as config_context, get_config as get_config
 from functools import update_wrapper as update_wrapper
-
-import functools
-import warnings
+from typing import Any, Callable, Iterable, Iterator
 
 import joblib
+from numpy import ndarray
+
+from .._config import config_context as config_context, get_config as get_config
 
 class Parallel(joblib.Parallel):
     def __call__(self, iterable: Iterable | Iterator[Any]) -> ndarray: ...

@@ -1,13 +1,13 @@
-from typing import ClassVar
-from scipy.special import expit as expit, logit as logit
-from scipy.stats import gmean as gmean
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from numpy import ndarray
-from ..utils.extmath import softmax as softmax
-from .._typing import ArrayLike, Float
+from typing import ClassVar
 
-import numpy as np
+from numpy import ndarray
+from scipy.special import expit as expit, logit as logit
+from scipy.stats import gmean as gmean
+
+from .._typing import ArrayLike, Float
+from ..utils.extmath import softmax as softmax
 
 @dataclass
 class Interval:
@@ -52,7 +52,7 @@ class MultinomialLogit(BaseLink):
     is_multiclass: ClassVar[bool] = ...
     interval_y_pred = ...
 
-    def symmetrize_raw_prediction(self, raw_prediction): ...
+    def symmetrize_raw_prediction(self, raw_prediction) -> None: ...
     def link(self, y_pred: ArrayLike, out: None | ArrayLike = None) -> ndarray: ...
     def inverse(self, raw_prediction: ArrayLike, out: None | ArrayLike = None) -> ndarray: ...
 

@@ -1,20 +1,20 @@
+from itertools import product as product
+from numbers import Integral as Integral, Number as Number, Real as Real
 from typing import Any, ClassVar, TypeVar
+
+from numpy import ndarray
+from numpy.lib.stride_tricks import as_strided as as_strided
 from numpy.random import RandomState
 from scipy import sparse as sparse
-from itertools import product as product
-from scipy.sparse._coo import coo_matrix
-from numpy import ndarray
-from ..utils._param_validation import Interval as Interval
-from numbers import Integral as Integral, Number as Number, Real as Real
-from numpy.lib.stride_tricks import as_strided as as_strided
-from ..base import BaseEstimator
 from scipy.sparse import spmatrix
-from .._typing import MatrixLike, ArrayLike, Int
+from scipy.sparse._coo import coo_matrix
+
+from .._typing import ArrayLike, Int, MatrixLike
+from ..base import BaseEstimator
 from ..utils import check_array as check_array, check_random_state as check_random_state
+from ..utils._param_validation import Interval as Interval
 
-PatchExtractor_Self = TypeVar("PatchExtractor_Self", bound="PatchExtractor")
-
-import numpy as np
+PatchExtractor_Self = TypeVar("PatchExtractor_Self", bound=PatchExtractor)
 
 __all__ = ["PatchExtractor", "extract_patches_2d", "grid_to_graph", "img_to_graph", "reconstruct_from_patches_2d"]
 

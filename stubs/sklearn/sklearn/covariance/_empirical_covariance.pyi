@@ -1,14 +1,16 @@
 from typing import Any, ClassVar, Literal, TypeVar
-from scipy import linalg as linalg
+
 from numpy import ndarray
-from ..utils.extmath import fast_logdet as fast_logdet
+from scipy import linalg as linalg
+
 from .. import config_context as config_context
+from .._typing import ArrayLike, Float, MatrixLike
 from ..base import BaseEstimator
 from ..metrics.pairwise import pairwise_distances as pairwise_distances
-from .._typing import MatrixLike, Float, ArrayLike
 from ..utils import check_array as check_array
+from ..utils.extmath import fast_logdet as fast_logdet
 
-EmpiricalCovariance_Self = TypeVar("EmpiricalCovariance_Self", bound="EmpiricalCovariance")
+EmpiricalCovariance_Self = TypeVar("EmpiricalCovariance_Self", bound=EmpiricalCovariance)
 
 # Author: Alexandre Gramfort <alexandre.gramfort@inria.fr>
 #         Gael Varoquaux <gael.varoquaux@normalesup.org>
@@ -17,8 +19,6 @@ EmpiricalCovariance_Self = TypeVar("EmpiricalCovariance_Self", bound="EmpiricalC
 # License: BSD 3 clause
 
 # avoid division truncation
-import warnings
-import numpy as np
 
 def log_likelihood(emp_cov: MatrixLike, precision: MatrixLike) -> Float: ...
 def empirical_covariance(X: ArrayLike, *, assume_centered: bool = False) -> ndarray: ...

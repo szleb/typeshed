@@ -1,27 +1,26 @@
-from typing import Any, ClassVar, TypeVar
-from numpy.random import RandomState
 from collections import defaultdict as defaultdict
-from numpy import ndarray
-from ..utils._param_validation import Interval as Interval
 from numbers import Integral as Integral, Real as Real
+from typing import Any, ClassVar, TypeVar
+
+from numpy import ndarray
+from numpy.random import RandomState
+
 from .._config import config_context as config_context
-from ..neighbors import NearestNeighbors as NearestNeighbors
+from .._typing import Float, Int, MatrixLike
 from ..base import BaseEstimator, ClusterMixin
 from ..metrics.pairwise import pairwise_distances_argmin as pairwise_distances_argmin
-from ..utils.parallel import delayed as delayed, Parallel as Parallel
-from .._typing import MatrixLike, Float, Int
-from ..utils import check_random_state as check_random_state, gen_batches as gen_batches, check_array as check_array
+from ..neighbors import NearestNeighbors as NearestNeighbors
+from ..utils import check_array as check_array, check_random_state as check_random_state, gen_batches as gen_batches
+from ..utils._param_validation import Interval as Interval
+from ..utils.parallel import Parallel as Parallel, delayed as delayed
 from ..utils.validation import check_is_fitted as check_is_fitted
 
-MeanShift_Self = TypeVar("MeanShift_Self", bound="MeanShift")
+MeanShift_Self = TypeVar("MeanShift_Self", bound=MeanShift)
 
 # Authors: Conrad Lee <conradlee@gmail.com>
 #          Alexandre Gramfort <alexandre.gramfort@inria.fr>
 #          Gael Varoquaux <gael.varoquaux@normalesup.org>
 #          Martino Sorbaro <martino.sorbaro@ed.ac.uk>
-
-import numpy as np
-import warnings
 
 def estimate_bandwidth(
     X: MatrixLike,

@@ -1,29 +1,26 @@
-from typing import Any, ClassVar, Literal, Sequence, TypeVar
-from numpy.random import RandomState
 from abc import ABCMeta, abstractmethod
-from scipy import linalg as linalg
-from .base import BaseEstimator, TransformerMixin, ClassNamePrefixFeaturesOutMixin
-from .utils.validation import check_array as check_array, check_is_fitted as check_is_fitted
-from numpy import ndarray
 from numbers import Integral as Integral, Real as Real
-from .utils.extmath import safe_sparse_dot as safe_sparse_dot
+from typing import Any, ClassVar, Literal, Sequence, TypeVar
+
+from numpy import ndarray
+from numpy.random import RandomState
+from scipy import linalg as linalg
+from scipy.sparse import spmatrix
+
+from ._typing import ArrayLike, Float, Int, MatrixLike
+from .base import BaseEstimator, ClassNamePrefixFeaturesOutMixin, TransformerMixin
 from .exceptions import DataDimensionalityWarning as DataDimensionalityWarning
 from .utils import check_random_state as check_random_state
 from .utils._param_validation import Interval as Interval, StrOptions as StrOptions
+from .utils.extmath import safe_sparse_dot as safe_sparse_dot
 from .utils.random import sample_without_replacement as sample_without_replacement
-from scipy.sparse import spmatrix
-from ._typing import Float, ArrayLike, Int, MatrixLike
+from .utils.validation import check_array as check_array, check_is_fitted as check_is_fitted
 
-BaseRandomProjection_Self = TypeVar("BaseRandomProjection_Self", bound="BaseRandomProjection")
+BaseRandomProjection_Self = TypeVar("BaseRandomProjection_Self", bound=BaseRandomProjection)
 
 # Authors: Olivier Grisel <olivier.grisel@ensta.org>,
 #          Arnaud Joly <a.joly@ulg.ac.be>
 # License: BSD 3 clause
-
-import warnings
-
-import numpy as np
-import scipy.sparse as sp
 
 __all__ = ["SparseRandomProjection", "GaussianRandomProjection", "johnson_lindenstrauss_min_dim"]
 

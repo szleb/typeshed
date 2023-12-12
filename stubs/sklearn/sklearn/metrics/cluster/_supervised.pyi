@@ -1,10 +1,11 @@
-from scipy import sparse as sp
+from math import log as log
+
 from numpy import ndarray
+from scipy.sparse import spmatrix
+
+from ..._typing import ArrayLike, Float, MatrixLike
 from ...utils.multiclass import type_of_target as type_of_target
 from ...utils.validation import check_array as check_array, check_consistent_length as check_consistent_length
-from math import log as log
-from scipy.sparse import spmatrix
-from ..._typing import ArrayLike, Float, MatrixLike
 from ._expected_mutual_info_fast import expected_mutual_information as expected_mutual_information
 
 # Authors: Olivier Grisel <olivier.grisel@ensta.org>
@@ -17,10 +18,6 @@ from ._expected_mutual_info_fast import expected_mutual_information as expected_
 #          Arya McCarthy <arya@jhu.edu>
 #          Uwe F Mayer <uwe_f_mayer@yahoo.com>
 # License: BSD 3 clause
-
-import warnings
-
-import numpy as np
 
 def check_clusterings(labels_true: ArrayLike, labels_pred: ArrayLike) -> tuple[ndarray, ndarray]: ...
 def contingency_matrix(

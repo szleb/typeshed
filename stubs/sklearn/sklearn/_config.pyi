@@ -1,8 +1,8 @@
-from typing import Iterator, Literal
-from ._typing import Int
+from collections.abc import Iterator
 from contextlib import contextmanager as contextmanager
-import os
-import threading
+from typing import Literal
+
+from ._typing import Int
 
 _global_config: dict = ...
 _threadlocal = ...

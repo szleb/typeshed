@@ -1,16 +1,16 @@
+from numbers import Integral as Integral
 from typing import Any, ClassVar, TypeVar
-from scipy import linalg as linalg, sparse as sparse
-from ._base import _BasePCA
+
 from numpy import ndarray
+from scipy import linalg as linalg, sparse as sparse
+
+from .._typing import ArrayLike, Int, MatrixLike
+from ..utils import gen_batches as gen_batches
 from ..utils._param_validation import Interval as Interval
 from ..utils.extmath import svd_flip as svd_flip
-from numbers import Integral as Integral
-from .._typing import Int, MatrixLike, ArrayLike
-from ..utils import gen_batches as gen_batches
+from ._base import _BasePCA
 
-IncrementalPCA_Self = TypeVar("IncrementalPCA_Self", bound="IncrementalPCA")
-
-import numpy as np
+IncrementalPCA_Self = TypeVar("IncrementalPCA_Self", bound=IncrementalPCA)
 
 class IncrementalPCA(_BasePCA):
     feature_names_in_: ndarray = ...

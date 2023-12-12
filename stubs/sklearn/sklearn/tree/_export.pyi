@@ -1,21 +1,19 @@
-from typing import Any, Literal, Sequence
-from ._reingold_tilford import buchheim as buchheim
-from ..base import ClassifierMixin, RegressorMixin
-from numpy import ndarray, longlong
-from matplotlib.axes import Axes
-from numbers import Integral as Integral
 from io import StringIO as StringIO
+from numbers import Integral as Integral
+from typing import Any, Literal, Sequence
+
+from matplotlib.axes import Axes
 from matplotlib.text import Annotation
-from ..base import is_classifier as is_classifier
-from ._classes import DecisionTreeClassifier
+from numpy import longlong, ndarray
+
 from .._typing import Int
-from ._tree import Tree
+from ..base import ClassifierMixin, RegressorMixin, is_classifier as is_classifier
 from ..utils.validation import check_is_fitted as check_is_fitted
+from ._classes import DecisionTreeClassifier
+from ._reingold_tilford import buchheim as buchheim
+from ._tree import Tree
 
-import numpy as np
-
-class Sentinel:
-    def __repr__(self) -> str: ...
+class Sentinel: ...
 
 SENTINEL = ...
 
@@ -74,10 +72,10 @@ class _DOTTreeExporter(_BaseTreeExporter):
         precision: int = 3,
         fontname: str = "helvetica",
     ) -> None: ...
-    def export(self, decision_tree): ...
-    def tail(self): ...
-    def head(self): ...
-    def recurse(self, tree, node_id, criterion, parent=None, depth: int = 0): ...
+    def export(self, decision_tree) -> None: ...
+    def tail(self) -> None: ...
+    def head(self) -> None: ...
+    def recurse(self, tree, node_id, criterion, parent=None, depth: int = 0) -> None: ...
 
 class _MPLTreeExporter(_BaseTreeExporter):
     def __init__(
@@ -95,7 +93,7 @@ class _MPLTreeExporter(_BaseTreeExporter):
         fontsize=None,
     ) -> None: ...
     def export(self, decision_tree: DecisionTreeClassifier, ax=None) -> list[Annotation]: ...
-    def recurse(self, node, tree, ax, max_x, max_y, depth: int = 0): ...
+    def recurse(self, node, tree, ax, max_x, max_y, depth: int = 0) -> None: ...
 
 def export_graphviz(
     decision_tree: ClassifierMixin,

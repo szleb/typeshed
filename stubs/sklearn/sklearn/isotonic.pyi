@@ -1,23 +1,21 @@
-from typing import Callable, ClassVar, Literal, TypeVar
-from scipy.stats import spearmanr as spearmanr
-from scipy import interpolate as interpolate
-from .base import BaseEstimator, TransformerMixin, RegressorMixin
-from numpy import ndarray
 from numbers import Real as Real
+from typing import Callable, ClassVar, Literal, TypeVar
+
+from numpy import ndarray
+from scipy import interpolate as interpolate
+from scipy.stats import spearmanr as spearmanr
+
+from ._typing import ArrayLike, Float
+from .base import BaseEstimator, RegressorMixin, TransformerMixin
 from .utils import check_array as check_array, check_consistent_length as check_consistent_length
 from .utils._param_validation import Interval as Interval, StrOptions as StrOptions
-from ._typing import ArrayLike, Float
 
-IsotonicRegression_Self = TypeVar("IsotonicRegression_Self", bound="IsotonicRegression")
+IsotonicRegression_Self = TypeVar("IsotonicRegression_Self", bound=IsotonicRegression)
 
 # Authors: Fabian Pedregosa <fabian@fseoane.net>
 #          Alexandre Gramfort <alexandre.gramfort@inria.fr>
 #          Nelle Varoquaux <nelle.varoquaux@gmail.com>
 # License: BSD 3 clause
-
-import numpy as np
-import warnings
-import math
 
 __all__ = ["check_increasing", "isotonic_regression", "IsotonicRegression"]
 

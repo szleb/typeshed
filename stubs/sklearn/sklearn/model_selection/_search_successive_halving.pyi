@@ -1,25 +1,22 @@
-from typing import Callable, ClassVar, Iterable, Iterator, Literal, Mapping, Sequence, TypeVar
-from numpy.random import RandomState
-from ..base import BaseEstimator
-from ._split import BaseShuffleSplit
-from ._split import check_cv as check_cv
-from copy import deepcopy as deepcopy
-from ..svm._classes import SVC
 from abc import abstractmethod as abstractmethod
-from numpy import ndarray
-from numbers import Integral as Integral
-from ..base import is_classifier as is_classifier
-from ..utils import resample as resample
-from . import ParameterGrid as ParameterGrid, ParameterSampler as ParameterSampler
-from ..utils.multiclass import check_classification_targets as check_classification_targets
+from copy import deepcopy as deepcopy
 from math import ceil as ceil, floor as floor, log as log
+from numbers import Integral as Integral
+from typing import Callable, ClassVar, Iterable, Iterator, Literal, Mapping, Sequence, TypeVar
+
+from numpy import ndarray
+from numpy.random import RandomState
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, is_classifier as is_classifier
+from ..svm._classes import SVC
+from ..utils import resample as resample
+from ..utils.multiclass import check_classification_targets as check_classification_targets
+from . import BaseCrossValidator, ParameterGrid as ParameterGrid, ParameterSampler as ParameterSampler
 from ._search import BaseSearchCV
-from .._typing import MatrixLike, ArrayLike, Int, Float
-from . import BaseCrossValidator
+from ._split import BaseShuffleSplit, check_cv as check_cv
 
-BaseSuccessiveHalving_Self = TypeVar("BaseSuccessiveHalving_Self", bound="BaseSuccessiveHalving")
-
-import numpy as np
+BaseSuccessiveHalving_Self = TypeVar("BaseSuccessiveHalving_Self", bound=BaseSuccessiveHalving)
 
 __all__ = ["HalvingGridSearchCV", "HalvingRandomSearchCV"]
 

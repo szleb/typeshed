@@ -1,34 +1,36 @@
+from abc import ABCMeta, abstractmethod
+from math import ceil as ceil
+from numbers import Integral as Integral, Real as Real
 from typing import ClassVar, Literal, Mapping, Sequence, TypeVar
+
+from numpy import ndarray
 from numpy.random import RandomState
 from scipy.sparse import issparse as issparse, spmatrix
-from ..utils._bunch import Bunch
-from ._criterion import Criterion as Criterion
-from ..utils.validation import check_is_fitted as check_is_fitted
-from abc import ABCMeta, abstractmethod
-from ._splitter import Splitter as Splitter
-from ..utils._param_validation import Hidden as Hidden, Interval as Interval, StrOptions as StrOptions
-from numpy import ndarray
-from numbers import Integral as Integral, Real as Real
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
 from ..base import (
     BaseEstimator,
     ClassifierMixin,
-    clone as clone,
-    RegressorMixin,
-    is_classifier as is_classifier,
     MultiOutputMixin,
+    RegressorMixin,
+    clone as clone,
+    is_classifier as is_classifier,
 )
 from ..utils import check_random_state as check_random_state, compute_sample_weight as compute_sample_weight
+from ..utils._bunch import Bunch
+from ..utils._param_validation import Hidden as Hidden, Interval as Interval, StrOptions as StrOptions
 from ..utils.multiclass import check_classification_targets as check_classification_targets
-from math import ceil as ceil
-from .._typing import MatrixLike, ArrayLike, Int, Float
+from ..utils.validation import check_is_fitted as check_is_fitted
+from ._criterion import Criterion as Criterion
+from ._splitter import Splitter as Splitter
 from ._tree import (
-    DepthFirstTreeBuilder as DepthFirstTreeBuilder,
     BestFirstTreeBuilder as BestFirstTreeBuilder,
+    DepthFirstTreeBuilder as DepthFirstTreeBuilder,
     Tree,
     ccp_pruning_path as ccp_pruning_path,
 )
 
-DecisionTreeRegressor_Self = TypeVar("DecisionTreeRegressor_Self", bound="DecisionTreeRegressor")
+DecisionTreeRegressor_Self = TypeVar("DecisionTreeRegressor_Self", bound=DecisionTreeRegressor)
 
 # Authors: Gilles Louppe <g.louppe@gmail.com>
 #          Peter Prettenhofer <peter.prettenhofer@gmail.com>
@@ -40,12 +42,6 @@ DecisionTreeRegressor_Self = TypeVar("DecisionTreeRegressor_Self", bound="Decisi
 #          Nelson Liu <nelson@nelsonliu.me>
 #
 # License: BSD 3 clause
-
-import numbers
-import warnings
-import copy
-
-import numpy as np
 
 __all__ = ["DecisionTreeClassifier", "DecisionTreeRegressor", "ExtraTreeClassifier", "ExtraTreeRegressor"]
 
@@ -89,7 +85,7 @@ class BaseDecisionTree(MultiOutputMixin, BaseEstimator, metaclass=ABCMeta):
     ) -> None: ...
     def get_depth(self) -> int: ...
     def get_n_leaves(self) -> int: ...
-    def fit(self, X, y: ndarray, sample_weight: None | ndarray = None, check_input: bool = True): ...
+    def fit(self, X, y: ndarray, sample_weight: None | ndarray = None, check_input: bool = True) -> None: ...
     def predict(self, X: MatrixLike | ArrayLike, check_input: bool = True) -> ndarray: ...
     def apply(self, X: MatrixLike | ArrayLike, check_input: bool = True) -> ArrayLike: ...
     def decision_path(self, X: MatrixLike | ArrayLike, check_input: bool = True) -> spmatrix: ...

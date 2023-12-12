@@ -13,6 +13,7 @@ class HistogramBuilder:
       contains all the samples, leading to some possible optimizations.
       Overall all the implementations look the same, and are optimized for
       cache hit.
+
     Parameters
     ----------
     X_binned : ndarray of int, shape (n_samples, n_features)
@@ -41,7 +42,8 @@ class HistogramBuilder:
     ) -> None: ...
     def compute_histograms_brute(self, sample_indices: np.ndarray, allowed_features: np.ndarray | None = None) -> np.ndarray:
         """Compute the histograms of the node by scanning through all the data.
-        For a given feature, the complexity is O(n_samples)
+        For a given feature, the complexity is O(n_samples).
+
         Parameters
         ----------
         sample_indices : array of int, shape (n_samples_at_node,)
@@ -49,6 +51,7 @@ class HistogramBuilder:
         allowed_features : None or ndarray, dtype=np.uint32
             Indices of the features that are allowed by interaction constraints to be
             split.
+
         Returns
         -------
         histograms : ndarray of HISTOGRAM_DTYPE, shape (n_features, n_bins)
@@ -63,6 +66,7 @@ class HistogramBuilder:
         For a given feature, the complexity is O(n_bins). This is much more
         efficient than compute_histograms_brute, but it's only possible for one
         of the siblings.
+
         Parameters
         ----------
         parent_histograms : ndarray of HISTOGRAM_DTYPE,                 shape (n_features, n_bins)
@@ -72,6 +76,7 @@ class HistogramBuilder:
         allowed_features : None or ndarray, dtype=np.uint32
             Indices of the features that are allowed by interaction constraints to be
             split.
+
         Returns
         -------
         histograms : ndarray of HISTOGRAM_DTYPE, shape(n_features, n_bins)

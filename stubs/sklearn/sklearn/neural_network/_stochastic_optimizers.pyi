@@ -1,11 +1,10 @@
 from typing import Literal, Sequence
-from .._typing import Float, Int
-from numpy import ndarray
 
 # Authors: Jiyuan Qian <jq401@nyu.edu>
 # License: BSD 3 clause
+from numpy import ndarray
 
-import numpy as np
+from .._typing import Float, Int
 
 class BaseOptimizer:
     learning_rate: float = ...

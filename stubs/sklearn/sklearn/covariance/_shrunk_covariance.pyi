@@ -1,15 +1,17 @@
+from numbers import Integral as Integral, Real as Real
 from typing import Any, ClassVar, TypeVar
-from numpy import ndarray
-from ..utils._param_validation import Interval as Interval
-from numbers import Real as Real, Integral as Integral
-from .._config import config_context as config_context
-from .._typing import MatrixLike, Float, Int
-from ..utils import check_array as check_array
-from . import empirical_covariance as empirical_covariance, EmpiricalCovariance
 
-ShrunkCovariance_Self = TypeVar("ShrunkCovariance_Self", bound="ShrunkCovariance")
-LedoitWolf_Self = TypeVar("LedoitWolf_Self", bound="LedoitWolf")
-OAS_Self = TypeVar("OAS_Self", bound="OAS")
+from numpy import ndarray
+
+from .._config import config_context as config_context
+from .._typing import Float, Int, MatrixLike
+from ..utils import check_array as check_array
+from ..utils._param_validation import Interval as Interval
+from . import EmpiricalCovariance, empirical_covariance as empirical_covariance
+
+ShrunkCovariance_Self = TypeVar("ShrunkCovariance_Self", bound=ShrunkCovariance)
+LedoitWolf_Self = TypeVar("LedoitWolf_Self", bound=LedoitWolf)
+OAS_Self = TypeVar("OAS_Self", bound=OAS)
 
 # Author: Alexandre Gramfort <alexandre.gramfort@inria.fr>
 #         Gael Varoquaux <gael.varoquaux@normalesup.org>
@@ -18,8 +20,6 @@ OAS_Self = TypeVar("OAS_Self", bound="OAS")
 # License: BSD 3 clause
 
 # avoid division truncation
-import warnings
-import numpy as np
 
 # ShrunkCovariance estimator
 

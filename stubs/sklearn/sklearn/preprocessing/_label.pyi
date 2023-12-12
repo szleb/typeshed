@@ -1,19 +1,21 @@
-from typing import Any, ClassVar, Iterable, TypeVar
-from ..utils.sparsefuncs import min_max_axis as min_max_axis
 from collections import defaultdict as defaultdict
-from numpy import ndarray
 from numbers import Integral as Integral
-from ..utils.multiclass import unique_labels as unique_labels, type_of_target as type_of_target
+from typing import Any, ClassVar, Iterable, TypeVar
+
+from numpy import ndarray
 from pandas.core.frame import DataFrame
+from scipy.sparse import csr_matrix, spmatrix
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
 from ..base import BaseEstimator, TransformerMixin
-from scipy.sparse import spmatrix, csr_matrix
-from .._typing import ArrayLike, Int, MatrixLike, Float
 from ..utils import column_or_1d as column_or_1d
+from ..utils.multiclass import type_of_target as type_of_target, unique_labels as unique_labels
+from ..utils.sparsefuncs import min_max_axis as min_max_axis
 from ..utils.validation import check_array as check_array, check_is_fitted as check_is_fitted
 
-MultiLabelBinarizer_Self = TypeVar("MultiLabelBinarizer_Self", bound="MultiLabelBinarizer")
-LabelEncoder_Self = TypeVar("LabelEncoder_Self", bound="LabelEncoder")
-LabelBinarizer_Self = TypeVar("LabelBinarizer_Self", bound="LabelBinarizer")
+MultiLabelBinarizer_Self = TypeVar("MultiLabelBinarizer_Self", bound=MultiLabelBinarizer)
+LabelEncoder_Self = TypeVar("LabelEncoder_Self", bound=LabelEncoder)
+LabelBinarizer_Self = TypeVar("LabelBinarizer_Self", bound=LabelBinarizer)
 
 # Authors: Alexandre Gramfort <alexandre.gramfort@inria.fr>
 #          Mathieu Blondel <mathieu@mblondel.org>
@@ -22,13 +24,6 @@ LabelBinarizer_Self = TypeVar("LabelBinarizer_Self", bound="LabelBinarizer")
 #          Joel Nothman <joel.nothman@gmail.com>
 #          Hamzeh Alsalhi <ha258@cornell.edu>
 # License: BSD 3 clause
-
-import itertools
-import array
-import warnings
-
-import numpy as np
-import scipy.sparse as sp
 
 __all__ = ["label_binarize", "LabelBinarizer", "LabelEncoder", "MultiLabelBinarizer"]
 

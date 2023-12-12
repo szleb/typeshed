@@ -1,9 +1,7 @@
 from abc import abstractmethod
-
-import numpy as np
-
 from typing import Any, Literal
 
+import numpy as np
 from scipy.sparse import csr_matrix, spmatrix
 
 def sqeuclidean_row_norms(X: np.ndarray | csr_matrix, num_threads: int) -> np.ndarray:
@@ -58,7 +56,7 @@ class BaseDistancesReductionDispatcher:
         ...
     @classmethod
     @abstractmethod
-    def compute(cls, X: np.ndarray | csr_matrix, Y: np.ndarray | csr_matrix, **kwargs): ...
+    def compute(cls, X: np.ndarray | csr_matrix, Y: np.ndarray | csr_matrix, **kwargs) -> None: ...
 
 class ArgKmin(BaseDistancesReductionDispatcher):
     """Compute the argkmin of row vectors of X on the ones of Y.
@@ -196,7 +194,7 @@ class RadiusNeighbors(BaseDistancesReductionDispatcher):
         strategy: Literal["auto", "parallel_on_X", "parallel_on_Y"] | None = None,
         return_distance: bool = False,
         sort_results: bool = False,
-    ):
+    ) -> None:
         """Return the results of the reduction for the given arguments.
 
         Parameters

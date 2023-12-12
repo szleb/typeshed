@@ -1,25 +1,25 @@
-from typing import Any, Callable, ClassVar, Literal, TypeVar
-from numpy.random import RandomState
-from scipy.sparse.linalg import eigsh as eigsh
-from ..preprocessing import KernelCenterer as KernelCenterer
-from scipy import linalg as linalg
-from ..exceptions import NotFittedError as NotFittedError
-from numpy import ndarray
-from ..utils.extmath import svd_flip as svd_flip
-from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
 from numbers import Integral as Integral, Real as Real
-from ..base import BaseEstimator, TransformerMixin, ClassNamePrefixFeaturesOutMixin
+from typing import Any, Callable, ClassVar, Literal, TypeVar
+
+from numpy import ndarray
+from numpy.random import RandomState
+from scipy import linalg as linalg
+from scipy.sparse.linalg import eigsh as eigsh
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, ClassNamePrefixFeaturesOutMixin, TransformerMixin
+from ..exceptions import NotFittedError as NotFittedError
 from ..metrics.pairwise import pairwise_kernels as pairwise_kernels
-from .._typing import Int, Float, MatrixLike, ArrayLike
+from ..preprocessing import KernelCenterer as KernelCenterer
+from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
+from ..utils.extmath import svd_flip as svd_flip
 from ..utils.validation import check_is_fitted as check_is_fitted
 
-KernelPCA_Self = TypeVar("KernelPCA_Self", bound="KernelPCA")
+KernelPCA_Self = TypeVar("KernelPCA_Self", bound=KernelPCA)
 
 # Author: Mathieu Blondel <mathieu@mblondel.org>
 #         Sylvain Marie <sylvain.marie@schneider-electric.com>
 # License: BSD 3 clause
-
-import numpy as np
 
 class KernelPCA(ClassNamePrefixFeaturesOutMixin, TransformerMixin, BaseEstimator):
     feature_names_in_: ndarray = ...

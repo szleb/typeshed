@@ -1,32 +1,29 @@
-from typing import Callable, ClassVar, TypeVar
-from numpy.random import RandomState
-from .base import BaseEstimator, TransformerMixin, ClassNamePrefixFeaturesOutMixin
-from .utils.validation import check_is_fitted as check_is_fitted, check_non_negative as check_non_negative
-from numpy import ndarray
-from scipy.linalg import svd as svd
 from numbers import Integral as Integral, Real as Real
-from .utils.extmath import safe_sparse_dot as safe_sparse_dot
-from .utils import check_random_state as check_random_state
-from .utils._param_validation import Interval as Interval, StrOptions as StrOptions
-from scipy.sparse import spmatrix
+from typing import Callable, ClassVar, TypeVar
+
+from numpy import ndarray
+from numpy.random import RandomState
 from scipy.fftpack import fft as fft, ifft as ifft
+from scipy.linalg import svd as svd
+from scipy.sparse import spmatrix
+
+from ._typing import ArrayLike, Float, Int, MatrixLike
+from .base import BaseEstimator, ClassNamePrefixFeaturesOutMixin, TransformerMixin
 from .metrics.pairwise import (
-    pairwise_kernels as pairwise_kernels,
     KERNEL_PARAMS as KERNEL_PARAMS,
     PAIRWISE_KERNEL_FUNCTIONS as PAIRWISE_KERNEL_FUNCTIONS,
+    pairwise_kernels as pairwise_kernels,
 )
-from ._typing import Float, Int, MatrixLike, ArrayLike
+from .utils import check_random_state as check_random_state
+from .utils._param_validation import Interval as Interval, StrOptions as StrOptions
+from .utils.extmath import safe_sparse_dot as safe_sparse_dot
+from .utils.validation import check_is_fitted as check_is_fitted, check_non_negative as check_non_negative
 
-SkewedChi2Sampler_Self = TypeVar("SkewedChi2Sampler_Self", bound="SkewedChi2Sampler")
-PolynomialCountSketch_Self = TypeVar("PolynomialCountSketch_Self", bound="PolynomialCountSketch")
-AdditiveChi2Sampler_Self = TypeVar("AdditiveChi2Sampler_Self", bound="AdditiveChi2Sampler")
-RBFSampler_Self = TypeVar("RBFSampler_Self", bound="RBFSampler")
-Nystroem_Self = TypeVar("Nystroem_Self", bound="Nystroem")
-
-import warnings
-
-import numpy as np
-import scipy.sparse as sp
+SkewedChi2Sampler_Self = TypeVar("SkewedChi2Sampler_Self", bound=SkewedChi2Sampler)
+PolynomialCountSketch_Self = TypeVar("PolynomialCountSketch_Self", bound=PolynomialCountSketch)
+AdditiveChi2Sampler_Self = TypeVar("AdditiveChi2Sampler_Self", bound=AdditiveChi2Sampler)
+RBFSampler_Self = TypeVar("RBFSampler_Self", bound=RBFSampler)
+Nystroem_Self = TypeVar("Nystroem_Self", bound=Nystroem)
 
 class PolynomialCountSketch(ClassNamePrefixFeaturesOutMixin, TransformerMixin, BaseEstimator):
     feature_names_in_: ndarray = ...

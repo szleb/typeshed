@@ -1,23 +1,22 @@
+from numbers import Real as Real
 from typing import ClassVar, Literal, TypeVar
+
+from numpy import ndarray
 from scipy import sparse as sparse
-from ._base import LinearModel
+from scipy.optimize import linprog as linprog
+
+from .._typing import ArrayLike, Float, MatrixLike
+from ..base import BaseEstimator, RegressorMixin
 from ..exceptions import ConvergenceWarning as ConvergenceWarning
 from ..utils._param_validation import Hidden as Hidden, Interval as Interval, StrOptions as StrOptions
-from numpy import ndarray
-from scipy.optimize import linprog as linprog
-from numbers import Real as Real
-from ..base import BaseEstimator, RegressorMixin
-from .._typing import Float, MatrixLike, ArrayLike
-from ..utils.fixes import sp_version as sp_version, parse_version as parse_version
+from ..utils.fixes import parse_version as parse_version, sp_version as sp_version
+from ._base import LinearModel
 
-QuantileRegressor_Self = TypeVar("QuantileRegressor_Self", bound="QuantileRegressor")
+QuantileRegressor_Self = TypeVar("QuantileRegressor_Self", bound=QuantileRegressor)
 
 # Authors: David Dale <dale.david@mail.ru>
 #          Christian Lorentzen <lorentzen.ch@gmail.com>
 # License: BSD 3 clause
-import warnings
-
-import numpy as np
 
 class QuantileRegressor(LinearModel, RegressorMixin, BaseEstimator):
     n_iter_: int = ...

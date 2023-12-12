@@ -1,13 +1,15 @@
-from typing import ClassVar, Literal, TypeVar
-from numpy.random import RandomState
-from numpy import ndarray
-from ..utils._param_validation import Hidden as Hidden, Interval as Interval, StrOptions as StrOptions, Options as Options
 from numbers import Integral as Integral
+from typing import ClassVar, Literal, TypeVar
+
+from numpy import ndarray
+from numpy.random import RandomState
 from pandas.core.series import Series
-from ..base import BaseEstimator, TransformerMixin
 from scipy.sparse import spmatrix
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, TransformerMixin
 from ..cluster import KMeans as KMeans
-from .._typing import ArrayLike, Int, Float, MatrixLike
+from ..utils._param_validation import Hidden as Hidden, Interval as Interval, Options as Options, StrOptions as StrOptions
 from ..utils.validation import (
     check_array as check_array,
     check_is_fitted as check_is_fitted,
@@ -15,15 +17,12 @@ from ..utils.validation import (
 )
 from . import OneHotEncoder as OneHotEncoder
 
-KBinsDiscretizer_Self = TypeVar("KBinsDiscretizer_Self", bound="KBinsDiscretizer")
+KBinsDiscretizer_Self = TypeVar("KBinsDiscretizer_Self", bound=KBinsDiscretizer)
 
 # Author: Henry Lin <hlin117@gmail.com>
 #         Tom Dupré la Tour
 
 # License: BSD
-
-import numpy as np
-import warnings
 
 class KBinsDiscretizer(TransformerMixin, BaseEstimator):
     feature_names_in_: ndarray = ...

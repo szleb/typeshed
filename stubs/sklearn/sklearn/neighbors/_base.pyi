@@ -1,25 +1,3 @@
-from typing import ClassVar, Literal
-from ..exceptions import DataConversionWarning as DataConversionWarning, EfficiencyWarning as EfficiencyWarning
-from joblib import effective_n_jobs as effective_n_jobs
-from ._ball_tree import BallTree as BallTree
-from ..metrics import pairwise_distances_chunked as pairwise_distances_chunked
-from ..utils.fixes import parse_version as parse_version, sp_version as sp_version
-from ._kd_tree import KDTree as KDTree
-from scipy.sparse import csr_matrix as csr_matrix, issparse as issparse, spmatrix
-from ..utils.parallel import delayed as delayed, Parallel as Parallel
-from ..metrics.pairwise import PAIRWISE_DISTANCE_FUNCTIONS as PAIRWISE_DISTANCE_FUNCTIONS
-from ..utils.validation import check_is_fitted as check_is_fitted, check_non_negative as check_non_negative
-from abc import ABCMeta, abstractmethod
-from numpy import ndarray
-from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
-from numbers import Integral as Integral, Real as Real
-from functools import partial as partial
-from ..base import BaseEstimator, MultiOutputMixin, is_classifier as is_classifier
-from ..utils import check_array as check_array, gen_even_slices as gen_even_slices
-from ..metrics._pairwise_distances_reduction import ArgKmin as ArgKmin, RadiusNeighbors as RadiusNeighbors
-from ..utils.multiclass import check_classification_targets as check_classification_targets
-from .._typing import MatrixLike, Float, Int, ArrayLike
-
 # Authors: Jake Vanderplas <vanderplas@astro.washington.edu>
 #          Fabian Pedregosa <fabian.pedregosa@inria.fr>
 #          Alexandre Gramfort <alexandre.gramfort@inria.fr>
@@ -27,12 +5,29 @@ from .._typing import MatrixLike, Float, Int, ArrayLike
 #          Multi-output support by Arnaud Joly <a.joly@ulg.ac.be>
 #
 # License: BSD 3 clause (C) INRIA, University of Amsterdam
-import itertools
+from abc import ABCMeta, abstractmethod
+from functools import partial as partial
+from numbers import Integral as Integral, Real as Real
+from typing import ClassVar, Literal
 
-import warnings
-import numbers
+from joblib import effective_n_jobs as effective_n_jobs
+from numpy import ndarray
+from scipy.sparse import csr_matrix as csr_matrix, issparse as issparse, spmatrix
 
-import numpy as np
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, MultiOutputMixin, is_classifier as is_classifier
+from ..exceptions import DataConversionWarning as DataConversionWarning, EfficiencyWarning as EfficiencyWarning
+from ..metrics import pairwise_distances_chunked as pairwise_distances_chunked
+from ..metrics._pairwise_distances_reduction import ArgKmin as ArgKmin, RadiusNeighbors as RadiusNeighbors
+from ..metrics.pairwise import PAIRWISE_DISTANCE_FUNCTIONS as PAIRWISE_DISTANCE_FUNCTIONS
+from ..utils import check_array as check_array, gen_even_slices as gen_even_slices
+from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
+from ..utils.fixes import parse_version as parse_version, sp_version as sp_version
+from ..utils.multiclass import check_classification_targets as check_classification_targets
+from ..utils.parallel import Parallel as Parallel, delayed as delayed
+from ..utils.validation import check_is_fitted as check_is_fitted, check_non_negative as check_non_negative
+from ._ball_tree import BallTree as BallTree
+from ._kd_tree import KDTree as KDTree
 
 VALID_METRICS = ...
 
@@ -81,4 +76,4 @@ class RadiusNeighborsMixin:
         radius: None | Float = None,
         mode: Literal["connectivity", "distance", "connectivity"] = "connectivity",
         sort_results: bool = False,
-    ): ...
+    ) -> None: ...

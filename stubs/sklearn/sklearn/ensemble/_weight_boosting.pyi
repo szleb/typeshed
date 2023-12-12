@@ -1,25 +1,22 @@
+from abc import ABCMeta, abstractmethod
+from numbers import Integral as Integral, Real as Real
 from typing import Any, ClassVar, Iterator, Literal, TypeVar
+
+from numpy import ndarray
 from numpy.random import RandomState
 from scipy.special import xlogy as xlogy
-from abc import ABCMeta, abstractmethod
-from ..tree import DecisionTreeClassifier as DecisionTreeClassifier, DecisionTreeRegressor as DecisionTreeRegressor
-from ..base import ClassifierMixin, RegressorMixin, BaseEstimator
-from ._base import BaseEnsemble
-from numpy import ndarray
-from ..utils.extmath import softmax as softmax, stable_cumsum as stable_cumsum
-from ..utils._param_validation import HasMethods as HasMethods, Interval as Interval, StrOptions as StrOptions
-from numbers import Integral as Integral, Real as Real
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, ClassifierMixin, RegressorMixin, is_classifier as is_classifier, is_regressor as is_regressor
 from ..metrics import accuracy_score as accuracy_score, r2_score as r2_score
-from ..base import is_classifier as is_classifier, is_regressor as is_regressor
-from .._typing import MatrixLike, ArrayLike, Int, Float
+from ..tree import DecisionTreeClassifier as DecisionTreeClassifier, DecisionTreeRegressor as DecisionTreeRegressor
 from ..utils import check_random_state as check_random_state
+from ..utils._param_validation import HasMethods as HasMethods, Interval as Interval, StrOptions as StrOptions
+from ..utils.extmath import softmax as softmax, stable_cumsum as stable_cumsum
 from ..utils.validation import check_is_fitted as check_is_fitted, has_fit_parameter as has_fit_parameter
+from ._base import BaseEnsemble
 
-BaseWeightBoosting_Self = TypeVar("BaseWeightBoosting_Self", bound="BaseWeightBoosting")
-
-import numpy as np
-
-import warnings
+BaseWeightBoosting_Self = TypeVar("BaseWeightBoosting_Self", bound=BaseWeightBoosting)
 
 __all__ = ["AdaBoostClassifier", "AdaBoostRegressor"]
 
@@ -40,7 +37,7 @@ class BaseWeightBoosting(BaseEnsemble, metaclass=ABCMeta):
     def fit(
         self: BaseWeightBoosting_Self, X: MatrixLike | ArrayLike, y: ArrayLike, sample_weight: None | ArrayLike = None
     ) -> BaseWeightBoosting_Self: ...
-    def staged_score(self, X: MatrixLike | ArrayLike, y: ArrayLike, sample_weight: None | ArrayLike = None): ...
+    def staged_score(self, X: MatrixLike | ArrayLike, y: ArrayLike, sample_weight: None | ArrayLike = None) -> None: ...
     @property
     def feature_importances_(self) -> ndarray: ...
 
@@ -73,7 +70,7 @@ class AdaBoostClassifier(ClassifierMixin, BaseWeightBoosting):
     def decision_function(self, X: MatrixLike | ArrayLike) -> ndarray: ...
     def staged_decision_function(self, X: MatrixLike | ArrayLike) -> Iterator[ndarray]: ...
     def predict_proba(self, X: MatrixLike | ArrayLike) -> ndarray: ...
-    def staged_predict_proba(self, X: MatrixLike | ArrayLike): ...
+    def staged_predict_proba(self, X: MatrixLike | ArrayLike) -> None: ...
     def predict_log_proba(self, X: MatrixLike | ArrayLike) -> ndarray: ...
 
 class AdaBoostRegressor(RegressorMixin, BaseWeightBoosting):
@@ -99,4 +96,4 @@ class AdaBoostRegressor(RegressorMixin, BaseWeightBoosting):
         base_estimator: Any = "deprecated",
     ) -> None: ...
     def predict(self, X: MatrixLike | ArrayLike) -> ndarray: ...
-    def staged_predict(self, X: MatrixLike | ArrayLike): ...
+    def staged_predict(self, X: MatrixLike | ArrayLike) -> None: ...

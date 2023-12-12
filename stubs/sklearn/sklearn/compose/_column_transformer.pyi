@@ -1,22 +1,21 @@
-from typing import ClassVar, Literal, Sequence, TypeVar
-from scipy import sparse as sparse
-from itertools import chain as chain
-from ..base import BaseEstimator
-from ..preprocessing import FunctionTransformer as FunctionTransformer
-from scipy.sparse import spmatrix
-from ..utils._bunch import Bunch
-from ..utils.parallel import delayed as delayed, Parallel as Parallel
-from ..utils.validation import check_array as check_array, check_is_fitted as check_is_fitted
 from collections import Counter as Counter
-from numpy import ndarray, dtype
-from ..base import clone as clone, TransformerMixin
+from itertools import chain as chain
+from typing import ClassVar, Literal, Sequence, TypeVar
+
+from numpy import dtype, ndarray
+from scipy import sparse as sparse
+from scipy.sparse import spmatrix
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, TransformerMixin, clone as clone
+from ..preprocessing import FunctionTransformer as FunctionTransformer
 from ..utils import check_pandas_support as check_pandas_support
+from ..utils._bunch import Bunch
 from ..utils.metaestimators import _BaseComposition
-from .._typing import Float, Int, ArrayLike, MatrixLike
+from ..utils.parallel import Parallel as Parallel, delayed as delayed
+from ..utils.validation import check_array as check_array, check_is_fitted as check_is_fitted
 
-ColumnTransformer_Self = TypeVar("ColumnTransformer_Self", bound="ColumnTransformer")
-
-import numpy as np
+ColumnTransformer_Self = TypeVar("ColumnTransformer_Self", bound=ColumnTransformer)
 
 __all__ = ["ColumnTransformer", "make_column_transformer", "make_column_selector"]
 

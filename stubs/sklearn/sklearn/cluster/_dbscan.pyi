@@ -1,24 +1,22 @@
-from typing import Any, Callable, ClassVar, Literal, TypeVar
-from scipy import sparse as sparse
-from numpy import ndarray
-from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
 from numbers import Integral as Integral, Real as Real
-from ._dbscan_inner import dbscan_inner as dbscan_inner
-from ..neighbors import NearestNeighbors as NearestNeighbors
-from ..base import BaseEstimator, ClusterMixin
-from .._typing import MatrixLike, Float, Int, ArrayLike
+from typing import Any, Callable, ClassVar, Literal, TypeVar
 
-DBSCAN_Self = TypeVar("DBSCAN_Self", bound="DBSCAN")
+from numpy import ndarray
+from scipy import sparse as sparse
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, ClusterMixin
+from ..neighbors import NearestNeighbors as NearestNeighbors
+from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
+from ._dbscan_inner import dbscan_inner as dbscan_inner
+
+DBSCAN_Self = TypeVar("DBSCAN_Self", bound=DBSCAN)
 
 # Author: Robert Layton <robertlayton@gmail.com>
 #         Joel Nothman <joel.nothman@gmail.com>
 #         Lars Buitinck
 #
 # License: BSD 3 clause
-
-import warnings
-
-import numpy as np
 
 def dbscan(
     X: MatrixLike,

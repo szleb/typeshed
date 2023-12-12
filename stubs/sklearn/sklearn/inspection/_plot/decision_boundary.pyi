@@ -1,16 +1,16 @@
-from typing import Any, Literal
-from matplotlib.collections import QuadMesh
-from matplotlib.axes import Axes
-from matplotlib.contour import QuadContourSet
 from functools import reduce as reduce
-from ...utils.validation import check_is_fitted as check_is_fitted
-from ...preprocessing import LabelEncoder as LabelEncoder
-from ...utils import check_matplotlib_support as check_matplotlib_support
-from ..._typing import MatrixLike, Int, Float
-from ...base import is_regressor as is_regressor
+from typing import Any, Literal
+
+from matplotlib.axes import Axes
+from matplotlib.collections import QuadMesh
+from matplotlib.contour import QuadContourSet
 from matplotlib.figure import Figure
 
-import numpy as np
+from ..._typing import Float, Int, MatrixLike
+from ...base import is_regressor as is_regressor
+from ...preprocessing import LabelEncoder as LabelEncoder
+from ...utils import check_matplotlib_support as check_matplotlib_support
+from ...utils.validation import check_is_fitted as check_is_fitted
 
 class DecisionBoundaryDisplay:
     figure_: Figure = ...

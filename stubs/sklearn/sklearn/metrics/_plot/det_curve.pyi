@@ -1,12 +1,13 @@
 from typing import Literal
-from ...base import BaseEstimator
-from matplotlib.axes import Axes
+
 from matplotlib.artist import Artist
-from ...utils import check_matplotlib_support as check_matplotlib_support
-from ..._typing import ArrayLike, MatrixLike
-from .. import det_curve as det_curve
+from matplotlib.axes import Axes
 from matplotlib.figure import Figure
-import scipy as sp
+
+from ..._typing import ArrayLike, MatrixLike
+from ...base import BaseEstimator
+from ...utils import check_matplotlib_support as check_matplotlib_support
+from .. import det_curve as det_curve
 
 class DetCurveDisplay:
     figure_: Figure = ...

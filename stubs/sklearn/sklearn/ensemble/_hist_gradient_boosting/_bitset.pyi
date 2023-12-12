@@ -1,4 +1,5 @@
 import numpy as np
+
 from .common import X_BINNED_DTYPE_C
 
 def set_bitset_memoryview(bitset: np.ndarray, val: X_BINNED_DTYPE_C) -> None: ...

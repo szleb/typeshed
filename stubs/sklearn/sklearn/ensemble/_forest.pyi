@@ -1,14 +1,17 @@
+from abc import ABCMeta, abstractmethod
+from numbers import Integral as Integral, Real as Real
 from typing import Any, ClassVar, Literal, Mapping, Sequence, TypeVar
 from warnings import catch_warnings as catch_warnings, simplefilter as simplefilter, warn as warn
+
+from numpy import ndarray
 from numpy.random import RandomState
-from ..tree._tree import DTYPE as DTYPE, DOUBLE as DOUBLE
+from scipy.sparse import issparse as issparse, spmatrix
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import ClassifierMixin, MultiOutputMixin, RegressorMixin, TransformerMixin, is_classifier as is_classifier
 from ..exceptions import DataConversionWarning as DataConversionWarning
 from ..metrics import accuracy_score as accuracy_score, r2_score as r2_score
 from ..preprocessing import OneHotEncoder
-from scipy.sparse import issparse as issparse, hstack as sparse_hstack, spmatrix
-from ..utils.parallel import delayed as delayed, Parallel as Parallel
-from ..utils.validation import check_is_fitted as check_is_fitted
-from abc import ABCMeta, abstractmethod
 from ..tree import (
     BaseDecisionTree as BaseDecisionTree,
     DecisionTreeClassifier,
@@ -16,20 +19,16 @@ from ..tree import (
     ExtraTreeClassifier as ExtraTreeClassifier,
     ExtraTreeRegressor,
 )
-from numpy import ndarray
-from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
-from numbers import Integral as Integral, Real as Real
-from ..base import is_classifier as is_classifier, ClassifierMixin, MultiOutputMixin, RegressorMixin, TransformerMixin
+from ..tree._tree import DOUBLE as DOUBLE, DTYPE as DTYPE
 from ..utils import check_random_state as check_random_state, compute_sample_weight as compute_sample_weight
-from ._base import BaseEnsemble
+from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
 from ..utils.multiclass import check_classification_targets as check_classification_targets, type_of_target as type_of_target
-from .._typing import MatrixLike, ArrayLike, Int, Float
+from ..utils.parallel import Parallel as Parallel, delayed as delayed
+from ..utils.validation import check_is_fitted as check_is_fitted
+from ._base import BaseEnsemble
 
-BaseForest_Self = TypeVar("BaseForest_Self", bound="BaseForest")
-RandomTreesEmbedding_Self = TypeVar("RandomTreesEmbedding_Self", bound="RandomTreesEmbedding")
-
-import threading
-import numpy as np
+BaseForest_Self = TypeVar("BaseForest_Self", bound=BaseForest)
+RandomTreesEmbedding_Self = TypeVar("RandomTreesEmbedding_Self", bound=RandomTreesEmbedding)
 
 __all__ = [
     "RandomForestClassifier",
@@ -267,7 +266,7 @@ class RandomTreesEmbedding(TransformerMixin, BaseForest):
     estimator_: ExtraTreeRegressor = ...
 
     _parameter_constraints: ClassVar[dict] = ...
-    for param in ("max_features", "ccp_alpha", "splitter"):
+    for _param in ("max_features", "ccp_alpha", "splitter"):
         pass
 
     criterion: ClassVar[str] = ...

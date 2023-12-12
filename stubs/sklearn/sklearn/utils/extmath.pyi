@@ -1,16 +1,3 @@
-from typing import Literal, Sequence
-from numpy.random import RandomState
-from scipy.sparse._csr import csr_matrix
-from scipy import linalg as linalg, sparse as sparse
-from numpy import ndarray
-from scipy.sparse._dia import dia_matrix
-from .sparsefuncs_fast import csr_row_norms as csr_row_norms
-from ._array_api import get_namespace as get_namespace
-from scipy.sparse import spmatrix
-from .validation import check_array as check_array
-from .._typing import ArrayLike, Float, MatrixLike, Int
-from . import check_random_state as check_random_state
-
 # Authors: Gael Varoquaux
 #          Alexandre Gramfort
 #          Alexandre T. Passos
@@ -20,10 +7,20 @@ from . import check_random_state as check_random_state
 #          Kyle Kastner
 #          Giorgio Patrini
 # License: BSD 3 clause
+from typing import Literal, Sequence
 
-import warnings
+from numpy import ndarray
+from numpy.random import RandomState
+from scipy import linalg as linalg, sparse as sparse
+from scipy.sparse import spmatrix
+from scipy.sparse._csr import csr_matrix
+from scipy.sparse._dia import dia_matrix
 
-import numpy as np
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from . import check_random_state as check_random_state
+from ._array_api import get_namespace as get_namespace
+from .sparsefuncs_fast import csr_row_norms as csr_row_norms
+from .validation import check_array as check_array
 
 def squared_norm(x: ArrayLike) -> Float: ...
 def row_norms(X: csr_matrix | ArrayLike, squared: bool = False) -> ndarray: ...

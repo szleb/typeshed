@@ -1,32 +1,29 @@
+from abc import ABCMeta, abstractmethod
+from functools import partial as partial
+from numbers import Integral as Integral, Real as Real
 from typing import Any, ClassVar, TypeVar
 from warnings import warn as warn
-from numpy.random import RandomState
-from ..base import BaseEstimator
-from ..utils.random import sample_without_replacement as sample_without_replacement
-from ..metrics import r2_score as r2_score, accuracy_score as accuracy_score
-from ..utils.parallel import delayed as delayed, Parallel as Parallel
-from ..utils.validation import has_fit_parameter as has_fit_parameter, check_is_fitted as check_is_fitted
-from abc import ABCMeta, abstractmethod
-from ..tree import DecisionTreeClassifier as DecisionTreeClassifier, DecisionTreeRegressor as DecisionTreeRegressor
-from numpy import ndarray
-from ..utils._param_validation import Interval as Interval, HasMethods as HasMethods, StrOptions as StrOptions
-from numbers import Integral as Integral, Real as Real
-from functools import partial as partial
-from ..base import ClassifierMixin, RegressorMixin
-from ..utils import check_random_state as check_random_state, column_or_1d as column_or_1d, indices_to_mask as indices_to_mask
-from ._base import BaseEnsemble
-from ..utils.multiclass import check_classification_targets as check_classification_targets
-from ..utils.metaestimators import available_if as available_if
-from .._typing import MatrixLike, ArrayLike, Int
 
-BaseBagging_Self = TypeVar("BaseBagging_Self", bound="BaseBagging")
+from numpy import ndarray
+from numpy.random import RandomState
+
+from .._typing import ArrayLike, Int, MatrixLike
+from ..base import BaseEstimator, ClassifierMixin, RegressorMixin
+from ..metrics import accuracy_score as accuracy_score, r2_score as r2_score
+from ..tree import DecisionTreeClassifier as DecisionTreeClassifier, DecisionTreeRegressor as DecisionTreeRegressor
+from ..utils import check_random_state as check_random_state, column_or_1d as column_or_1d, indices_to_mask as indices_to_mask
+from ..utils._param_validation import HasMethods as HasMethods, Interval as Interval, StrOptions as StrOptions
+from ..utils.metaestimators import available_if as available_if
+from ..utils.multiclass import check_classification_targets as check_classification_targets
+from ..utils.parallel import Parallel as Parallel, delayed as delayed
+from ..utils.random import sample_without_replacement as sample_without_replacement
+from ..utils.validation import check_is_fitted as check_is_fitted, has_fit_parameter as has_fit_parameter
+from ._base import BaseEnsemble
+
+BaseBagging_Self = TypeVar("BaseBagging_Self", bound=BaseBagging)
 
 # Author: Gilles Louppe <g.louppe@gmail.com>
 # License: BSD 3 clause
-
-import itertools
-import numbers
-import numpy as np
 
 __all__ = ["BaggingClassifier", "BaggingRegressor"]
 
@@ -55,7 +52,7 @@ class BaseBagging(BaseEnsemble, metaclass=ABCMeta):
     def fit(
         self: BaseBagging_Self, X: MatrixLike | ArrayLike, y: ArrayLike, sample_weight: None | ArrayLike = None
     ) -> BaggingRegressor | BaseBagging_Self: ...
-    def estimators_samples_(self): ...
+    def estimators_samples_(self) -> None: ...
 
 class BaggingClassifier(ClassifierMixin, BaseBagging):
     oob_decision_function_: ndarray = ...

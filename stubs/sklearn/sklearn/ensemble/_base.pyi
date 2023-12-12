@@ -1,28 +1,25 @@
-from typing import Any, ClassVar, Sequence, List, TypeVar
 from abc import ABCMeta, abstractmethod
+from typing import Any, ClassVar, Sequence, TypeVar
+
+from joblib import effective_n_jobs as effective_n_jobs
+
+from .._typing import Int
+from ..base import BaseEstimator, MetaEstimatorMixin, clone as clone, is_classifier as is_classifier, is_regressor as is_regressor
 from ..tree import (
-    DecisionTreeRegressor as DecisionTreeRegressor,
     BaseDecisionTree as BaseDecisionTree,
     DecisionTreeClassifier as DecisionTreeClassifier,
+    DecisionTreeRegressor as DecisionTreeRegressor,
 )
-from ..base import BaseEstimator
-from joblib import effective_n_jobs as effective_n_jobs
+from ..utils import Bunch, check_random_state as check_random_state, deprecated
 from ..utils.metaestimators import _BaseComposition
-from ..base import clone as clone, is_classifier as is_classifier, is_regressor as is_regressor, MetaEstimatorMixin
-from .._typing import Int
-from ..utils import Bunch, deprecated, check_random_state as check_random_state
 
-_BaseHeterogeneousEnsemble_Self = TypeVar("_BaseHeterogeneousEnsemble_Self", bound="_BaseHeterogeneousEnsemble")
-
-import warnings
-
-import numpy as np
+_BaseHeterogeneousEnsemble_Self = TypeVar("_BaseHeterogeneousEnsemble_Self", bound=_BaseHeterogeneousEnsemble)
 
 class BaseEnsemble(MetaEstimatorMixin, BaseEstimator, metaclass=ABCMeta):
     estimators_: list[BaseEstimator] = ...
 
     # overwrite _required_parameters from MetaEstimatorMixin
-    _required_parameters: ClassVar[List[str]] = ...
+    _required_parameters: ClassVar[list[str]] = ...
 
     @abstractmethod
     def __init__(
@@ -36,9 +33,7 @@ class BaseEnsemble(MetaEstimatorMixin, BaseEstimator, metaclass=ABCMeta):
 
     # TODO(1.4): remove
     # mypy error: Decorated property not supported
-    @deprecated(  # type: ignore
-        "Attribute `base_estimator_` was deprecated in version 1.2 and will be removed " "in 1.4. Use `estimator_` instead."
-    )
+    @deprecated(...)  # type: ignore
     @property
     def base_estimator_(self) -> BaseEstimator: ...
 

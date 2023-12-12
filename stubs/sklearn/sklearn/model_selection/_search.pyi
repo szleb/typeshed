@@ -1,37 +1,30 @@
-from typing import Any, Callable, ClassVar, Generic, Iterable, Iterator, Mapping, Sequence, TypeVar
-from numpy.random import RandomState
-from itertools import product as product
-from ..base import BaseEstimator
-from ..exceptions import NotFittedError as NotFittedError
-from ._split import BaseShuffleSplit
-from ..utils.random import sample_without_replacement as sample_without_replacement
-from ..metrics import check_scoring as check_scoring
-from ._split import check_cv as check_cv
-from scipy.sparse import spmatrix
-from ..utils.parallel import delayed as delayed, Parallel as Parallel
-from collections.abc import Mapping, Sequence, Iterable
-from ..utils.validation import indexable as indexable, check_is_fitted as check_is_fitted
-from scipy.stats import rankdata as rankdata
-from collections import defaultdict as defaultdict
 from abc import ABCMeta, abstractmethod
-from numpy import ndarray
+from collections import defaultdict as defaultdict
+from collections.abc import Iterable, Mapping, Sequence
 from functools import partial as partial, reduce as reduce
-from ..base import is_classifier as is_classifier, clone as clone, MetaEstimatorMixin
+from itertools import product as product
+from typing import Any, Callable, ClassVar, Generic, Iterable, Iterator, Mapping, Sequence, TypeVar
+
+from numpy import ndarray
+from numpy.ma import MaskedArray as MaskedArray
+from numpy.random import RandomState
+from scipy.sparse import spmatrix
+from scipy.stats import rankdata as rankdata
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, MetaEstimatorMixin, clone as clone, is_classifier as is_classifier
+from ..exceptions import NotFittedError as NotFittedError
+from ..metrics import check_scoring as check_scoring
 from ..utils import check_random_state as check_random_state
 from ..utils.metaestimators import available_if as available_if
-from numpy.ma import MaskedArray as MaskedArray
-from .._typing import Int, MatrixLike, ArrayLike, Float
+from ..utils.parallel import Parallel as Parallel, delayed as delayed
+from ..utils.random import sample_without_replacement as sample_without_replacement
+from ..utils.validation import check_is_fitted as check_is_fitted, indexable as indexable
 from . import BaseCrossValidator
+from ._split import BaseShuffleSplit, check_cv as check_cv
 
-BaseSearchCV_Self = TypeVar("BaseSearchCV_Self", bound="BaseSearchCV")
+BaseSearchCV_Self = TypeVar("BaseSearchCV_Self", bound=BaseSearchCV)
 BaseEstimatorT = TypeVar("BaseEstimatorT", bound=BaseEstimator, default=BaseEstimator, covariant=True)
-
-import numbers
-import operator
-import time
-import warnings
-
-import numpy as np
 
 __all__ = ["GridSearchCV", "ParameterGrid", "ParameterSampler", "RandomizedSearchCV"]
 
@@ -69,8 +62,8 @@ class BaseSearchCV(MetaEstimatorMixin, BaseEstimator, metaclass=ABCMeta):
     def decision_function(self, X: ArrayLike) -> ndarray: ...
     def transform(self, X: ArrayLike) -> ndarray | spmatrix: ...
     def inverse_transform(self, Xt: ArrayLike) -> ndarray | spmatrix: ...
-    def n_features_in_(self): ...
-    def classes_(self): ...
+    def n_features_in_(self) -> None: ...
+    def classes_(self) -> None: ...
     def fit(
         self: BaseSearchCV_Self,
         X: list[str] | MatrixLike,

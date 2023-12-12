@@ -1,30 +1,27 @@
+from numbers import Integral as Integral, Real as Real
 from typing import ClassVar, Literal, TypeVar
+
+from numpy import ndarray
 from numpy.random import RandomState
-from .base import BaseEstimator, ClassifierMixin, RegressorMixin, MultiOutputMixin
+
+from ._typing import ArrayLike, Float, Int, MatrixLike
+from .base import BaseEstimator, ClassifierMixin, MultiOutputMixin, RegressorMixin
+from .utils import check_random_state as check_random_state
+from .utils._param_validation import Interval as Interval, StrOptions as StrOptions
+from .utils.multiclass import class_distribution as class_distribution
 from .utils.validation import (
     check_array as check_array,
     check_consistent_length as check_consistent_length,
     check_is_fitted as check_is_fitted,
 )
-from .utils.multiclass import class_distribution as class_distribution
-from numpy import ndarray
-from numbers import Integral as Integral, Real as Real
-from .utils import check_random_state as check_random_state
-from .utils._param_validation import StrOptions as StrOptions, Interval as Interval
-from ._typing import Int, ArrayLike, MatrixLike, Float
 
-DummyRegressor_Self = TypeVar("DummyRegressor_Self", bound="DummyRegressor")
-DummyClassifier_Self = TypeVar("DummyClassifier_Self", bound="DummyClassifier")
+DummyRegressor_Self = TypeVar("DummyRegressor_Self", bound=DummyRegressor)
+DummyClassifier_Self = TypeVar("DummyClassifier_Self", bound=DummyClassifier)
 
 # Author: Mathieu Blondel <mathieu@mblondel.org>
 #         Arnaud Joly <a.joly@ulg.ac.be>
 #         Maheshakya Wijewardena <maheshakya.10@cse.mrt.ac.lk>
 # License: BSD 3 clause
-
-import warnings
-
-import numpy as np
-import scipy.sparse as sp
 
 class DummyClassifier(MultiOutputMixin, ClassifierMixin, BaseEstimator):
     sparse_output_: bool = ...

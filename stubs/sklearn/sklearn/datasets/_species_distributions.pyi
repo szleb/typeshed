@@ -1,15 +1,12 @@
+from io import BytesIO as BytesIO
 from os import makedirs as makedirs, remove as remove
 from os.path import exists as exists
-from ._base import RemoteFileMetadata as RemoteFileMetadata
+
 from numpy import ndarray
-from io import BytesIO as BytesIO
+
 from ..utils._bunch import Bunch
 from . import get_data_home as get_data_home
-
-import logging
-import numpy as np
-
-import joblib
+from ._base import RemoteFileMetadata as RemoteFileMetadata
 
 # The original data can be found at:
 # https://biodiversityinformatics.amnh.org/open_source/maxent/samples.zip

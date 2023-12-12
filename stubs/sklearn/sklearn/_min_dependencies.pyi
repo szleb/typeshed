@@ -1,6 +1,4 @@
 from collections import defaultdict as defaultdict
-import platform
-import argparse
 
 SCIPY_MIN_VERSION: str = ...
 JOBLIB_MIN_VERSION: str = ...

@@ -1,9 +1,6 @@
-from numpy import ndarray, longlong
-
 # Authors: William Mill (bill@billmill.org)
 # License: BSD 3 clause
-
-import numpy as np
+from numpy import longlong, ndarray
 
 class DrawTree:
     def __init__(self, tree: Tree, parent: DrawTree | None = None, depth: int = 0, number: int = 1) -> None: ...
@@ -14,8 +11,6 @@ class DrawTree:
 
     lmost_sibling = ...
 
-    def __str__(self) -> str: ...
-    def __repr__(self) -> str: ...
     def max_extents(self) -> ndarray: ...
 
 def buchheim(tree: Tree) -> DrawTree: ...

@@ -1,15 +1,3 @@
-from typing import Literal
-from scipy.special import xlogy as xlogy
-from ..exceptions import UndefinedMetricWarning as UndefinedMetricWarning
-from numpy import ndarray
-from .._typing import MatrixLike, ArrayLike, Float
-from ..utils.validation import (
-    check_array as check_array,
-    check_consistent_length as check_consistent_length,
-    check_scalar as check_scalar,
-    column_or_1d as column_or_1d,
-)
-
 # Authors: Alexandre Gramfort <alexandre.gramfort@inria.fr>
 #          Mathieu Blondel <mathieu@mblondel.org>
 #          Olivier Grisel <olivier.grisel@ensta.org>
@@ -28,11 +16,19 @@ from ..utils.validation import (
 #          Sylvain Marie <sylvain.marie@se.com>
 #          Ohad Michel <ohadmich@gmail.com>
 # License: BSD 3 clause
+from typing import Literal
 
-import numbers
-import warnings
+from numpy import ndarray
+from scipy.special import xlogy as xlogy
 
-import numpy as np
+from .._typing import ArrayLike, Float, MatrixLike
+from ..exceptions import UndefinedMetricWarning as UndefinedMetricWarning
+from ..utils.validation import (
+    check_array as check_array,
+    check_consistent_length as check_consistent_length,
+    check_scalar as check_scalar,
+    column_or_1d as column_or_1d,
+)
 
 __ALL__: list = ...
 

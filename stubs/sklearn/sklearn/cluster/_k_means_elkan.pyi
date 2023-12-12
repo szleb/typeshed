@@ -22,6 +22,7 @@ def init_bounds_dense(
     cluster, if and only if dist > center_half_distances[c1][c2]. This prevents
     computation of unnecessary distances for each sample to the clusters that
     it is unlikely to be assigned to.
+
     Parameters
     ----------
     X : ndarray of shape (n_samples, n_features), dtype=floating
@@ -64,6 +65,7 @@ def init_bounds_sparse(
     cluster, if and only if dist > center_half_distances[c1][c2]. This prevents
     computation of unnecessary distances for each sample to the clusters that
     it is unlikely to be assigned to.
+
     Parameters
     ----------
     X : sparse matrix of shape (n_samples, n_features), dtype=floating
@@ -103,6 +105,7 @@ def elkan_iter_chunked_dense(
     """Single iteration of K-means Elkan algorithm with dense input.
     Update labels and centers (inplace), for one iteration, distributed
     over data chunks.
+
     Parameters
     ----------
     X : ndarray of shape (n_samples, n_features), dtype=floating
@@ -161,6 +164,7 @@ def elkan_iter_chunked_sparse(
     """Single iteration of K-means Elkan algorithm with sparse input.
     Update labels and centers (inplace), for one iteration, distributed
     over data chunks.
+
     Parameters
     ----------
     X : sparse matrix of shape (n_samples, n_features)

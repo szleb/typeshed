@@ -1,32 +1,31 @@
-from typing import Callable, ClassVar, Literal, TypeVar
-from ..utils.validation import check_is_fitted as check_is_fitted
-from scipy import special as special, stats
-from ._base import SelectorMixin
-from numpy import ndarray
-from ..utils.extmath import safe_sparse_dot as safe_sparse_dot, row_norms as row_norms
-from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
 from numbers import Integral as Integral, Real as Real
+from typing import Callable, ClassVar, Literal, TypeVar
+
 from joblib.memory import MemorizedFunc
-from ..base import BaseEstimator
+from numpy import ndarray
+from scipy import special as special
 from scipy.sparse import issparse as issparse
-from .._typing import MatrixLike, ArrayLike, Int, Float
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator
+from ..preprocessing import LabelBinarizer as LabelBinarizer
 from ..utils import (
     as_float_array as as_float_array,
     check_array as check_array,
     check_X_y as check_X_y,
-    safe_sqr as safe_sqr,
     safe_mask as safe_mask,
+    safe_sqr as safe_sqr,
 )
-from ..preprocessing import LabelBinarizer as LabelBinarizer
+from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
+from ..utils.extmath import row_norms as row_norms, safe_sparse_dot as safe_sparse_dot
+from ..utils.validation import check_is_fitted as check_is_fitted
+from ._base import SelectorMixin
 
-_BaseFilter_Self = TypeVar("_BaseFilter_Self", bound="_BaseFilter")
+_BaseFilter_Self = TypeVar("_BaseFilter_Self", bound=_BaseFilter)
 
 # Authors: V. Michel, B. Thirion, G. Varoquaux, A. Gramfort, E. Duchesnay.
 #          L. Buitinck, A. Joly
 # License: BSD 3 clause
-
-import numpy as np
-import warnings
 
 ######################################################################
 # Scoring functions

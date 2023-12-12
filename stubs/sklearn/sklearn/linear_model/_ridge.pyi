@@ -1,49 +1,44 @@
-from typing import Callable, ClassVar, Iterable, Literal, Mapping, TypeVar
-from numpy.random import RandomState
-from scipy import linalg, sparse, optimize as optimize
-from ..exceptions import ConvergenceWarning as ConvergenceWarning
-from scipy.sparse._coo import coo_matrix
-from ..utils.extmath import safe_sparse_dot as safe_sparse_dot, row_norms as row_norms
-from ..model_selection._split import BaseShuffleSplit
-from pandas.core.frame import DataFrame
-from scipy.sparse._csr import csr_matrix
-from ..metrics import check_scoring as check_scoring, get_scorer_names as get_scorer_names
-from ..preprocessing import LabelBinarizer as LabelBinarizer
-from ..utils.sparsefuncs import mean_variance_axis as mean_variance_axis
-from scipy.sparse import linalg as sp_linalg
-from ..utils.validation import check_is_fitted as check_is_fitted
-from scipy.sparse.linalg import LinearOperator
 from abc import ABCMeta, abstractmethod
-from numpy import ndarray
-from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
-from numbers import Integral as Integral, Real as Real
-from ._sag import sag_solver as sag_solver
 from functools import partial as partial
+from numbers import Integral as Integral, Real as Real
+from typing import Callable, ClassVar, Iterable, Literal, Mapping, TypeVar
+
+from numpy import ndarray
+from numpy.random import RandomState
+from pandas.core.frame import DataFrame
+from pandas.core.series import Series
+from scipy import optimize as optimize
+from scipy.sparse._coo import coo_matrix
+from scipy.sparse._csr import csr_matrix
+from scipy.sparse.linalg import LinearOperator
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
 from ..base import MultiOutputMixin, RegressorMixin, is_classifier as is_classifier
-from ..model_selection import GridSearchCV as GridSearchCV
+from ..exceptions import ConvergenceWarning as ConvergenceWarning
+from ..metrics import check_scoring as check_scoring, get_scorer_names as get_scorer_names
+from ..model_selection import BaseCrossValidator, GridSearchCV as GridSearchCV
+from ..model_selection._split import BaseShuffleSplit
+from ..preprocessing import LabelBinarizer as LabelBinarizer
 from ..utils import (
     check_array as check_array,
     check_consistent_length as check_consistent_length,
     check_scalar as check_scalar,
-    compute_sample_weight as compute_sample_weight,
     column_or_1d as column_or_1d,
+    compute_sample_weight as compute_sample_weight,
 )
+from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
+from ..utils.extmath import row_norms as row_norms, safe_sparse_dot as safe_sparse_dot
+from ..utils.sparsefuncs import mean_variance_axis as mean_variance_axis
+from ..utils.validation import check_is_fitted as check_is_fitted
 from ._base import LinearClassifierMixin, LinearModel
-from pandas.core.series import Series
-from .._typing import MatrixLike, ArrayLike, Int, Float
-from ..model_selection import BaseCrossValidator
+from ._sag import sag_solver as sag_solver
 
-_BaseRidgeCV_Self = TypeVar("_BaseRidgeCV_Self", bound="_BaseRidgeCV")
-_RidgeGCV_Self = TypeVar("_RidgeGCV_Self", bound="_RidgeGCV")
-RidgeClassifier_Self = TypeVar("RidgeClassifier_Self", bound="RidgeClassifier")
-RidgeClassifierCV_Self = TypeVar("RidgeClassifierCV_Self", bound="RidgeClassifierCV")
-RidgeCV_Self = TypeVar("RidgeCV_Self", bound="RidgeCV")
-Ridge_Self = TypeVar("Ridge_Self", bound="Ridge")
-
-import warnings
-
-import numpy as np
-import numbers
+_BaseRidgeCV_Self = TypeVar("_BaseRidgeCV_Self", bound=_BaseRidgeCV)
+_RidgeGCV_Self = TypeVar("_RidgeGCV_Self", bound=_RidgeGCV)
+RidgeClassifier_Self = TypeVar("RidgeClassifier_Self", bound=RidgeClassifier)
+RidgeClassifierCV_Self = TypeVar("RidgeClassifierCV_Self", bound=RidgeClassifierCV)
+RidgeCV_Self = TypeVar("RidgeCV_Self", bound=RidgeCV)
+Ridge_Self = TypeVar("Ridge_Self", bound=Ridge)
 
 def ridge_regression(
     X: MatrixLike | LinearOperator,
@@ -78,7 +73,7 @@ class _BaseRidge(LinearModel, metaclass=ABCMeta):
         positive: bool = False,
         random_state=None,
     ) -> None: ...
-    def fit(self, X: csr_matrix | ndarray, y: ndarray, sample_weight: Series | None | ndarray = None): ...
+    def fit(self, X: csr_matrix | ndarray, y: ndarray, sample_weight: Series | None | ndarray = None) -> None: ...
 
 class Ridge(MultiOutputMixin, RegressorMixin, _BaseRidge):
     feature_names_in_: ndarray = ...
@@ -141,8 +136,8 @@ class _XT_CenterStackOp(LinearOperator):
     def __init__(self, X, X_mean, sqrt_sw) -> None: ...
 
 class _IdentityRegressor:
-    def decision_function(self, y_predict): ...
-    def predict(self, y_predict): ...
+    def decision_function(self, y_predict) -> None: ...
+    def predict(self, y_predict) -> None: ...
 
 class _IdentityClassifier(LinearClassifierMixin):
     def __init__(self, classes) -> None: ...
@@ -210,7 +205,7 @@ class RidgeClassifierCV(_RidgeClassifierMixin, _BaseRidgeCV):
     cv_values_: ndarray = ...
 
     _parameter_constraints: ClassVar[dict] = ...
-    for param in ("gcv_mode", "alpha_per_target"):
+    for _param in ("gcv_mode", "alpha_per_target"):
         pass
 
     def __init__(

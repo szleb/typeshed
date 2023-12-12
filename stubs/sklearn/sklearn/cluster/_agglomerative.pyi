@@ -1,28 +1,26 @@
-from typing import Any, Callable, ClassVar, Literal, Set, TypeVar
-from scipy import sparse as sparse
-from joblib import Memory
-from ..metrics import DistanceMetric as DistanceMetric
-from scipy.cluster import hierarchy as hierarchy
-from ..metrics._dist_metrics import METRIC_MAPPING as METRIC_MAPPING
-from scipy.sparse.csgraph import connected_components as connected_components
-from ._feature_agglomeration import AgglomerationTransform
 from heapq import heapify as heapify, heappop as heappop, heappush as heappush, heappushpop as heappushpop
-from ..metrics.pairwise import paired_distances as paired_distances
-from ..utils.validation import check_memory as check_memory
-from numpy import ndarray
-from ..utils._param_validation import Hidden as Hidden, Interval as Interval, StrOptions as StrOptions, HasMethods as HasMethods
 from numbers import Integral as Integral, Real as Real
-from ..utils._fast_dict import IntFloatDict as IntFloatDict
-from ..base import BaseEstimator, ClusterMixin, ClassNamePrefixFeaturesOutMixin
+from typing import Any, Callable, ClassVar, Literal, TypeVar
+
+from joblib import Memory
+from numpy import ndarray
+from scipy import sparse as sparse
+from scipy.cluster import hierarchy as hierarchy
+from scipy.sparse.csgraph import connected_components as connected_components
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, ClassNamePrefixFeaturesOutMixin, ClusterMixin
+from ..metrics import DistanceMetric as DistanceMetric
+from ..metrics._dist_metrics import METRIC_MAPPING as METRIC_MAPPING
+from ..metrics.pairwise import paired_distances as paired_distances
 from ..utils import check_array as check_array
-from .._typing import MatrixLike, Int, ArrayLike, Float
+from ..utils._fast_dict import IntFloatDict as IntFloatDict
+from ..utils._param_validation import HasMethods as HasMethods, Hidden as Hidden, Interval as Interval, StrOptions as StrOptions
+from ..utils.validation import check_memory as check_memory
+from ._feature_agglomeration import AgglomerationTransform
 
-FeatureAgglomeration_Self = TypeVar("FeatureAgglomeration_Self", bound="FeatureAgglomeration")
-AgglomerativeClustering_Self = TypeVar("AgglomerativeClustering_Self", bound="AgglomerativeClustering")
-
-import warnings
-
-import numpy as np
+FeatureAgglomeration_Self = TypeVar("FeatureAgglomeration_Self", bound=FeatureAgglomeration)
+AgglomerativeClustering_Self = TypeVar("AgglomerativeClustering_Self", bound=AgglomerativeClustering)
 
 ###############################################################################
 # Hierarchical tree building functions
@@ -100,4 +98,4 @@ class FeatureAgglomeration(ClassNamePrefixFeaturesOutMixin, AgglomerativeCluster
         compute_distances: bool = False,
     ) -> None: ...
     def fit(self: FeatureAgglomeration_Self, X: MatrixLike, y: Any = None) -> FeatureAgglomeration_Self: ...
-    def fit_predict(self): ...
+    def fit_predict(self) -> None: ...

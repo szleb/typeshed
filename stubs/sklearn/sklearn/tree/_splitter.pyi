@@ -1,4 +1,5 @@
 import numpy as np
+
 from ._criterion import Criterion
 
 class SplitRecord:
@@ -14,7 +15,8 @@ class SplitRecord:
 
 class Splitter:
     """The splitter searches in the input space for a feature and a threshold
-    to split the samples samples[start:end]."""
+    to split the samples samples[start:end].
+    """
 
     criterion: Criterion  # Impurity criterion
     max_features: int  # Number of features to test

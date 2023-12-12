@@ -1,14 +1,14 @@
 from typing import Callable, Iterable, Literal
-from . import BaseCrossValidator
-from numpy.random import RandomState
-from matplotlib.figure import Figure
-from ._split import BaseShuffleSplit
-from matplotlib.axes import Axes
+
 from matplotlib.artist import Artist
-from .._typing import ArrayLike, MatrixLike, Int, Float
+from matplotlib.axes import Axes
+from matplotlib.figure import Figure
+from numpy.random import RandomState
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
 from ..utils import check_matplotlib_support as check_matplotlib_support
-from . import learning_curve as learning_curve
-import numpy as np
+from . import BaseCrossValidator, learning_curve as learning_curve
+from ._split import BaseShuffleSplit
 
 class LearningCurveDisplay:
     fill_between_: Artist | None = ...

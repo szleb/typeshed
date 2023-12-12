@@ -1,25 +1,24 @@
+from numbers import Integral as Integral, Real as Real
 from typing import ClassVar, Literal, TypeVar
+
+from numpy import ndarray
 from numpy.random import RandomState
 from scipy.special import gammainc as gammainc
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator
 from ..neighbors._base import VALID_METRICS as VALID_METRICS
-from ._binary_tree import BinaryTree
-from ._kd_tree import KDTree as KDTree
-from numpy import ndarray
+from ..utils import check_random_state as check_random_state
 from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
 from ..utils.extmath import row_norms as row_norms
-from numbers import Integral as Integral, Real as Real
-from ..base import BaseEstimator
-from ._ball_tree import BallTree as BallTree, DTYPE as DTYPE
-from .._typing import Float, Int, MatrixLike, ArrayLike
-from ..utils import check_random_state as check_random_state
 from ..utils.validation import check_is_fitted as check_is_fitted
+from ._ball_tree import DTYPE as DTYPE, BallTree as BallTree
+from ._binary_tree import BinaryTree
+from ._kd_tree import KDTree as KDTree
 
-KernelDensity_Self = TypeVar("KernelDensity_Self", bound="KernelDensity")
+KernelDensity_Self = TypeVar("KernelDensity_Self", bound=KernelDensity)
 
 # Author: Jake Vanderplas <jakevdp@cs.washington.edu>
-import itertools
-
-import numpy as np
 
 VALID_KERNELS: list = ...
 

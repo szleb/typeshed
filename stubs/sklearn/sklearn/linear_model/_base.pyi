@@ -1,30 +1,26 @@
-from typing import ClassVar, TypeVar
-from scipy import linalg as linalg, optimize as optimize, sparse
-from ..utils.extmath import safe_sparse_dot as safe_sparse_dot
-from numpy.random.mtrand import RandomState
-from ..utils._array_api import get_namespace as get_namespace
-from ..utils.sparsefuncs import mean_variance_axis as mean_variance_axis, inplace_column_scale as inplace_column_scale
-from scipy.special import expit as expit
-from ..utils.parallel import delayed as delayed, Parallel as Parallel
-from ..utils._seq_dataset import ArrayDataset32 as ArrayDataset32, CSRDataset32 as CSRDataset32, ArrayDataset64, CSRDataset64
-from ..utils.validation import FLOAT_DTYPES as FLOAT_DTYPES, check_is_fitted as check_is_fitted
-from scipy.sparse.linalg import lsqr as lsqr
 from abc import ABCMeta, abstractmethod
-from numpy import ndarray
 from numbers import Integral as Integral
-from ..base import BaseEstimator, ClassifierMixin, RegressorMixin, MultiOutputMixin
+from typing import ClassVar, TypeVar
+
+from numpy import ndarray
+from numpy.random.mtrand import RandomState
+from scipy import linalg as linalg, optimize as optimize
+from scipy.sparse.linalg import lsqr as lsqr
+from scipy.special import expit as expit
+
+from .._typing import ArrayLike, Int, MatrixLike
+from ..base import BaseEstimator, ClassifierMixin, MultiOutputMixin, RegressorMixin
 from ..utils import check_array as check_array, check_random_state as check_random_state
+from ..utils._array_api import get_namespace as get_namespace
+from ..utils._seq_dataset import ArrayDataset32 as ArrayDataset32, ArrayDataset64, CSRDataset32 as CSRDataset32, CSRDataset64
+from ..utils.extmath import safe_sparse_dot as safe_sparse_dot
+from ..utils.parallel import Parallel as Parallel, delayed as delayed
+from ..utils.sparsefuncs import inplace_column_scale as inplace_column_scale, mean_variance_axis as mean_variance_axis
+from ..utils.validation import FLOAT_DTYPES as FLOAT_DTYPES, check_is_fitted as check_is_fitted
 from ._stochastic_gradient import SGDClassifier
-from .._typing import MatrixLike, ArrayLike, Int
 
-LinearRegression_Self = TypeVar("LinearRegression_Self", bound="LinearRegression")
-SparseCoefMixin_Self = TypeVar("SparseCoefMixin_Self", bound="SparseCoefMixin")
-
-import numbers
-import warnings
-
-import numpy as np
-import scipy.sparse as sp
+LinearRegression_Self = TypeVar("LinearRegression_Self", bound=LinearRegression)
+SparseCoefMixin_Self = TypeVar("SparseCoefMixin_Self", bound=SparseCoefMixin)
 
 # TODO: bayesian_ridge_regression and bayesian_regression_ard
 # should be squashed into its respective objects.
@@ -37,7 +33,7 @@ def make_dataset(
 
 class LinearModel(BaseEstimator, metaclass=ABCMeta):
     @abstractmethod
-    def fit(self, X, y): ...
+    def fit(self, X, y) -> None: ...
     def predict(self, X: MatrixLike) -> ndarray: ...
 
 # XXX Should this derive from LinearModel? It should be a mixin, not an ABC.

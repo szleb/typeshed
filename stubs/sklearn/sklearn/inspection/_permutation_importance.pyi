@@ -1,12 +1,12 @@
 from typing import Any, Callable, Mapping
+
 from numpy.random import RandomState
-from ..utils import check_random_state as check_random_state, check_array as check_array
-from ..utils._bunch import Bunch
-from ..utils.parallel import delayed as delayed, Parallel as Parallel
-from .._typing import MatrixLike, ArrayLike, Int
+
+from .._typing import ArrayLike, Int, MatrixLike
 from ..metrics import check_scoring as check_scoring
-import numbers
-import numpy as np
+from ..utils import check_array as check_array, check_random_state as check_random_state
+from ..utils._bunch import Bunch
+from ..utils.parallel import Parallel as Parallel, delayed as delayed
 
 def permutation_importance(
     estimator: Any,

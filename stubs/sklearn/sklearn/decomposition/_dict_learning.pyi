@@ -1,38 +1,33 @@
+from math import ceil as ceil
+from numbers import Integral as Integral, Real as Real
 from typing import Any, Callable, ClassVar, Literal, TypeVar
+
+from joblib import effective_n_jobs as effective_n_jobs
+from numpy import ndarray
 from numpy.random import RandomState
 from scipy import linalg as linalg
-from ..linear_model import Lasso as Lasso, orthogonal_mp_gram as orthogonal_mp_gram, LassoLars as LassoLars, Lars as Lars
-from numpy import ndarray
-from ..utils._param_validation import Hidden as Hidden, Interval as Interval, StrOptions as StrOptions
-from ..utils.extmath import randomized_svd as randomized_svd, row_norms as row_norms, svd_flip as svd_flip
-from joblib import effective_n_jobs as effective_n_jobs
-from numbers import Integral as Integral, Real as Real
-from math import ceil as ceil
-from ..base import BaseEstimator, TransformerMixin, ClassNamePrefixFeaturesOutMixin
-from ..utils.parallel import delayed as delayed, Parallel as Parallel
-from .._typing import ArrayLike, MatrixLike, Int, Float
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, ClassNamePrefixFeaturesOutMixin, TransformerMixin
+from ..linear_model import Lars as Lars, Lasso as Lasso, LassoLars as LassoLars, orthogonal_mp_gram as orthogonal_mp_gram
 from ..utils import (
     check_array as check_array,
     check_random_state as check_random_state,
-    gen_even_slices as gen_even_slices,
-    gen_batches as gen_batches,
     deprecated,
+    gen_batches as gen_batches,
+    gen_even_slices as gen_even_slices,
 )
+from ..utils._param_validation import Hidden as Hidden, Interval as Interval, StrOptions as StrOptions
+from ..utils.extmath import randomized_svd as randomized_svd, row_norms as row_norms, svd_flip as svd_flip
+from ..utils.parallel import Parallel as Parallel, delayed as delayed
 from ..utils.validation import check_is_fitted as check_is_fitted
 
-DictionaryLearning_Self = TypeVar("DictionaryLearning_Self", bound="DictionaryLearning")
-SparseCoder_Self = TypeVar("SparseCoder_Self", bound="SparseCoder")
-MiniBatchDictionaryLearning_Self = TypeVar("MiniBatchDictionaryLearning_Self", bound="MiniBatchDictionaryLearning")
+DictionaryLearning_Self = TypeVar("DictionaryLearning_Self", bound=DictionaryLearning)
+SparseCoder_Self = TypeVar("SparseCoder_Self", bound=SparseCoder)
+MiniBatchDictionaryLearning_Self = TypeVar("MiniBatchDictionaryLearning_Self", bound=MiniBatchDictionaryLearning)
 
 # Author: Vlad Niculae, Gael Varoquaux, Alexandre Gramfort
 # License: BSD 3 clause
-
-import time
-import sys
-import itertools
-import warnings
-
-import numpy as np
 
 # XXX : could be moved to the linear_model module
 def sparse_encode(
@@ -201,13 +196,13 @@ class MiniBatchDictionaryLearning(_BaseSparseCoding, BaseEstimator):
         tol: Float = 1e-3,
         max_no_improvement: Int = 10,
     ) -> None: ...
-    @deprecated("The attribute `iter_offset_` is deprecated in 1.1 and will be removed in 1.3.")  # type: ignore
+    @deprecated(...)  # type: ignore
     @property
     def iter_offset_(self) -> int: ...
-    @deprecated("The attribute `random_state_` is deprecated in 1.1 and will be removed in 1.3.")  # type: ignore
+    @deprecated(...)  # type: ignore
     @property
     def random_state_(self) -> RandomState: ...
-    @deprecated("The attribute `inner_stats_` is deprecated in 1.1 and will be removed in 1.3.")  # type: ignore
+    @deprecated(...)  # type: ignore
     @property
     def inner_stats_(self) -> tuple[ndarray, ndarray]: ...
     def fit(self: MiniBatchDictionaryLearning_Self, X: MatrixLike, y: Any = None) -> MiniBatchDictionaryLearning_Self: ...

@@ -1,35 +1,32 @@
-from typing import Callable, ClassVar, Iterator, Literal, TypeVar
-from numpy.random import RandomState
-from ..tree._tree import DTYPE as DTYPE, DOUBLE as DOUBLE
-from ..base import BaseEstimator
-from ..exceptions import NotFittedError as NotFittedError
-from ._gradient_boosting import predict_stages as predict_stages, predict_stage as predict_stage
-from scipy.sparse import csc_matrix as csc_matrix, csr_matrix as csr_matrix, issparse as issparse
-from ..utils.validation import check_is_fitted as check_is_fitted
 from abc import ABCMeta, abstractmethod
-from ..tree import DecisionTreeRegressor as DecisionTreeRegressor
-from numpy import ndarray
-from ..utils._param_validation import HasMethods as HasMethods, Interval as Interval, StrOptions as StrOptions
 from numbers import Integral as Integral, Real as Real
-from ..base import ClassifierMixin, RegressorMixin, is_classifier as is_classifier
-from ..model_selection import train_test_split as train_test_split
 from time import time as time
-from ..utils import deprecated, check_array as check_array, check_random_state as check_random_state, column_or_1d as column_or_1d
-from ._base import BaseEnsemble
+from typing import Callable, ClassVar, Iterator, Literal, TypeVar
+
+from numpy import ndarray
+from numpy.random import RandomState
+from scipy.sparse import csc_matrix as csc_matrix, csr_matrix as csr_matrix, issparse as issparse
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, ClassifierMixin, RegressorMixin, is_classifier as is_classifier
+from ..exceptions import NotFittedError as NotFittedError
+from ..model_selection import train_test_split as train_test_split
+from ..tree import DecisionTreeRegressor as DecisionTreeRegressor
+from ..tree._tree import DOUBLE as DOUBLE, DTYPE as DTYPE
+from ..utils import check_array as check_array, check_random_state as check_random_state, column_or_1d as column_or_1d, deprecated
+from ..utils._param_validation import HasMethods as HasMethods, Interval as Interval, StrOptions as StrOptions
 from ..utils.multiclass import check_classification_targets as check_classification_targets
+from ..utils.validation import check_is_fitted as check_is_fitted
+from ._base import BaseEnsemble
 from ._gb_losses import LossFunction
-from .._typing import Int, MatrixLike, ArrayLike, Float
+from ._gradient_boosting import predict_stage as predict_stage, predict_stages as predict_stages
 
-BaseGradientBoosting_Self = TypeVar("BaseGradientBoosting_Self", bound="BaseGradientBoosting")
-
-import warnings
-
-import numpy as np
+BaseGradientBoosting_Self = TypeVar("BaseGradientBoosting_Self", bound=BaseGradientBoosting)
 
 class VerboseReporter:
     def __init__(self, verbose: Int) -> None: ...
-    def init(self, est: BaseEstimator, begin_at_stage: Int = 0): ...
-    def update(self, j: Int, est: BaseEstimator): ...
+    def init(self, est: BaseEstimator, begin_at_stage: Int = 0) -> None: ...
+    def update(self, j: Int, est: BaseEstimator) -> None: ...
 
 class BaseGradientBoosting(BaseEnsemble, metaclass=ABCMeta):
     _parameter_constraints: ClassVar[dict] = ...
@@ -73,8 +70,8 @@ class BaseGradientBoosting(BaseEnsemble, metaclass=ABCMeta):
 
     # TODO(1.3): Remove
     # mypy error: Decorated property not supported
-    @deprecated("Attribute `loss_` was deprecated in version 1.1 and will be removed in 1.3.")  # type: ignore
-    def loss_(self): ...
+    @deprecated(...)  # type: ignore
+    def loss_(self) -> None: ...
 
 class GradientBoostingClassifier(ClassifierMixin, BaseGradientBoosting):
     max_features_: int = ...
@@ -118,9 +115,9 @@ class GradientBoostingClassifier(ClassifierMixin, BaseGradientBoosting):
         ccp_alpha: float = 0.0,
     ) -> None: ...
     def decision_function(self, X: MatrixLike | ArrayLike) -> ndarray: ...
-    def staged_decision_function(self, X: MatrixLike | ArrayLike): ...
+    def staged_decision_function(self, X: MatrixLike | ArrayLike) -> None: ...
     def predict(self, X: MatrixLike | ArrayLike) -> ndarray: ...
-    def staged_predict(self, X: MatrixLike | ArrayLike): ...
+    def staged_predict(self, X: MatrixLike | ArrayLike) -> None: ...
     def predict_proba(self, X: MatrixLike | ArrayLike) -> ndarray: ...
     def predict_log_proba(self, X: MatrixLike | ArrayLike) -> ndarray: ...
     def staged_predict_proba(self, X: MatrixLike | ArrayLike) -> Iterator[ndarray]: ...

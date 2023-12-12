@@ -1,32 +1,29 @@
-from typing import Callable, ClassVar, Literal
-from numpy.random import RandomState
-from ..decomposition import PCA as PCA
-from scipy.spatial.distance import pdist as pdist, squareform as squareform
-from scipy import linalg as linalg
-from numpy import ndarray
-from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions, Hidden as Hidden
-from numbers import Integral as Integral, Real as Real
-from ..neighbors import NearestNeighbors as NearestNeighbors
-from scipy.sparse import csr_matrix as csr_matrix, issparse as issparse
-from ..base import BaseEstimator
-from ..metrics.pairwise import pairwise_distances as pairwise_distances
-from time import time as time
-from .._typing import MatrixLike, Int, Float, ArrayLike
-from ..utils import check_random_state as check_random_state
-from ..utils.validation import check_non_negative as check_non_negative
-
 # Author: Alexander Fabisch  -- <afabisch@informatik.uni-bremen.de>
 # Author: Christopher Moody <chrisemoody@gmail.com>
 # Author: Nick Travers <nickt@squareup.com>
 # License: BSD 3 clause (C) 2014
-
 # This is the exact and Barnes-Hut t-SNE implementation. There are other
 # modifications of the algorithm:
 # * Fast Optimization for t-SNE:
 #   https://cseweb.ucsd.edu/~lvdmaaten/workshops/nips2010/papers/vandermaaten.pdf
+from numbers import Integral as Integral, Real as Real
+from time import time as time
+from typing import Callable, ClassVar, Literal
 
-import warnings
-import numpy as np
+from numpy import ndarray
+from numpy.random import RandomState
+from scipy import linalg as linalg
+from scipy.sparse import csr_matrix as csr_matrix, issparse as issparse
+from scipy.spatial.distance import pdist as pdist, squareform as squareform
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator
+from ..decomposition import PCA as PCA
+from ..metrics.pairwise import pairwise_distances as pairwise_distances
+from ..neighbors import NearestNeighbors as NearestNeighbors
+from ..utils import check_random_state as check_random_state
+from ..utils._param_validation import Hidden as Hidden, Interval as Interval, StrOptions as StrOptions
+from ..utils.validation import check_non_negative as check_non_negative
 
 MACHINE_EPSILON = ...
 

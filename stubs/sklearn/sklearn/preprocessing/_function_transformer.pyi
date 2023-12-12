@@ -1,18 +1,15 @@
 from typing import Any, Callable, ClassVar, Literal, TypeVar
-from ..base import BaseEstimator
-from numpy import ufunc, ndarray
+
+from numpy import ndarray, ufunc
+from pandas.core.frame import DataFrame
+
+from .._typing import ArrayLike, MatrixLike
+from ..base import BaseEstimator, TransformerMixin
 from ..utils._param_validation import StrOptions as StrOptions
 from ..utils.metaestimators import available_if as available_if
-from ..base import TransformerMixin
-from pandas.core.frame import DataFrame
-from .._typing import MatrixLike, ArrayLike
 from ..utils.validation import check_array as check_array
 
-FunctionTransformer_Self = TypeVar("FunctionTransformer_Self", bound="FunctionTransformer")
-
-import warnings
-
-import numpy as np
+FunctionTransformer_Self = TypeVar("FunctionTransformer_Self", bound=FunctionTransformer)
 
 class FunctionTransformer(TransformerMixin, BaseEstimator):
     feature_names_in_: ndarray = ...

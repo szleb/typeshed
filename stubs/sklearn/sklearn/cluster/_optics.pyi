@@ -1,22 +1,21 @@
-from typing import Any, Callable, ClassVar, Literal, TypeVar
-from ..exceptions import DataConversionWarning as DataConversionWarning
-from numpy import ndarray
-from ..utils._param_validation import Interval as Interval, HasMethods as HasMethods, StrOptions as StrOptions
 from numbers import Integral as Integral, Real as Real
+from typing import Any, Callable, ClassVar, Literal, TypeVar
+
 from joblib import Memory
-from ..neighbors import NearestNeighbors as NearestNeighbors
-from ..metrics import pairwise_distances as pairwise_distances
+from numpy import ndarray
+from scipy.sparse import SparseEfficiencyWarning as SparseEfficiencyWarning, issparse as issparse
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
 from ..base import BaseEstimator, ClusterMixin
-from scipy.sparse import issparse as issparse, SparseEfficiencyWarning as SparseEfficiencyWarning
+from ..exceptions import DataConversionWarning as DataConversionWarning
+from ..metrics import pairwise_distances as pairwise_distances
 from ..metrics.pairwise import PAIRWISE_BOOLEAN_FUNCTIONS as PAIRWISE_BOOLEAN_FUNCTIONS
-from .._typing import Float, Int, MatrixLike, ArrayLike
+from ..neighbors import NearestNeighbors as NearestNeighbors
 from ..utils import gen_batches as gen_batches, get_chunk_n_rows as get_chunk_n_rows
+from ..utils._param_validation import HasMethods as HasMethods, Interval as Interval, StrOptions as StrOptions
 from ..utils.validation import check_memory as check_memory
 
-OPTICS_Self = TypeVar("OPTICS_Self", bound="OPTICS")
-
-import warnings
-import numpy as np
+OPTICS_Self = TypeVar("OPTICS_Self", bound=OPTICS)
 
 class OPTICS(ClusterMixin, BaseEstimator):
     feature_names_in_: ndarray = ...

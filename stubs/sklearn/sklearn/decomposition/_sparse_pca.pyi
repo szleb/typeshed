@@ -1,19 +1,19 @@
+from numbers import Integral as Integral, Real as Real
 from typing import Any, Callable, ClassVar, Literal, TypeVar
-from numpy.random import RandomState
-from ._dict_learning import dict_learning as dict_learning, MiniBatchDictionaryLearning as MiniBatchDictionaryLearning
-from ..linear_model import ridge_regression as ridge_regression
+
 from numpy import ndarray
+from numpy.random import RandomState
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, ClassNamePrefixFeaturesOutMixin, TransformerMixin
+from ..linear_model import ridge_regression as ridge_regression
+from ..utils import check_random_state as check_random_state
 from ..utils._param_validation import Hidden as Hidden, Interval as Interval, StrOptions as StrOptions
 from ..utils.extmath import svd_flip as svd_flip
-from numbers import Integral as Integral, Real as Real
-from ..base import BaseEstimator, TransformerMixin, ClassNamePrefixFeaturesOutMixin
-from .._typing import MatrixLike, ArrayLike, Int, Float
-from ..utils import check_random_state as check_random_state
 from ..utils.validation import check_array as check_array, check_is_fitted as check_is_fitted
+from ._dict_learning import MiniBatchDictionaryLearning as MiniBatchDictionaryLearning, dict_learning as dict_learning
 
-_BaseSparsePCA_Self = TypeVar("_BaseSparsePCA_Self", bound="_BaseSparsePCA")
-
-import numpy as np
+_BaseSparsePCA_Self = TypeVar("_BaseSparsePCA_Self", bound=_BaseSparsePCA)
 
 class _BaseSparsePCA(ClassNamePrefixFeaturesOutMixin, TransformerMixin, BaseEstimator):
     _parameter_constraints: ClassVar[dict] = ...

@@ -1,21 +1,20 @@
-from typing import Any, Callable, ClassVar, Literal, TypeVar
-from ._base import MissingIndicator
-from ..utils import is_scalar_nan as is_scalar_nan
-from ._base import _BaseImputer
-from numpy import ndarray
-from ..utils._param_validation import Hidden as Hidden, Interval as Interval, StrOptions as StrOptions
 from numbers import Integral as Integral
-from .._typing import Int, MatrixLike, ArrayLike
-from ..metrics import pairwise_distances_chunked as pairwise_distances_chunked
-from ..utils.validation import FLOAT_DTYPES as FLOAT_DTYPES, check_is_fitted as check_is_fitted
+from typing import Any, Callable, ClassVar, Literal, TypeVar
 
-KNNImputer_Self = TypeVar("KNNImputer_Self", bound="KNNImputer")
+from numpy import ndarray
+
+from .._typing import ArrayLike, Int, MatrixLike
+from ..metrics import pairwise_distances_chunked as pairwise_distances_chunked
+from ..utils import is_scalar_nan as is_scalar_nan
+from ..utils._param_validation import Hidden as Hidden, Interval as Interval, StrOptions as StrOptions
+from ..utils.validation import FLOAT_DTYPES as FLOAT_DTYPES, check_is_fitted as check_is_fitted
+from ._base import MissingIndicator, _BaseImputer
+
+KNNImputer_Self = TypeVar("KNNImputer_Self", bound=KNNImputer)
 
 # Authors: Ashim Bhattarai <ashimb9@gmail.com>
 #          Thomas J Fan <thomasjpfan@gmail.com>
 # License: BSD 3 clause
-
-import numpy as np
 
 class KNNImputer(_BaseImputer):
     feature_names_in_: ndarray = ...

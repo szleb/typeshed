@@ -1,24 +1,26 @@
-from typing import Any, Callable, ClassVar, Iterable, Literal, Mapping, TypeVar
-from operator import itemgetter as itemgetter
 from collections import defaultdict as defaultdict
-from ..utils.validation import check_is_fitted as check_is_fitted, check_array as check_array, FLOAT_DTYPES as FLOAT_DTYPES
-from ..exceptions import NotFittedError as NotFittedError
-from numpy import ndarray
-from ..utils._param_validation import StrOptions as StrOptions, Interval as Interval, HasMethods as HasMethods
-from numbers import Integral as Integral, Real as Real
-from functools import partial
-from ._stop_words import ENGLISH_STOP_WORDS
-from ..base import BaseEstimator, TransformerMixin, OneToOneFeatureMixin
-from scipy.sparse import spmatrix
-from ._hash import FeatureHasher as FeatureHasher
-from .._typing import ArrayLike, Int, MatrixLike, Float
 from collections.abc import Mapping
-from ..preprocessing import normalize as normalize
+from functools import partial
+from numbers import Integral as Integral, Real as Real
+from operator import itemgetter as itemgetter
+from typing import Any, Callable, ClassVar, Iterable, Literal, Mapping, TypeVar
 
-TfidfVectorizer_Self = TypeVar("TfidfVectorizer_Self", bound="TfidfVectorizer")
-HashingVectorizer_Self = TypeVar("HashingVectorizer_Self", bound="HashingVectorizer")
-CountVectorizer_Self = TypeVar("CountVectorizer_Self", bound="CountVectorizer")
-TfidfTransformer_Self = TypeVar("TfidfTransformer_Self", bound="TfidfTransformer")
+from numpy import ndarray
+from scipy.sparse import spmatrix
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, OneToOneFeatureMixin, TransformerMixin
+from ..exceptions import NotFittedError as NotFittedError
+from ..preprocessing import normalize as normalize
+from ..utils._param_validation import HasMethods as HasMethods, Interval as Interval, StrOptions as StrOptions
+from ..utils.validation import FLOAT_DTYPES as FLOAT_DTYPES, check_array as check_array, check_is_fitted as check_is_fitted
+from ._hash import FeatureHasher as FeatureHasher
+from ._stop_words import ENGLISH_STOP_WORDS
+
+TfidfVectorizer_Self = TypeVar("TfidfVectorizer_Self", bound=TfidfVectorizer)
+HashingVectorizer_Self = TypeVar("HashingVectorizer_Self", bound=HashingVectorizer)
+CountVectorizer_Self = TypeVar("CountVectorizer_Self", bound=CountVectorizer)
+TfidfTransformer_Self = TypeVar("TfidfTransformer_Self", bound=TfidfTransformer)
 
 # Authors: Olivier Grisel <olivier.grisel@ensta.org>
 #          Mathieu Blondel <mathieu@mblondel.org>
@@ -28,14 +30,6 @@ TfidfTransformer_Self = TypeVar("TfidfTransformer_Self", bound="TfidfTransformer
 #          Roman Sinayev <roman.sinayev@gmail.com>
 #
 # License: BSD 3 clause
-
-import array
-import re
-import unicodedata
-import warnings
-
-import numpy as np
-import scipy.sparse as sp
 
 __all__ = [
     "HashingVectorizer",

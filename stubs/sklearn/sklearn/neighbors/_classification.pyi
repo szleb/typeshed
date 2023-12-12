@@ -1,18 +1,16 @@
-from typing import Callable, ClassVar, Literal, TypeVar
-from ._base import NeighborsBase, KNeighborsMixin, RadiusNeighborsMixin
-from numpy import ndarray
-from ..utils.extmath import weighted_mode as weighted_mode
-from ..utils._param_validation import StrOptions as StrOptions
 from numbers import Integral as Integral
+from typing import Callable, ClassVar, Literal, TypeVar
+
+from numpy import ndarray
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
 from ..base import ClassifierMixin
-from .._typing import Int, MatrixLike, ArrayLike, Float
+from ..utils._param_validation import StrOptions as StrOptions
+from ..utils.extmath import weighted_mode as weighted_mode
+from ._base import KNeighborsMixin, NeighborsBase, RadiusNeighborsMixin
 
-RadiusNeighborsClassifier_Self = TypeVar("RadiusNeighborsClassifier_Self", bound="RadiusNeighborsClassifier")
-KNeighborsClassifier_Self = TypeVar("KNeighborsClassifier_Self", bound="KNeighborsClassifier")
-
-import numpy as np
-
-import warnings
+RadiusNeighborsClassifier_Self = TypeVar("RadiusNeighborsClassifier_Self", bound=RadiusNeighborsClassifier)
+KNeighborsClassifier_Self = TypeVar("KNeighborsClassifier_Self", bound=KNeighborsClassifier)
 
 class KNeighborsClassifier(KNeighborsMixin, ClassifierMixin, NeighborsBase):
     outputs_2d_: bool = ...

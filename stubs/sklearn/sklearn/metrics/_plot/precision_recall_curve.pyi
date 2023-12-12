@@ -1,12 +1,14 @@
 from typing import Literal
-from ...base import is_classifier as is_classifier, BaseEstimator
-from .._classification import check_consistent_length as check_consistent_length
-from matplotlib.axes import Axes
+
 from matplotlib.artist import Artist
-from ...utils import check_matplotlib_support as check_matplotlib_support
-from ..._typing import ArrayLike, Float, MatrixLike
-from .. import average_precision_score as average_precision_score, precision_recall_curve as precision_recall_curve
+from matplotlib.axes import Axes
 from matplotlib.figure import Figure
+
+from ..._typing import ArrayLike, Float, MatrixLike
+from ...base import BaseEstimator, is_classifier as is_classifier
+from ...utils import check_matplotlib_support as check_matplotlib_support
+from .. import average_precision_score as average_precision_score, precision_recall_curve as precision_recall_curve
+from .._classification import check_consistent_length as check_consistent_length
 
 class PrecisionRecallDisplay:
     figure_: Figure = ...

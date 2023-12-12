@@ -1,22 +1,22 @@
-from typing import Any, ClassVar, Literal, TypeVar
-from numpy.random import RandomState
-from scipy.sparse.linalg import eigsh as eigsh, LinearOperator
-from numpy import ndarray
-from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
-from scipy.linalg import svd as svd, qr as qr, solve as solve
 from numbers import Integral as Integral, Real as Real
-from ..utils.extmath import stable_cumsum as stable_cumsum
-from ..neighbors._unsupervised import NearestNeighbors
+from typing import Any, ClassVar, Literal, TypeVar
+
+from numpy import ndarray
+from numpy.random import RandomState
+from scipy.linalg import qr as qr, solve as solve, svd as svd
 from scipy.sparse import eye as eye
-from ..base import BaseEstimator, TransformerMixin, _UnstableArchMixin, ClassNamePrefixFeaturesOutMixin
 from scipy.sparse._csr import csr_matrix
-from .._typing import MatrixLike, Float, ArrayLike, Int
-from ..utils import check_random_state as check_random_state, check_array as check_array
-from ..utils.validation import check_is_fitted as check_is_fitted, FLOAT_DTYPES as FLOAT_DTYPES
+from scipy.sparse.linalg import LinearOperator, eigsh as eigsh
 
-LocallyLinearEmbedding_Self = TypeVar("LocallyLinearEmbedding_Self", bound="LocallyLinearEmbedding")
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, ClassNamePrefixFeaturesOutMixin, TransformerMixin, _UnstableArchMixin
+from ..neighbors._unsupervised import NearestNeighbors
+from ..utils import check_array as check_array, check_random_state as check_random_state
+from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
+from ..utils.extmath import stable_cumsum as stable_cumsum
+from ..utils.validation import FLOAT_DTYPES as FLOAT_DTYPES, check_is_fitted as check_is_fitted
 
-import numpy as np
+LocallyLinearEmbedding_Self = TypeVar("LocallyLinearEmbedding_Self", bound=LocallyLinearEmbedding)
 
 def barycenter_weights(X: MatrixLike, Y: MatrixLike, indices: MatrixLike, reg: Float = 1e-3) -> ndarray: ...
 def barycenter_kneighbors_graph(

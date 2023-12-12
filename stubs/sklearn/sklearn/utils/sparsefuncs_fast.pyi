@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.sparse import csr_matrix, csc_matrix
+from scipy.sparse import csc_matrix, csr_matrix
 
 def csr_row_norms(X: np.ndarray) -> np.ndarray:
     """Squared L2 norm of each row in CSR matrix X."""
@@ -10,6 +10,7 @@ def csr_mean_variance_axis0(
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Compute mean and variance along axis 0 on a CSR matrix
     Uses a np.float64 accumulator.
+
     Parameters
     ----------
     X : CSR sparse matrix, shape (n_samples, n_features)
@@ -20,6 +21,7 @@ def csr_mean_variance_axis0(
     return_sum_weights : bool, default=False
         If True, returns the sum of weights seen for each feature.
         .. versionadded:: 0.24
+
     Returns
     -------
     means : float array with shape (n_features,)
@@ -36,6 +38,7 @@ def csc_mean_variance_axis0(
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Compute mean and variance along axis 0 on a CSC matrix
     Uses a np.float64 accumulator.
+
     Parameters
     ----------
     X : CSC sparse matrix, shape (n_samples, n_features)
@@ -46,6 +49,7 @@ def csc_mean_variance_axis0(
     return_sum_weights : bool, default=False
         If True, returns the sum of weights seen for each feature.
         .. versionadded:: 0.24
+
     Returns
     -------
     means : float array with shape (n_features,)
@@ -64,6 +68,7 @@ def incr_mean_variance_axis0(
     last_mean, last_var are the statistics computed at the last step by this
     function. Both must be initialized to 0.0. last_n is the
     number of samples encountered until now and is initialized at 0.
+
     Parameters
     ----------
     X : CSR or CSC sparse matrix, shape (n_samples, n_features)
@@ -77,6 +82,7 @@ def incr_mean_variance_axis0(
       this will be the same as number of samples seen so far, before X).
     weights : float array with shape (n_samples,) or None. If it is set
       to None samples will be equall weighted.
+
     Returns
     -------
     updated_mean : float array with shape (n_features,)
@@ -89,17 +95,18 @@ def incr_mean_variance_axis0(
     ...
 
 def inplace_csr_row_normalize_l1(X: np.ndarray) -> None:
-    """Inplace row normalize using the l1 norm"""
+    """Inplace row normalize using the l1 norm."""
     ...
 
 def inplace_csr_row_normalize_l2(X: np.ndarray) -> None:
-    """Inplace row normalize using the l2 norm"""
+    """Inplace row normalize using the l2 norm."""
     ...
 
 def assign_rows_csr(X: csr_matrix, X_rows: np.ndarray, out_rows: np.ndarray, out: np.ndarray) -> None:
     """Densify selected rows of a CSR matrix into a preallocated array.
     Like out[out_rows] = X[X_rows].toarray() but without copying.
     No-copy supported for both dtype=np.float32 and dtype=np.float64.
+
     Parameters
     ----------
     X : scipy.sparse.csr_matrix, shape=(n_samples, n_features)

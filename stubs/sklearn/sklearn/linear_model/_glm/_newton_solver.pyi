@@ -1,19 +1,14 @@
-from abc import ABC, abstractmethod
-from numpy import ndarray
-from ..._loss.loss import HalfSquaredError as HalfSquaredError
-from ..._typing import MatrixLike, ArrayLike, Float, Int
-from .._linear_loss import LinearModelLoss
-from scipy.sparse._csr import csr_matrix
-from ...exceptions import ConvergenceWarning as ConvergenceWarning
-
 # Author: Christian Lorentzen <lorentzen.ch@gmail.com>
 # License: BSD 3 clause
+from abc import ABC, abstractmethod
 
-import warnings
+from numpy import ndarray
+from scipy.sparse._csr import csr_matrix
 
-import numpy as np
-import scipy.linalg
-import scipy.optimize
+from ..._loss.loss import HalfSquaredError as HalfSquaredError
+from ..._typing import ArrayLike, Float, Int, MatrixLike
+from ...exceptions import ConvergenceWarning as ConvergenceWarning
+from .._linear_loss import LinearModelLoss
 
 class NewtonSolver(ABC):
     gradient_times_newton: float = ...
@@ -41,10 +36,10 @@ class NewtonSolver(ABC):
     ) -> None: ...
     def setup(self, X: csr_matrix, y: ndarray, sample_weight: ndarray) -> None: ...
     @abstractmethod
-    def update_gradient_hessian(self, X, y, sample_weight): ...
+    def update_gradient_hessian(self, X, y, sample_weight) -> None: ...
     @abstractmethod
-    def inner_solve(self, X, y, sample_weight): ...
-    def fallback_lbfgs_solve(self, X, y, sample_weight): ...
+    def inner_solve(self, X, y, sample_weight) -> None: ...
+    def fallback_lbfgs_solve(self, X, y, sample_weight) -> None: ...
     def line_search(self, X: csr_matrix, y: ndarray, sample_weight: ndarray) -> None: ...
     def check_convergence(self, X: csr_matrix, y: ndarray, sample_weight: ndarray) -> None: ...
     def finalize(self, X: csr_matrix, y: ndarray, sample_weight: ndarray) -> None: ...

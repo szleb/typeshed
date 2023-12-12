@@ -1,22 +1,17 @@
-from typing import Literal
-from numpy.random import RandomState
-from ._svmlight_format_io import load_svmlight_files as load_svmlight_files
-from os import remove as remove, makedirs as makedirs
-from os.path import exists as exists, join as join
-from ._base import RemoteFileMetadata as RemoteFileMetadata, load_descr as load_descr
-from gzip import GzipFile as GzipFile
-from .._typing import Int
-from ..utils import shuffle as shuffle_, Bunch
-from . import get_data_home as get_data_home
-
 # Author: Tom Dupre la Tour
 # License: BSD 3 clause
+from gzip import GzipFile as GzipFile
+from os import makedirs as makedirs, remove as remove
+from os.path import exists as exists, join as join
+from typing import Literal
 
-import logging
+from numpy.random import RandomState
 
-import numpy as np
-import scipy.sparse as sp
-import joblib
+from .._typing import Int
+from ..utils import Bunch
+from . import get_data_home as get_data_home
+from ._base import RemoteFileMetadata as RemoteFileMetadata, load_descr as load_descr
+from ._svmlight_format_io import load_svmlight_files as load_svmlight_files
 
 # The original vectorized data can be found at:
 #    http://www.ai.mit.edu/projects/jmlr/papers/volume5/lewis04a/a13-vector-files/lyrl2004_vectors_test_pt0.dat.gz

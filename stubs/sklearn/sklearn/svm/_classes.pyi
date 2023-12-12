@@ -1,20 +1,20 @@
-from typing import Any, Callable, ClassVar, Literal, Mapping, TypeVar
-from numpy.random import RandomState
-from ..linear_model._base import LinearClassifierMixin, SparseCoefMixin, LinearModel
-from ._base import BaseSVC, BaseLibSVM
-from numpy import ndarray
-from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
 from numbers import Integral as Integral, Real as Real
-from ..utils.multiclass import check_classification_targets as check_classification_targets
-from ..base import BaseEstimator, RegressorMixin, OutlierMixin
-from .._typing import Float, Int, MatrixLike, ArrayLike
+from typing import Any, Callable, ClassVar, Literal, Mapping, TypeVar
+
+from numpy import ndarray
+from numpy.random import RandomState
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, OutlierMixin, RegressorMixin
+from ..linear_model._base import LinearClassifierMixin, LinearModel, SparseCoefMixin
 from ..utils import deprecated
+from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
+from ..utils.multiclass import check_classification_targets as check_classification_targets
+from ._base import BaseLibSVM, BaseSVC
 
-OneClassSVM_Self = TypeVar("OneClassSVM_Self", bound="OneClassSVM")
-LinearSVC_Self = TypeVar("LinearSVC_Self", bound="LinearSVC")
-LinearSVR_Self = TypeVar("LinearSVR_Self", bound="LinearSVR")
-
-import numpy as np
+OneClassSVM_Self = TypeVar("OneClassSVM_Self", bound=OneClassSVM)
+LinearSVC_Self = TypeVar("LinearSVC_Self", bound=LinearSVC)
+LinearSVR_Self = TypeVar("LinearSVR_Self", bound=LinearSVR)
 
 class LinearSVC(LinearClassifierMixin, SparseCoefMixin, BaseEstimator):
     n_iter_: int = ...
@@ -169,7 +169,7 @@ class SVR(RegressorMixin, BaseLibSVM):
     _impl: ClassVar[str] = ...
 
     _parameter_constraints: ClassVar[dict] = ...
-    for unused_param in ["class_weight", "nu", "probability", "random_state"]:
+    for _unused_param in ["class_weight", "nu", "probability", "random_state"]:
         pass
 
     def __init__(
@@ -189,7 +189,7 @@ class SVR(RegressorMixin, BaseLibSVM):
     ) -> None: ...
 
     # TODO(1.4): Remove
-    @deprecated("Attribute `class_weight_` was deprecated in version 1.2 and will be removed in" " 1.4.")  # type: ignore
+    @deprecated(...)  # type: ignore
     @property
     def class_weight_(self) -> ndarray: ...
 
@@ -209,7 +209,7 @@ class NuSVR(RegressorMixin, BaseLibSVM):
     _impl: ClassVar[str] = ...
 
     _parameter_constraints: ClassVar[dict] = ...
-    for unused_param in ["class_weight", "epsilon", "probability", "random_state"]:
+    for _unused_param in ["class_weight", "epsilon", "probability", "random_state"]:
         pass
 
     def __init__(
@@ -229,7 +229,7 @@ class NuSVR(RegressorMixin, BaseLibSVM):
     ) -> None: ...
 
     # TODO(1.4): Remove
-    @deprecated("Attribute `class_weight_` was deprecated in version 1.2 and will be removed in" " 1.4.")  # type: ignore
+    @deprecated(...)  # type: ignore
     @property
     def class_weight_(self) -> ndarray: ...
 
@@ -250,7 +250,7 @@ class OneClassSVM(OutlierMixin, BaseLibSVM):
     _impl: ClassVar[str] = ...
 
     _parameter_constraints: ClassVar[dict] = ...
-    for unused_param in ["C", "class_weight", "epsilon", "probability", "random_state"]:
+    for _unused_param in ["C", "class_weight", "epsilon", "probability", "random_state"]:
         pass
 
     def __init__(
@@ -269,7 +269,7 @@ class OneClassSVM(OutlierMixin, BaseLibSVM):
     ) -> None: ...
 
     # TODO(1.4): Remove
-    @deprecated("Attribute `class_weight_` was deprecated in version 1.2 and will be removed in" " 1.4.")  # type: ignore
+    @deprecated(...)  # type: ignore
     @property
     def class_weight_(self) -> ndarray: ...
     def fit(

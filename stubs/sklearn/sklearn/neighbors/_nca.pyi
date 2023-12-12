@@ -1,26 +1,24 @@
+from numbers import Integral as Integral, Real as Real
 from typing import Callable, ClassVar, Literal, TypeVar
 from warnings import warn as warn
-from numpy.random import RandomState
-from ..decomposition import PCA as PCA
-from ..utils.validation import check_is_fitted as check_is_fitted, check_array as check_array
-from ..exceptions import ConvergenceWarning as ConvergenceWarning
+
 from numpy import ndarray
-from ..utils.extmath import softmax as softmax
-from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
+from numpy.random import RandomState
 from scipy.optimize import minimize as minimize
-from numbers import Integral as Integral, Real as Real
-from ..utils.multiclass import check_classification_targets as check_classification_targets
-from ..base import BaseEstimator, TransformerMixin, ClassNamePrefixFeaturesOutMixin
-from ..utils.random import check_random_state as check_random_state
-from .._typing import Int, MatrixLike, Float, ArrayLike
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, ClassNamePrefixFeaturesOutMixin, TransformerMixin
+from ..decomposition import PCA as PCA
+from ..exceptions import ConvergenceWarning as ConvergenceWarning
 from ..metrics import pairwise_distances as pairwise_distances
 from ..preprocessing import LabelEncoder as LabelEncoder
+from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
+from ..utils.extmath import softmax as softmax
+from ..utils.multiclass import check_classification_targets as check_classification_targets
+from ..utils.random import check_random_state as check_random_state
+from ..utils.validation import check_array as check_array, check_is_fitted as check_is_fitted
 
-NeighborhoodComponentsAnalysis_Self = TypeVar("NeighborhoodComponentsAnalysis_Self", bound="NeighborhoodComponentsAnalysis")
-
-import numpy as np
-import sys
-import time
+NeighborhoodComponentsAnalysis_Self = TypeVar("NeighborhoodComponentsAnalysis_Self", bound=NeighborhoodComponentsAnalysis)
 
 class NeighborhoodComponentsAnalysis(ClassNamePrefixFeaturesOutMixin, TransformerMixin, BaseEstimator):
     feature_names_in_: ndarray = ...

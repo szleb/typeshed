@@ -1,19 +1,17 @@
-from typing import ClassVar, Literal
-from numpy.random import RandomState
-from scipy.special import betaln as betaln, digamma as digamma, gammaln as gammaln
-from ._base import BaseMixture
-from numpy import ndarray
-from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
-from numbers import Real as Real
-from .._typing import Int, Float, ArrayLike
-from ..utils import check_array as check_array
-
 # Author: Wei Xue <xuewei4d@gmail.com>
 #         Thierry Guillemot <thierry.guillemot.work@gmail.com>
 # License: BSD 3 clause
+from numbers import Real as Real
+from typing import ClassVar, Literal
 
-import math
-import numpy as np
+from numpy import ndarray
+from numpy.random import RandomState
+from scipy.special import betaln as betaln, digamma as digamma, gammaln as gammaln
+
+from .._typing import ArrayLike, Float, Int
+from ..utils import check_array as check_array
+from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
+from ._base import BaseMixture
 
 class BayesianGaussianMixture(BaseMixture):
     feature_names_in_: ndarray = ...

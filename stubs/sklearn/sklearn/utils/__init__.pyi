@@ -1,40 +1,40 @@
-from typing import Any, Iterable, Iterator, Sequence, SupportsIndex
-from numpy.random import RandomState
-from .fixes import parse_version as parse_version, threadpool_info as threadpool_info
-from ._bunch import Bunch as Bunch
-from .murmurhash import murmurhash3_32 as murmurhash3_32
-from itertools import compress as compress, islice as islice
-from ..exceptions import DataConversionWarning as DataConversionWarning
-from .validation import (
-    as_float_array as as_float_array,
-    assert_all_finite as assert_all_finite,
-    check_random_state as check_random_state,
-    column_or_1d as column_or_1d,
-    check_array as check_array,
-    check_consistent_length as check_consistent_length,
-    check_X_y as check_X_y,
-    indexable as indexable,
-    check_symmetric as check_symmetric,
-    check_scalar as check_scalar,
-)
-from contextlib import contextmanager as contextmanager, suppress as suppress
-from .discovery import all_estimators as all_estimators
-from scipy.sparse import issparse as issparse
-from .. import get_config as get_config
-from collections.abc import Sequence as Sequence
-from .deprecation import deprecated as deprecated
-from numpy import ndarray
-from .class_weight import compute_class_weight as compute_class_weight, compute_sample_weight as compute_sample_weight
-from ._estimator_html_repr import estimator_html_repr as estimator_html_repr
-from .._typing import MatrixLike, ArrayLike, Int
 import math as math
 import numbers as numbers
 import platform as platform
 import struct as struct
 import timeit as timeit
-
 import warnings as warnings
-import numpy as np
+from collections.abc import Sequence as Sequence
+from contextlib import contextmanager as contextmanager, suppress as suppress
+from itertools import compress as compress, islice as islice
+from typing import Any, Iterable, Iterator, Sequence, SupportsIndex
+
+from numpy import ndarray
+from numpy.random import RandomState
+from scipy.sparse import issparse as issparse
+
+from .. import get_config as get_config
+from .._typing import ArrayLike, Int, MatrixLike
+from ..exceptions import DataConversionWarning as DataConversionWarning
+from ._bunch import Bunch as Bunch
+from ._estimator_html_repr import estimator_html_repr as estimator_html_repr
+from .class_weight import compute_class_weight as compute_class_weight, compute_sample_weight as compute_sample_weight
+from .deprecation import deprecated as deprecated
+from .discovery import all_estimators as all_estimators
+from .fixes import parse_version as parse_version, threadpool_info as threadpool_info
+from .murmurhash import murmurhash3_32 as murmurhash3_32
+from .validation import (
+    as_float_array as as_float_array,
+    assert_all_finite as assert_all_finite,
+    check_array as check_array,
+    check_consistent_length as check_consistent_length,
+    check_random_state as check_random_state,
+    check_scalar as check_scalar,
+    check_symmetric as check_symmetric,
+    check_X_y as check_X_y,
+    column_or_1d as column_or_1d,
+    indexable as indexable,
+)
 
 # Do not deprecate parallel_backend and register_parallel_backend as they are
 # needed to tune `scikit-learn` behavior and have different effect if called
@@ -92,4 +92,4 @@ def indices_to_mask(indices: Sequence | ndarray, mask_length: Int) -> ndarray: .
 def get_chunk_n_rows(row_bytes: Int, *, max_n_rows: None | Int = None, working_memory: float | None | int = None) -> int: ...
 def is_scalar_nan(x: Any) -> bool: ...
 def check_matplotlib_support(caller_name: str) -> None: ...
-def check_pandas_support(caller_name: str): ...
+def check_pandas_support(caller_name: str) -> None: ...

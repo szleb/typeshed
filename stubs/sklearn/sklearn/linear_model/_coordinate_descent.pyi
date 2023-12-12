@@ -1,35 +1,36 @@
+from abc import ABC, abstractmethod
+from functools import partial as partial
+from numbers import Integral as Integral, Real as Real
 from typing import ClassVar, Iterable, Literal, Sequence, TypeVar
+
+from joblib import effective_n_jobs as effective_n_jobs
+from numpy import ndarray
 from numpy.random import RandomState
 from scipy import sparse as sparse
-from scipy.sparse._coo import coo_matrix
-from ..model_selection._split import BaseShuffleSplit
-from ..utils.extmath import safe_sparse_dot as safe_sparse_dot
-from joblib import effective_n_jobs as effective_n_jobs
 from scipy.sparse import spmatrix
-from ..utils.parallel import delayed as delayed, Parallel as Parallel
+from scipy.sparse._coo import coo_matrix
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import MultiOutputMixin, RegressorMixin
+from ..model_selection import BaseCrossValidator, check_cv as check_cv
+from ..model_selection._split import BaseShuffleSplit
+from ..utils import check_array as check_array, check_scalar as check_scalar
+from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
+from ..utils.extmath import safe_sparse_dot as safe_sparse_dot
+from ..utils.parallel import Parallel as Parallel, delayed as delayed
 from ..utils.validation import (
-    check_random_state as check_random_state,
     check_consistent_length as check_consistent_length,
     check_is_fitted as check_is_fitted,
+    check_random_state as check_random_state,
     column_or_1d as column_or_1d,
 )
-from abc import ABC, abstractmethod
-from numpy import ndarray
-from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
-from numbers import Integral as Integral, Real as Real
-from functools import partial as partial
-from ..base import RegressorMixin, MultiOutputMixin
-from ..model_selection import check_cv as check_cv
-from ..utils import check_array as check_array, check_scalar as check_scalar
 from ._base import LinearModel
-from .._typing import MatrixLike, ArrayLike, Float, Int
-from ..model_selection import BaseCrossValidator
 
-LinearModelCV_Self = TypeVar("LinearModelCV_Self", bound="LinearModelCV")
-MultiTaskElasticNetCV_Self = TypeVar("MultiTaskElasticNetCV_Self", bound="MultiTaskElasticNetCV")
-MultiTaskLassoCV_Self = TypeVar("MultiTaskLassoCV_Self", bound="MultiTaskLassoCV")
-ElasticNet_Self = TypeVar("ElasticNet_Self", bound="ElasticNet")
-MultiTaskElasticNet_Self = TypeVar("MultiTaskElasticNet_Self", bound="MultiTaskElasticNet")
+LinearModelCV_Self = TypeVar("LinearModelCV_Self", bound=LinearModelCV)
+MultiTaskElasticNetCV_Self = TypeVar("MultiTaskElasticNetCV_Self", bound=MultiTaskElasticNetCV)
+MultiTaskLassoCV_Self = TypeVar("MultiTaskLassoCV_Self", bound=MultiTaskLassoCV)
+ElasticNet_Self = TypeVar("ElasticNet_Self", bound=ElasticNet)
+MultiTaskElasticNet_Self = TypeVar("MultiTaskElasticNet_Self", bound=MultiTaskElasticNet)
 
 # Author: Alexandre Gramfort <alexandre.gramfort@inria.fr>
 #         Fabian Pedregosa <fabian.pedregosa@inria.fr>
@@ -37,12 +38,6 @@ MultiTaskElasticNet_Self = TypeVar("MultiTaskElasticNet_Self", bound="MultiTaskE
 #         Gael Varoquaux <gael.varoquaux@inria.fr>
 #
 # License: BSD 3 clause
-
-import sys
-import warnings
-import numbers
-
-import numpy as np
 
 def lasso_path(
     X: MatrixLike | ArrayLike,
@@ -173,7 +168,7 @@ class LinearModelCV(MultiOutputMixin, LinearModel, ABC):
     ) -> None: ...
     @staticmethod
     @abstractmethod
-    def path(X, y, **kwargs): ...
+    def path(X, y, **kwargs) -> None: ...
     def fit(
         self: LinearModelCV_Self, X: MatrixLike | ArrayLike, y: MatrixLike | ArrayLike, sample_weight: None | ArrayLike = None
     ) -> LinearModelCV_Self | LassoCV: ...
@@ -260,7 +255,7 @@ class MultiTaskElasticNet(Lasso):
     intercept_: ndarray = ...
 
     _parameter_constraints: ClassVar[dict] = ...
-    for param in ("precompute", "positive"):
+    for _param in ("precompute", "positive"):
         pass
 
     def __init__(

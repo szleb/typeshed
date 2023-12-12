@@ -1,28 +1,17 @@
-from typing import Literal
-from numpy.random import RandomState
-from ._base import RemoteFileMetadata as RemoteFileMetadata, load_descr as load_descr
-from numpy import ndarray
-from .. import preprocessing as preprocessing
-from ..utils._bunch import Bunch
-from .._typing import ArrayLike, Int
-from ..utils import check_random_state as check_random_state
-from ..feature_extraction.text import CountVectorizer as CountVectorizer
-from . import get_data_home as get_data_home, load_files as load_files
-
 # Copyright (c) 2011 Olivier Grisel <olivier.grisel@ensta.org>
 # License: BSD 3 clause
+from typing import Literal
 
-import os
-import logging
-import tarfile
-import pickle
-import shutil
-import re
-import codecs
+from numpy import ndarray
+from numpy.random import RandomState
 
-import numpy as np
-import scipy.sparse as sp
-import joblib
+from .. import preprocessing as preprocessing
+from .._typing import ArrayLike, Int
+from ..feature_extraction.text import CountVectorizer as CountVectorizer
+from ..utils import check_random_state as check_random_state
+from ..utils._bunch import Bunch
+from . import get_data_home as get_data_home, load_files as load_files
+from ._base import RemoteFileMetadata as RemoteFileMetadata, load_descr as load_descr
 
 logger = ...
 

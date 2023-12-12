@@ -1,24 +1,18 @@
-from typing import Iterable, Literal, Sequence
-from numpy.random import RandomState
-from scipy import linalg as linalg
-from numpy import ndarray
-from collections.abc import Iterable
-from scipy.sparse import spmatrix
-from ..utils.random import sample_without_replacement as sample_without_replacement
-from .._typing import Int, ArrayLike, Float, MatrixLike
-from ..utils import check_array as check_array, check_random_state as check_random_state, shuffle as util_shuffle
-from ..preprocessing import MultiLabelBinarizer as MultiLabelBinarizer
-
 # Authors: B. Thirion, G. Varoquaux, A. Gramfort, V. Michel, O. Grisel,
 #          G. Louppe, J. Nothman
 # License: BSD 3 clause
+from collections.abc import Iterable
+from typing import Iterable, Literal, Sequence
 
-import numbers
-import array
-import warnings
+from numpy import ndarray
+from numpy.random import RandomState
+from scipy import linalg as linalg
+from scipy.sparse import spmatrix
 
-import numpy as np
-import scipy.sparse as sp
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..preprocessing import MultiLabelBinarizer as MultiLabelBinarizer
+from ..utils import check_array as check_array, check_random_state as check_random_state
+from ..utils.random import sample_without_replacement as sample_without_replacement
 
 def make_classification(
     n_samples: Int = 100,

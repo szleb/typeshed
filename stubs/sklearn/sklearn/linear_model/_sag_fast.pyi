@@ -1,4 +1,5 @@
 import numpy as np
+
 from ..utils._seq_dataset import SequentialDataset32, SequentialDataset64
 
 def sag32(

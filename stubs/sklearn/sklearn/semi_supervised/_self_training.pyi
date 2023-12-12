@@ -1,19 +1,16 @@
-from typing import ClassVar, Literal, TypeVar
-from ..base import BaseEstimator
-from numpy import ndarray
-from ..utils._param_validation import HasMethods as HasMethods, Interval as Interval, StrOptions as StrOptions
 from numbers import Integral as Integral, Real as Real
-from ..utils.metaestimators import available_if as available_if
-from ..base import MetaEstimatorMixin, clone as clone
-from .._typing import Float, Int, MatrixLike, ArrayLike
+from typing import ClassVar, Literal, TypeVar
+
+from numpy import ndarray
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, MetaEstimatorMixin, clone as clone
 from ..utils import safe_mask as safe_mask
+from ..utils._param_validation import HasMethods as HasMethods, Interval as Interval, StrOptions as StrOptions
+from ..utils.metaestimators import available_if as available_if
 from ..utils.validation import check_is_fitted as check_is_fitted
 
-SelfTrainingClassifier_Self = TypeVar("SelfTrainingClassifier_Self", bound="SelfTrainingClassifier")
-
-import warnings
-
-import numpy as np
+SelfTrainingClassifier_Self = TypeVar("SelfTrainingClassifier_Self", bound=SelfTrainingClassifier)
 
 __all__ = ["SelfTrainingClassifier"]
 

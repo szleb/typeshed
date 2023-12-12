@@ -1,27 +1,26 @@
-from typing import Any, ClassVar, Iterable, Literal, Sequence, TypeVar
-from scipy import sparse as sparse
-from .utils.validation import check_memory as check_memory, check_is_fitted as check_is_fitted
-from itertools import islice as islice
-from .base import BaseEstimator
-from joblib import Memory
-from .utils.metaestimators import available_if as available_if, _BaseComposition
-from pandas.core.frame import DataFrame
-from scipy.sparse import spmatrix
-from .utils._bunch import Bunch
 from collections import defaultdict as defaultdict
-from .base import clone as clone, TransformerMixin
+from itertools import islice as islice
+from typing import Any, ClassVar, Iterable, Literal, Sequence, TypeVar
+
+from joblib import Memory
 from numpy import ndarray
-from .exceptions import NotFittedError as NotFittedError
-from ._typing import Int, MatrixLike, ArrayLike, Float
-from .preprocessing import FunctionTransformer as FunctionTransformer
+from pandas.core.frame import DataFrame
 from pandas.core.series import Series
+from scipy import sparse as sparse
+from scipy.sparse import spmatrix
+
+from ._typing import ArrayLike, Float, Int, MatrixLike
+from .base import BaseEstimator, TransformerMixin, clone as clone
+from .exceptions import NotFittedError as NotFittedError
+from .preprocessing import FunctionTransformer as FunctionTransformer
 from .utils import check_pandas_support as check_pandas_support
-from .utils.parallel import delayed as delayed, Parallel as Parallel
+from .utils._bunch import Bunch
+from .utils.metaestimators import _BaseComposition, available_if as available_if
+from .utils.parallel import Parallel as Parallel, delayed as delayed
+from .utils.validation import check_is_fitted as check_is_fitted, check_memory as check_memory
 
-FeatureUnion_Self = TypeVar("FeatureUnion_Self", bound="FeatureUnion")
-Pipeline_Self = TypeVar("Pipeline_Self", bound="Pipeline")
-
-import numpy as np
+FeatureUnion_Self = TypeVar("FeatureUnion_Self", bound=FeatureUnion)
+Pipeline_Self = TypeVar("Pipeline_Self", bound=Pipeline)
 
 __all__ = ["Pipeline", "FeatureUnion", "make_pipeline", "make_union"]
 

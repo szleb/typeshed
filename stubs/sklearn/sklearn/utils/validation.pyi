@@ -1,33 +1,27 @@
-from typing import Any, Callable, Literal, Sequence, Type
+from contextlib import suppress as suppress
+from functools import wraps as wraps
+from inspect import Parameter as Parameter, isclass as isclass, signature as signature
+from numbers import Integral, Number, Real
+from typing import Any, Callable, Literal, Sequence
+
+from joblib.memory import Memory
+from numpy import ndarray
+from numpy.core.numeric import ComplexWarning as ComplexWarning
+from numpy.random.mtrand import RandomState
+from pandas import DataFrame
+from pandas.api.types import is_sparse as is_sparse
+from scipy.sparse import spmatrix
+from scipy.sparse._coo import coo_matrix
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
 from ..base import BaseEstimator
 from ..exceptions import (
-    PositiveSpectrumWarning as PositiveSpectrumWarning,
-    NotFittedError as NotFittedError,
     DataConversionWarning as DataConversionWarning,
+    NotFittedError as NotFittedError,
+    PositiveSpectrumWarning as PositiveSpectrumWarning,
 )
-from scipy.sparse._coo import coo_matrix
-from numpy.random.mtrand import RandomState
 from ..utils._array_api import get_namespace as get_namespace
-from inspect import signature as signature, isclass as isclass, Parameter as Parameter
-from contextlib import suppress as suppress
-from numpy.core.numeric import ComplexWarning as ComplexWarning
-from joblib.memory import Memory
-from ._isfinite import cy_isfinite as cy_isfinite, FiniteStatus as FiniteStatus
-from scipy.sparse import spmatrix
-from .. import get_config as _get_config
-from numpy import ndarray
-from numbers import Real, Integral, Number
-from functools import wraps as wraps
-from pandas.api.types import is_sparse as is_sparse
-from pandas import DataFrame
-from .._typing import MatrixLike, ArrayLike, Int, Float
-import warnings
-import numbers
-import operator
-
-import numpy as np
-import scipy.sparse as sp
-import joblib
+from ._isfinite import FiniteStatus as FiniteStatus, cy_isfinite as cy_isfinite
 
 FLOAT_DTYPES = ...
 
@@ -91,7 +85,7 @@ def check_non_negative(X: MatrixLike | ArrayLike, whom: str) -> None: ...
 def check_scalar(
     x: Any,
     name: str,
-    target_type: Type[Integral] | tuple | Type[Real] | type,
+    target_type: type[Integral | Real],
     *,
     min_val: None | Float = None,
     max_val: None | Float = None,

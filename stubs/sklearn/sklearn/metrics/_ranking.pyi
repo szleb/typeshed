@@ -1,21 +1,3 @@
-from typing import Literal
-from ..utils.sparsefuncs import count_nonzero as count_nonzero
-from scipy.stats import rankdata as rankdata
-from ..preprocessing import label_binarize as label_binarize
-from ..exceptions import UndefinedMetricWarning as UndefinedMetricWarning
-from ..utils.extmath import stable_cumsum as stable_cumsum
-from numpy import ndarray
-from ..utils.multiclass import type_of_target as type_of_target
-from functools import partial as partial
-from scipy.sparse import csr_matrix as csr_matrix, issparse as issparse
-from .._typing import ArrayLike, Float, MatrixLike, Int
-from ..utils import (
-    assert_all_finite as assert_all_finite,
-    check_consistent_length as check_consistent_length,
-    column_or_1d as column_or_1d,
-    check_array as check_array,
-)
-
 # Authors: Alexandre Gramfort <alexandre.gramfort@inria.fr>
 #          Mathieu Blondel <mathieu@mblondel.org>
 #          Olivier Grisel <olivier.grisel@ensta.org>
@@ -26,10 +8,25 @@ from ..utils import (
 #          Noel Dawe <noel@dawe.me>
 #          Michal Karbownik <michakarbownik@gmail.com>
 # License: BSD 3 clause
+from functools import partial as partial
+from typing import Literal
 
-import warnings
+from numpy import ndarray
+from scipy.sparse import csr_matrix as csr_matrix, issparse as issparse
+from scipy.stats import rankdata as rankdata
 
-import numpy as np
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..exceptions import UndefinedMetricWarning as UndefinedMetricWarning
+from ..preprocessing import label_binarize as label_binarize
+from ..utils import (
+    assert_all_finite as assert_all_finite,
+    check_array as check_array,
+    check_consistent_length as check_consistent_length,
+    column_or_1d as column_or_1d,
+)
+from ..utils.extmath import stable_cumsum as stable_cumsum
+from ..utils.multiclass import type_of_target as type_of_target
+from ..utils.sparsefuncs import count_nonzero as count_nonzero
 
 def auc(x: ArrayLike, y: ArrayLike) -> Float: ...
 def average_precision_score(

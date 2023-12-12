@@ -1,16 +1,18 @@
 from typing import Any, Callable, ClassVar, Literal, TypeVar
-from ._ball_tree import BallTree
-from ._base import KNeighborsMixin, RadiusNeighborsMixin, NeighborsBase
-from numpy import ndarray
-from ..utils._param_validation import StrOptions as StrOptions
-from ..base import TransformerMixin, ClassNamePrefixFeaturesOutMixin
-from ._unsupervised import NearestNeighbors
-from scipy.sparse import spmatrix
-from .._typing import MatrixLike, Int, Float
-from ..utils.validation import check_is_fitted as check_is_fitted
 
-RadiusNeighborsTransformer_Self = TypeVar("RadiusNeighborsTransformer_Self", bound="RadiusNeighborsTransformer")
-KNeighborsTransformer_Self = TypeVar("KNeighborsTransformer_Self", bound="KNeighborsTransformer")
+from numpy import ndarray
+from scipy.sparse import spmatrix
+
+from .._typing import Float, Int, MatrixLike
+from ..base import ClassNamePrefixFeaturesOutMixin, TransformerMixin
+from ..utils._param_validation import StrOptions as StrOptions
+from ..utils.validation import check_is_fitted as check_is_fitted
+from ._ball_tree import BallTree
+from ._base import KNeighborsMixin, NeighborsBase, RadiusNeighborsMixin
+from ._unsupervised import NearestNeighbors
+
+RadiusNeighborsTransformer_Self = TypeVar("RadiusNeighborsTransformer_Self", bound=RadiusNeighborsTransformer)
+KNeighborsTransformer_Self = TypeVar("KNeighborsTransformer_Self", bound=KNeighborsTransformer)
 
 def kneighbors_graph(
     X: MatrixLike | BallTree | NearestNeighbors,
@@ -33,7 +35,7 @@ def radius_neighbors_graph(
     metric_params: None | dict = None,
     include_self: str | bool = False,
     n_jobs: None | Int = None,
-): ...
+) -> None: ...
 
 class KNeighborsTransformer(ClassNamePrefixFeaturesOutMixin, KNeighborsMixin, TransformerMixin, NeighborsBase):
     n_samples_fit_: int = ...
@@ -82,5 +84,5 @@ class RadiusNeighborsTransformer(ClassNamePrefixFeaturesOutMixin, RadiusNeighbor
         n_jobs: None | Int = None,
     ) -> None: ...
     def fit(self: RadiusNeighborsTransformer_Self, X: MatrixLike, y: Any = None) -> RadiusNeighborsTransformer_Self: ...
-    def transform(self, X: MatrixLike): ...
-    def fit_transform(self, X: MatrixLike, y: Any = None): ...
+    def transform(self, X: MatrixLike) -> None: ...
+    def fit_transform(self, X: MatrixLike, y: Any = None) -> None: ...

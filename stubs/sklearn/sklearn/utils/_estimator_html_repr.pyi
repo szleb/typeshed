@@ -1,15 +1,15 @@
-from typing import Literal, Sequence
-from string import Template as Template
 from contextlib import closing as closing
-from ..base import BaseEstimator
-from io import StringIO as StringIO
 from inspect import isclass as isclass
+from io import StringIO as StringIO
+from string import Template as Template
+from typing import Literal, Sequence
+
 from .. import config_context as config_context
-import html
+from ..base import BaseEstimator
 
 class _IDCounter:
     def __init__(self, prefix: str) -> None: ...
-    def get_id(self): ...
+    def get_id(self) -> None: ...
 
 _CONTAINER_ID_COUNTER = ...
 _ESTIMATOR_ID_COUNTER = ...
@@ -25,6 +25,6 @@ class _VisualBlock:
         dash_wrapped: bool = True,
     ) -> None: ...
 
-_STYLE = ...  # noqa
+_STYLE = ...
 
 def estimator_html_repr(estimator: BaseEstimator) -> str: ...

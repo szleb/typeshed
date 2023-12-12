@@ -1,29 +1,28 @@
-from typing import Any, ClassVar, TypeVar
-from scipy import sparse as sparse
-from ..exceptions import ConvergenceWarning as ConvergenceWarning
-from numpy import ndarray
-from ..utils.extmath import row_norms as row_norms
-from ..utils._param_validation import Interval as Interval
-from numbers import Integral as Integral, Real as Real
-from .._config import config_context as config_context
 from math import sqrt as sqrt
-from ..base import TransformerMixin, ClusterMixin, BaseEstimator, ClassNamePrefixFeaturesOutMixin
+from numbers import Integral as Integral, Real as Real
+from typing import Any, ClassVar, TypeVar
+
+from numpy import ndarray
+from scipy import sparse as sparse
 from scipy.sparse import spmatrix
-from ..metrics.pairwise import euclidean_distances as euclidean_distances
-from .._typing import Float, Int, ArrayLike, MatrixLike
+
+from .._config import config_context as config_context
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, ClassNamePrefixFeaturesOutMixin, ClusterMixin, TransformerMixin
+from ..exceptions import ConvergenceWarning as ConvergenceWarning
 from ..metrics import pairwise_distances_argmin as pairwise_distances_argmin
+from ..metrics.pairwise import euclidean_distances as euclidean_distances
+from ..utils._param_validation import Interval as Interval
+from ..utils.extmath import row_norms as row_norms
 from ..utils.validation import check_is_fitted as check_is_fitted
 from . import AgglomerativeClustering as AgglomerativeClustering
 
-Birch_Self = TypeVar("Birch_Self", bound="Birch")
+Birch_Self = TypeVar("Birch_Self", bound=Birch)
 
 # Authors: Manoj Kumar <manojkumarsivaraj334@gmail.com>
 #          Alexandre Gramfort <alexandre.gramfort@telecom-paristech.fr>
 #          Joel Nothman <joel.nothman@gmail.com>
 # License: BSD 3 clause
-
-import warnings
-import numpy as np
 
 class _CFNode:
     squared_norm_: ndarray = ...
@@ -52,7 +51,7 @@ class _CFSubcluster:
     def __init__(self, *, linear_sum: None | ArrayLike = None) -> None: ...
     def update(self, subcluster: _CFSubcluster) -> None: ...
     def merge_subcluster(self, nominee_cluster: _CFSubcluster, threshold: float) -> bool: ...
-    def radius(self): ...
+    def radius(self) -> None: ...
 
 class Birch(ClassNamePrefixFeaturesOutMixin, ClusterMixin, TransformerMixin, BaseEstimator):
     feature_names_in_: ndarray = ...

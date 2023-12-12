@@ -1,28 +1,26 @@
-from typing import ClassVar, Iterable, Literal, TypeVar
-from ..model_selection import BaseCrossValidator
-from scipy import linalg as linalg
-from ._base import LinearModel
-from numpy import ndarray
-from ..utils._param_validation import Hidden as Hidden, Interval as Interval, StrOptions as StrOptions
-from ..model_selection._split import BaseShuffleSplit
-from numbers import Integral as Integral, Real as Real
-from scipy.linalg.lapack import get_lapack_funcs as get_lapack_funcs
 from math import sqrt as sqrt
-from ..base import RegressorMixin, MultiOutputMixin
-from ..model_selection import check_cv as check_cv
-from ..utils.parallel import delayed as delayed, Parallel as Parallel
-from .._typing import ArrayLike, MatrixLike, Int, Float
-from ..utils import as_float_array as as_float_array, check_array as check_array
+from numbers import Integral as Integral, Real as Real
+from typing import ClassVar, Iterable, Literal, TypeVar
 
-OrthogonalMatchingPursuitCV_Self = TypeVar("OrthogonalMatchingPursuitCV_Self", bound="OrthogonalMatchingPursuitCV")
-OrthogonalMatchingPursuit_Self = TypeVar("OrthogonalMatchingPursuit_Self", bound="OrthogonalMatchingPursuit")
+from numpy import ndarray
+from scipy import linalg as linalg
+from scipy.linalg.lapack import get_lapack_funcs as get_lapack_funcs
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import MultiOutputMixin, RegressorMixin
+from ..model_selection import BaseCrossValidator, check_cv as check_cv
+from ..model_selection._split import BaseShuffleSplit
+from ..utils import as_float_array as as_float_array, check_array as check_array
+from ..utils._param_validation import Hidden as Hidden, Interval as Interval, StrOptions as StrOptions
+from ..utils.parallel import Parallel as Parallel, delayed as delayed
+from ._base import LinearModel
+
+OrthogonalMatchingPursuitCV_Self = TypeVar("OrthogonalMatchingPursuitCV_Self", bound=OrthogonalMatchingPursuitCV)
+OrthogonalMatchingPursuit_Self = TypeVar("OrthogonalMatchingPursuit_Self", bound=OrthogonalMatchingPursuit)
 
 # Author: Vlad Niculae
 #
 # License: BSD 3 clause
-
-import warnings
-import numpy as np
 
 premature: str = ...
 

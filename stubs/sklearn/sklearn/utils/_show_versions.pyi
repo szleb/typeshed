@@ -1,8 +1,5 @@
-from ..utils.fixes import threadpool_info as threadpool_info
-
 # License: BSD 3 clause
 
-import platform
-import sys
+from ..utils.fixes import threadpool_info as threadpool_info
 
-def show_versions(): ...
+def show_versions() -> None: ...

@@ -1,18 +1,17 @@
 from typing import ClassVar, Literal
-from numpy.random import RandomState
-from scipy import linalg as linalg
-from ._base import BaseMixture
-from numpy import ndarray
-from ..utils.extmath import row_norms as row_norms
-from ..utils._param_validation import StrOptions as StrOptions
-from .._typing import Int, Float, ArrayLike, MatrixLike
-from ..utils import check_array as check_array
 
 # Author: Wei Xue <xuewei4d@gmail.com>
 # Modified by Thierry Guillemot <thierry.guillemot.work@gmail.com>
 # License: BSD 3 clause
+from numpy import ndarray
+from numpy.random import RandomState
+from scipy import linalg as linalg
 
-import numpy as np
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..utils import check_array as check_array
+from ..utils._param_validation import StrOptions as StrOptions
+from ..utils.extmath import row_norms as row_norms
+from ._base import BaseMixture
 
 class GaussianMixture(BaseMixture):
     feature_names_in_: ndarray = ...

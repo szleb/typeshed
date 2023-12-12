@@ -14,6 +14,7 @@ def lloyd_iter_chunked_dense(
     """Single iteration of K-means lloyd algorithm with dense input.
     Update labels and centers (inplace), for one iteration, distributed
     over data chunks.
+
     Parameters
     ----------
     X : ndarray of shape (n_samples, n_features), dtype=floating
@@ -60,6 +61,7 @@ def lloyd_iter_chunked_sparse(
     """Single iteration of K-means lloyd algorithm with sparse input.
     Update labels and centers (inplace), for one iteration, distributed
     over data chunks.
+
     Parameters
     ----------
     X : sparse matrix of shape (n_samples, n_features), dtype=floating

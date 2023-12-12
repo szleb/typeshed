@@ -1,23 +1,22 @@
-from typing import Any, Callable, ClassVar, TypeVar
-from numpy.random import RandomState
-from scipy.stats import chi2 as chi2
-from scipy import linalg as linalg
-from numpy import ndarray
-from ..utils.extmath import fast_logdet as fast_logdet
-from ..utils._param_validation import Interval as Interval
 from numbers import Integral as Integral, Real as Real
-from .._typing import MatrixLike, Int, Float
-from ..utils import check_random_state as check_random_state, check_array as check_array
-from . import empirical_covariance as empirical_covariance, EmpiricalCovariance
+from typing import Any, Callable, ClassVar, TypeVar
 
-MinCovDet_Self = TypeVar("MinCovDet_Self", bound="MinCovDet")
+from numpy import ndarray
+from numpy.random import RandomState
+from scipy import linalg as linalg
+from scipy.stats import chi2 as chi2
+
+from .._typing import Float, Int, MatrixLike
+from ..utils import check_array as check_array, check_random_state as check_random_state
+from ..utils._param_validation import Interval as Interval
+from ..utils.extmath import fast_logdet as fast_logdet
+from . import EmpiricalCovariance, empirical_covariance as empirical_covariance
+
+MinCovDet_Self = TypeVar("MinCovDet_Self", bound=MinCovDet)
 
 # Author: Virgile Fritsch <virgile.fritsch@inria.fr>
 #
 # License: BSD 3 clause
-
-import warnings
-import numpy as np
 
 # Minimum Covariance Determinant
 #   Implementing of an algorithm by Rousseeuw & Van Driessen described in

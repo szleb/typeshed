@@ -1,32 +1,29 @@
-from typing import ClassVar, Literal, TypeVar
-from numpy.random import RandomState
-from itertools import chain as chain
-from ..exceptions import ConvergenceWarning as ConvergenceWarning
-from ..utils.extmath import safe_sparse_dot as safe_sparse_dot
-from ..metrics import accuracy_score as accuracy_score, r2_score as r2_score
-from ..preprocessing import LabelBinarizer as LabelBinarizer
-from ..utils.validation import check_is_fitted as check_is_fitted
 from abc import ABCMeta, abstractmethod
-from numpy import ndarray
-from ..utils._param_validation import StrOptions as StrOptions, Options as Options, Interval as Interval
+from itertools import chain as chain
 from numbers import Integral as Integral, Real as Real
+from typing import ClassVar, Literal, TypeVar
+
+from numpy import ndarray
+from numpy.random import RandomState
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
 from ..base import BaseEstimator, ClassifierMixin, RegressorMixin, is_classifier as is_classifier
+from ..exceptions import ConvergenceWarning as ConvergenceWarning
+from ..metrics import accuracy_score as accuracy_score, r2_score as r2_score
 from ..model_selection import train_test_split as train_test_split
-from ..utils import gen_batches as gen_batches, check_random_state as check_random_state, shuffle, column_or_1d as column_or_1d
-from ._stochastic_optimizers import SGDOptimizer as SGDOptimizer, AdamOptimizer as AdamOptimizer
-from ._base import ACTIVATIONS as ACTIVATIONS, DERIVATIVES as DERIVATIVES, LOSS_FUNCTIONS as LOSS_FUNCTIONS
-from ..utils.multiclass import unique_labels as unique_labels, type_of_target as type_of_target
+from ..preprocessing import LabelBinarizer as LabelBinarizer
+from ..utils import check_random_state as check_random_state, column_or_1d as column_or_1d, gen_batches as gen_batches
+from ..utils._param_validation import Interval as Interval, Options as Options, StrOptions as StrOptions
+from ..utils.extmath import safe_sparse_dot as safe_sparse_dot
 from ..utils.metaestimators import available_if as available_if
-from .._typing import Float, MatrixLike, ArrayLike, Int
+from ..utils.multiclass import type_of_target as type_of_target, unique_labels as unique_labels
+from ..utils.validation import check_is_fitted as check_is_fitted
+from ._base import ACTIVATIONS as ACTIVATIONS, DERIVATIVES as DERIVATIVES, LOSS_FUNCTIONS as LOSS_FUNCTIONS
+from ._stochastic_optimizers import AdamOptimizer as AdamOptimizer, SGDOptimizer as SGDOptimizer
 
-BaseMultilayerPerceptron_Self = TypeVar("BaseMultilayerPerceptron_Self", bound="BaseMultilayerPerceptron")
-MLPRegressor_Self = TypeVar("MLPRegressor_Self", bound="MLPRegressor")
-MLPClassifier_Self = TypeVar("MLPClassifier_Self", bound="MLPClassifier")
-
-import numpy as np
-import warnings
-
-import scipy.optimize
+BaseMultilayerPerceptron_Self = TypeVar("BaseMultilayerPerceptron_Self", bound=BaseMultilayerPerceptron)
+MLPRegressor_Self = TypeVar("MLPRegressor_Self", bound=MLPRegressor)
+MLPClassifier_Self = TypeVar("MLPClassifier_Self", bound=MLPClassifier)
 
 _STOCHASTIC_SOLVERS: list = ...
 

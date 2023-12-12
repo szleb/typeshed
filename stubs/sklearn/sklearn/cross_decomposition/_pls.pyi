@@ -1,24 +1,22 @@
-from typing import ClassVar, Literal, TypeVar
 from abc import ABCMeta, abstractmethod
-from ..exceptions import ConvergenceWarning as ConvergenceWarning
-from numpy import ndarray
-from ..utils.extmath import svd_flip as svd_flip
-from scipy.linalg import svd, pinv as pinv2, pinv2 as pinv2
 from numbers import Integral as Integral, Real as Real
-from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
-from ..base import BaseEstimator, RegressorMixin, TransformerMixin, MultiOutputMixin, ClassNamePrefixFeaturesOutMixin
-from .._typing import MatrixLike, ArrayLike, Int, Float
+from typing import ClassVar, Literal, TypeVar
+
+from numpy import ndarray
+from scipy.linalg import pinv as pinv2, pinv2 as pinv2
+
+from .._typing import ArrayLike, Float, Int, MatrixLike
+from ..base import BaseEstimator, ClassNamePrefixFeaturesOutMixin, MultiOutputMixin, RegressorMixin, TransformerMixin
+from ..exceptions import ConvergenceWarning as ConvergenceWarning
 from ..utils import check_array as check_array, check_consistent_length as check_consistent_length
-from ..utils.fixes import sp_version as sp_version, parse_version as parse_version
-from ..utils.validation import check_is_fitted as check_is_fitted, FLOAT_DTYPES as FLOAT_DTYPES
+from ..utils._param_validation import Interval as Interval, StrOptions as StrOptions
+from ..utils.extmath import svd_flip as svd_flip
+from ..utils.fixes import parse_version as parse_version, sp_version as sp_version
+from ..utils.validation import FLOAT_DTYPES as FLOAT_DTYPES, check_is_fitted as check_is_fitted
 
-PLSSVD_Self = TypeVar("PLSSVD_Self", bound="PLSSVD")
-PLSRegression_Self = TypeVar("PLSRegression_Self", bound="PLSRegression")
-_PLS_Self = TypeVar("_PLS_Self", bound="_PLS")
-
-import warnings
-
-import numpy as np
+PLSSVD_Self = TypeVar("PLSSVD_Self", bound=PLSSVD)
+PLSRegression_Self = TypeVar("PLSRegression_Self", bound=PLSRegression)
+_PLS_Self = TypeVar("_PLS_Self", bound=_PLS)
 
 __all__ = ["PLSCanonical", "PLSRegression", "PLSSVD"]
 
@@ -63,7 +61,7 @@ class PLSRegression(_PLS):
     x_weights_: ndarray = ...
 
     _parameter_constraints: ClassVar[dict] = ...
-    for param in ("deflation_mode", "mode", "algorithm"):
+    for _param in ("deflation_mode", "mode", "algorithm"):
         pass
 
     # This implementation provides the same results that 3 PLS packages
@@ -91,7 +89,7 @@ class PLSCanonical(_PLS):
     x_weights_: ndarray = ...
 
     _parameter_constraints: ClassVar[dict] = ...
-    for param in ("deflation_mode", "mode"):
+    for _param in ("deflation_mode", "mode"):
         pass
 
     # This implementation provides the same results that the "plspm" package
@@ -127,7 +125,7 @@ class CCA(_PLS):
     x_weights_: ndarray = ...
 
     _parameter_constraints: ClassVar[dict] = ...
-    for param in ("deflation_mode", "mode", "algorithm"):
+    for _param in ("deflation_mode", "mode", "algorithm"):
         pass
 
     def __init__(

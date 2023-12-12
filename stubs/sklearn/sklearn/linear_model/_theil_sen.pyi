@@ -1,29 +1,27 @@
-from typing import ClassVar, TypeVar
-from numpy.random import RandomState
-from scipy.special import binom as binom
-from scipy import linalg as linalg
 from itertools import combinations as combinations
-from ._base import LinearModel
-from ..exceptions import ConvergenceWarning as ConvergenceWarning
-from ..utils._param_validation import Interval as Interval
-from numpy import ndarray
 from numbers import Integral as Integral, Real as Real
-from scipy.linalg.lapack import get_lapack_funcs as get_lapack_funcs
-from joblib import effective_n_jobs as effective_n_jobs
-from ..base import RegressorMixin
-from ..utils.parallel import delayed as delayed, Parallel as Parallel
-from .._typing import Int, Float, ArrayLike
-from ..utils import check_random_state as check_random_state
+from typing import ClassVar, TypeVar
 
-TheilSenRegressor_Self = TypeVar("TheilSenRegressor_Self", bound="TheilSenRegressor")
+from joblib import effective_n_jobs as effective_n_jobs
+from numpy import ndarray
+from numpy.random import RandomState
+from scipy import linalg as linalg
+from scipy.linalg.lapack import get_lapack_funcs as get_lapack_funcs
+from scipy.special import binom as binom
+
+from .._typing import ArrayLike, Float, Int
+from ..base import RegressorMixin
+from ..exceptions import ConvergenceWarning as ConvergenceWarning
+from ..utils import check_random_state as check_random_state
+from ..utils._param_validation import Interval as Interval
+from ..utils.parallel import Parallel as Parallel, delayed as delayed
+from ._base import LinearModel
+
+TheilSenRegressor_Self = TypeVar("TheilSenRegressor_Self", bound=TheilSenRegressor)
 
 # Author: Florian Wilhelm <florian.wilhelm@gmail.com>
 #
 # License: BSD 3 clause
-
-import warnings
-
-import numpy as np
 
 _EPSILON = ...
 
