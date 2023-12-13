@@ -1,0 +1,4 @@
+version = "1.11.*"
+upstream_repository = "https://github.com/scipy/scipy.git"
+requires=["numpy"]
+requires_python=">=3.9"

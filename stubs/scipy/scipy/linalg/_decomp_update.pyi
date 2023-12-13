@@ -1,0 +1,16 @@
+# Python: 3.8.2 (tags/v3.8.2:7b3ab59, Feb 25 2020, 23:03:10) [MSC v.1916 64 bit (AMD64)]
+# Library: scipy, version: 1.6.2
+# Module: scipy.linalg._decomp_update, version: unspecified
+import typing
+
+import numpy.linalg as _mod_numpy_linalg
+
+LinAlgError = _mod_numpy_linalg.LinAlgError
+
+__test__: dict
+
+def _form_qTu() -> typing.Any: ...
+def qr_delete(Q, R, k, intp=..., which=..., overwrite_qr=..., check_finite=...) -> typing.Any: ...
+def qr_insert(Q, R, u, k, which=..., rcond=..., overwrite_qru=..., check_finite=...) -> typing.Any: ...
+def qr_update(Q, R, u, v, overwrite_qruv=..., check_finite=...) -> typing.Any: ...
+def __getattr__(name) -> typing.Any: ...
