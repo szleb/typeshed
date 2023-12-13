@@ -1,4 +1,4 @@
-from typing import Self
+from typing_extensions import Self
 
 class LowLevelCallable(tuple):
     def __new__(cls, function, user_data=..., signature=...) -> Self: ...
